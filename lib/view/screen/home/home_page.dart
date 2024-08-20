@@ -1,5 +1,7 @@
+import 'package:chat_app/view/screen/chat/chat_page.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -55,6 +57,9 @@ class HomePage extends StatelessWidget {
           itemBuilder: (context, index) => Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: ListTile(
+              onTap: () {
+                Get.to(()=>ChatPage());
+              },
               leading: CircleAvatar(
                 radius: 30,
               ),

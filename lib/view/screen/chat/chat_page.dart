@@ -44,62 +44,72 @@ class ChatPage extends StatelessWidget {
             height: 500,
           )),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  height: 50,
-                  width: 320,
-                  decoration: BoxDecoration(
-                    color: const Color(0xff1e2829).withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: TextField(
-                    controller: controller.txtChats,
-                    decoration: InputDecoration(
-                      hintText: 'Message',
-                      hintStyle: const TextStyle(fontSize: 20),
-                      border: InputBorder.none,
-                      prefixIcon: const Icon(Icons.emoji_emotions_outlined),
-                      suffixIcon: controller.txtChats.text.isEmpty
-                          ? const Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(Icons.attach_file),
-                                SizedBox(
-                                  width: 10,
+                Card(
+                  child: Container(
+                    height: 50,
+                    width: 325,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child: Obx(
+                      () => TextField(
+                        controller: controller.txtChats,
+                        onChanged: (value) => controller.changeMessage(value),
+                        decoration: InputDecoration(
+                          hintText: 'Message',
+                          hintStyle: const TextStyle(fontSize: 20),
+                          border: InputBorder.none,
+                          prefixIcon: const Icon(Icons.emoji_emotions_outlined),
+                          suffixIcon: controller.chatMessage.value.isEmpty
+                              ? const Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(Icons.attach_file),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Icon(CupertinoIcons
+                                        .money_dollar_circle_fill),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Icon(Icons.photo_camera),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                  ],
+                                )
+                              : const Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(Icons.attach_file),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                  ],
                                 ),
-                                Icon(CupertinoIcons.money_dollar_circle_fill),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Icon(Icons.photo_camera),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                              ],
-                            )
-                          : const Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(Icons.attach_file),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                              ],
-                            ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0, right: 4),
-                  child: FloatingActionButton(
-                    shape: const CircleBorder(),
-                    onPressed: () {},
-                    child: controller.txtChats.text.isEmpty
-                        ? const Icon(Icons.mic)
-                        : const Icon(Icons.send),
+                SizedBox(
+                  height: 60,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0, right: 4),
+                    child: Obx(
+                      () => FloatingActionButton(
+                        shape: const CircleBorder(),
+                        onPressed: () {},
+                        child: controller.chatMessage.value.isEmpty
+                            ? const Icon(Icons.mic)
+                            : const Icon(Icons.send),
+                      ),
+                    ),
                   ),
                 )
               ],

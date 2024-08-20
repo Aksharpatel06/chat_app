@@ -1,0 +1,78 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class IntroPage extends StatelessWidget {
+  const IntroPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Image.asset(
+              'asset/splash/Group 1.png',
+              fit: BoxFit.cover,
+            ),
+            Column(
+              children: [
+                Text(
+                  'Welcome to Chatify',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 32,
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text.rich(
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18, wordSpacing: 2),
+                  TextSpan(
+                    children: [
+                      TextSpan(text: 'Read our '),
+                      TextSpan(
+                          text: 'Privacy Policy',
+                          style: TextStyle(color: Colors.blue)),
+                      TextSpan(
+                        text: '. Tap “Agree and Continue” to accept ',
+                      ),
+                      TextSpan(
+                        text: 'Terms of Services.',
+                        style: TextStyle(
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 45,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Get.offAndToNamed('/home');
+                  },
+                  child: Container(
+                    width: 300,
+                    height: 50,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: Color(0xff31C48D),
+                        borderRadius: BorderRadius.circular(25)),
+                    child: Text(
+                      'Agree and Continue',
+                      style: TextStyle(fontSize: 17, color: Colors.white),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
