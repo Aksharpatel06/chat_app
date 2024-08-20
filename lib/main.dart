@@ -1,3 +1,4 @@
+import 'package:chat_app/view/controller/theme_controller.dart';
 import 'package:chat_app/view/screen/chat/chat_page.dart';
 import 'package:chat_app/view/screen/home/home_page.dart';
 import 'package:chat_app/view/screen/intro/intro_page.dart';
@@ -14,15 +15,34 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      // theme: ThemeData.dark(),
-      debugShowCheckedModeBanner: false,
-      getPages: [
-        GetPage(name: '/', page:() => const SplashPage(),),
-        GetPage(name: '/intro', page:() => const IntroPage(),),
-        GetPage(name: '/home', page:() => const HomePage(),),
-        GetPage(name: '/chat', page:() => const ChatPage(),),
-      ],
+    // Initialize the ThemeController and make it available globally
+    ThemeController themeController = Get.put(ThemeController());
+
+    return Obx(
+          () => GetMaterialApp(
+        themeMode: themeController.themeMode.value,  // Observe themeMode changes
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
+        debugShowCheckedModeBanner: false,
+        getPages: [
+          GetPage(
+            name: '/',
+            page: () => const SplashPage(),
+          ),
+          GetPage(
+            name: '/intro',
+            page: () => const IntroPage(),
+          ),
+          GetPage(
+            name: '/home',
+            page: () => const HomePage(),
+          ),
+          GetPage(
+            name: '/chat',
+            page: () => const ChatPage(),
+          ),
+        ],
+      ),
     );
   }
 }

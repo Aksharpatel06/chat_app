@@ -17,17 +17,17 @@ class IntroPage extends StatelessWidget {
             ),
             Column(
               children: [
-                Text(
+                const Text(
                   'Welcome to Chatify',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 32,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                Text.rich(
+                const Text.rich(
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 18, wordSpacing: 2),
                   TextSpan(
@@ -48,7 +48,7 @@ class IntroPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 45,
                 ),
                 GestureDetector(
@@ -60,9 +60,9 @@ class IntroPage extends StatelessWidget {
                     height: 50,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                        color: Color(0xff31C48D),
+                        color: const Color(0xff31C48D),
                         borderRadius: BorderRadius.circular(25)),
-                    child: Text(
+                    child: const Text(
                       'Agree and Continue',
                       style: TextStyle(fontSize: 17, color: Colors.white),
                     ),

@@ -1,3 +1,4 @@
+import 'package:chat_app/view/controller/theme_controller.dart';
 import 'package:chat_app/view/screen/chat/chat_page.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeController themeController = Get.find();
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -31,7 +33,7 @@ class HomePage extends StatelessWidget {
         bottom: PreferredSize(
           preferredSize: Size(double.infinity, 50),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 4),
             child: SizedBox(
               height: 50,
               child: SearchBar(
@@ -71,7 +73,7 @@ class HomePage extends StatelessWidget {
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 12.0,right: 14),
         child: FloatingActionButton(onPressed: () {
-
+          themeController.changeMode();
         },
           backgroundColor: Colors.green.shade500,
           child: Icon(Icons.add_comment),
@@ -79,14 +81,18 @@ class HomePage extends StatelessWidget {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: CurvedNavigationBar(
-          backgroundColor: Colors.green.shade200,
-          items: [
-            Icon(Icons.chat_sharp),
-            Icon(Icons.update),
-            Icon(Icons.groups_2_outlined),
-            Icon(Icons.call),
-          ],
+        child: Obx(
+          ()=> CurvedNavigationBar(
+            backgroundColor: Colors.green.shade200,
+            buttonBackgroundColor: Colors.green,
+           color: themeController.themeMode.value==ThemeMode.dark?Colors.black:Colors.white,
+            items: [
+              Icon(Icons.chat_sharp),
+              Icon(Icons.update),
+              Icon(Icons.groups_2_outlined),
+              Icon(Icons.call),
+            ],
+          ),
         ),
       ),
     );
