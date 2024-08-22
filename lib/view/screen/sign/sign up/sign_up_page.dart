@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/sign_controller.dart';
@@ -62,8 +63,23 @@ class SignUpPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40.0),
               child: GestureDetector(
-                onTap: () {
-                  Get.back();
+                onTap: () async {
+                  Fluttertoast.showToast(
+                      msg: (signController.error.value.isNotEmpty ||
+                          signController.pwd.value.isNotEmpty)
+                          ? signController.error.value.isNotEmpty
+                          ? signController.error.value
+                          : signController.pwd.value
+                          : 'SuccessFully Register',
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: (signController.error.value.isNotEmpty ||
+                          signController.pwd.value.isNotEmpty )
+                          ? Colors.redAccent
+                          : Colors.green.withOpacity(0.7),
+                      textColor: Colors.white,
+                      fontSize: 16.0);
                 },
                 child: Container(
                   width: double.infinity,
@@ -90,7 +106,9 @@ class SignUpPage extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            const ContinueWithOtherBrowser(sign: 'Sign In',),
+            const ContinueWithOtherBrowser(
+              sign: 'Sign In',
+            ),
           ],
         ),
       ),

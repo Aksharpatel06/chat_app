@@ -1,4 +1,6 @@
+import 'package:chat_app/view/helper/google_firebase_services.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class ContinueWithOtherBrowser extends StatelessWidget {
@@ -29,10 +31,9 @@ class ContinueWithOtherBrowser extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                if(sign=='Sign Up')
-                  {
-                    Get.toNamed('/signup');
-                  }else{
+                if (sign == 'Sign Up') {
+                  Get.toNamed('/signup');
+                } else {
                   Get.back();
                 }
               },
@@ -67,7 +68,17 @@ class ContinueWithOtherBrowser extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             GestureDetector(
-              onTap: () async {},
+              onTap: () async {
+                String status = await GoogleFirebaseServices.googleFirebaseServices
+                    .signInWithGoogle();
+                Fluttertoast.showToast(msg: status);
+                if (status == 'Suceess') {
+                  Get.toNamed('/home');
+                  // if (account == 'Already have an account') {
+                  //   controller.getUserDetails();
+                  // }
+                }
+              },
               child: Container(
                 height: 50,
                 width: 50,

@@ -1,4 +1,5 @@
 import 'package:chat_app/view/controller/sign_controller.dart';
+import 'package:chat_app/view/helper/google_firebase_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -70,7 +71,9 @@ class SignInPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 40.0),
                 child: GestureDetector(
                   onTap: () {
-                    Get.offAndToNamed('/home');
+                    GoogleFirebaseServices.googleFirebaseServices
+                        .compareEmailAndPwd(signController.txtEmail.text,
+                            signController.txtPwd.text);
                   },
                   child: Container(
                     width: double.infinity,
@@ -97,7 +100,9 @@ class SignInPage extends StatelessWidget {
               const SizedBox(
                 height: 35,
               ),
-              const ContinueWithOtherBrowser(sign: 'Sign Up',),
+              const ContinueWithOtherBrowser(
+                sign: 'Sign Up',
+              ),
             ],
           ),
         ),

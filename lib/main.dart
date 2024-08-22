@@ -4,12 +4,18 @@ import 'package:chat_app/view/screen/home/home_page.dart';
 import 'package:chat_app/view/screen/intro/intro_page.dart';
 import 'package:chat_app/view/screen/sign/sign%20up/sign_up_page.dart';
 import 'package:chat_app/view/screen/splash/splash_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'firebase_options.dart';
 import 'view/screen/sign/sign in/sign_in_page.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -58,3 +64,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
