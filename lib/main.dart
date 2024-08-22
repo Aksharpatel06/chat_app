@@ -2,6 +2,7 @@ import 'package:chat_app/view/controller/theme_controller.dart';
 import 'package:chat_app/view/screen/chat/chat_page.dart';
 import 'package:chat_app/view/screen/home/home_page.dart';
 import 'package:chat_app/view/screen/intro/intro_page.dart';
+import 'package:chat_app/view/screen/sign%20in/sign_page.dart';
 import 'package:chat_app/view/screen/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,6 +34,10 @@ class MyApp extends StatelessWidget {
               GetPage(
                 name: '/intro',
                 page: () => const IntroPage(),
+              ),
+              GetPage(
+                name: '/signin',
+                page: () => const SignInPage(),
               ),
               GetPage(
                 name: '/home',

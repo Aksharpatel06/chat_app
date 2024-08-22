@@ -53,13 +53,21 @@ class IntroPage extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.offAndToNamed('/home');
+                    Get.offAndToNamed('/signin');
                   },
                   child: Container(
                     width: 300,
                     height: 50,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0x3F000000),
+                            blurRadius: 4,
+                            offset: Offset(0, 4),
+                            spreadRadius: 0,
+                          )
+                        ],
                         color: const Color(0xff31C48D),
                         borderRadius: BorderRadius.circular(25)),
                     child: const Text(
