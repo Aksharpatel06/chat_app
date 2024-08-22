@@ -15,34 +15,35 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Initialize the ThemeController and make it available globally
     ThemeController themeController = Get.put(ThemeController());
 
     return Obx(
-          () => GetMaterialApp(
-        themeMode: themeController.themeMode.value,  // Observe themeMode changes
-        theme: ThemeData.light(),
-        darkTheme: ThemeData.dark(),
-        debugShowCheckedModeBanner: false,
-        getPages: [
-          GetPage(
-            name: '/',
-            page: () => const SplashPage(),
+          () =>
+          GetMaterialApp(
+            themeMode: themeController.themeMode.value,
+            // Observe themeMode changes
+            theme: ThemeData.light(),
+            darkTheme: ThemeData.dark(),
+            debugShowCheckedModeBanner: false,
+            getPages: [
+              GetPage(
+                name: '/',
+                page: () => const SplashPage(),
+              ),
+              GetPage(
+                name: '/intro',
+                page: () => const IntroPage(),
+              ),
+              GetPage(
+                name: '/home',
+                page: () => const HomePage(),
+              ),
+              GetPage(
+                name: '/chat',
+                page: () => const ChatPage(),
+              ),
+            ],
           ),
-          GetPage(
-            name: '/intro',
-            page: () => const IntroPage(),
-          ),
-          GetPage(
-            name: '/home',
-            page: () => const HomePage(),
-          ),
-          GetPage(
-            name: '/chat',
-            page: () => const ChatPage(),
-          ),
-        ],
-      ),
     );
   }
 }

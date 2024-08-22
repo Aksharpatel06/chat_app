@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Chats',
+          'Chatify',
           style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25),
         ),
         actions: const [
@@ -31,17 +31,17 @@ class HomePage extends StatelessWidget {
           ),
         ],
         bottom: PreferredSize(
-          preferredSize: Size(double.infinity, 50),
+          preferredSize: const Size(double.infinity, 50),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4),
             child: SizedBox(
               height: 50,
               child: SearchBar(
                 hintText: 'search',
                 trailing: Iterable.generate(
                   1,
-                  (index) => Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  (index) => const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: Icon(Icons.search),
                   ),
                 ),
@@ -60,9 +60,9 @@ class HomePage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: ListTile(
               onTap: () {
-                Get.to(()=>ChatPage());
+                Get.to(() => const ChatPage());
               },
-              leading: CircleAvatar(
+              leading: const CircleAvatar(
                 radius: 30,
               ),
               title: Text(index.toString()),
@@ -71,22 +71,25 @@ class HomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 12.0,right: 14),
-        child: FloatingActionButton(onPressed: () {
-          themeController.changeMode();
-        },
+        padding: const EdgeInsets.only(bottom: 12.0, right: 14),
+        child: FloatingActionButton(
+          onPressed: () {
+            themeController.changeMode();
+          },
           backgroundColor: Colors.green.shade500,
-          child: Icon(Icons.add_comment),
+          child: const Icon(Icons.add_comment),
         ),
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Obx(
-          ()=> CurvedNavigationBar(
+          () => CurvedNavigationBar(
             backgroundColor: Colors.green.shade200,
             buttonBackgroundColor: Colors.green,
-           color: themeController.themeMode.value==ThemeMode.dark?Colors.black:Colors.white,
-            items: [
+            color: themeController.themeMode.value == ThemeMode.dark
+                ? Colors.black
+                : Colors.white,
+            items: const [
               Icon(Icons.chat_sharp),
               Icon(Icons.update),
               Icon(Icons.groups_2_outlined),
