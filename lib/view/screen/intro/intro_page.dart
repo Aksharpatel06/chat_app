@@ -29,7 +29,7 @@ class IntroPage extends StatelessWidget {
                 ),
                 const Text.rich(
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 18, wordSpacing: 2),
+                  style: TextStyle(fontSize: 16, wordSpacing: 2),
                   TextSpan(
                     children: [
                       TextSpan(text: 'Read our '),
@@ -53,14 +53,14 @@ class IntroPage extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.offAndToNamed('/signin');
+                    Get.offAndToNamed('/otp');
                   },
                   child: Container(
                     width: 300,
                     height: 50,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Color(0x3F000000),
                             blurRadius: 4,

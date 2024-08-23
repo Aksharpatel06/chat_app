@@ -161,4 +161,19 @@ class SignController extends GetxController{
     }
     return null;
   }
+
+
+
+  TextEditingController countryController =
+  TextEditingController(text: '+91');
+  RxString phone = "".obs;
+  RxString code = "".obs;
+
+  RxString verificationId =''.obs;
+
+  void changeCode(String value)
+  {
+    code.value = value;
+  }
+
 }

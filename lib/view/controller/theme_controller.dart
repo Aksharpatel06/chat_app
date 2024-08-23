@@ -4,6 +4,21 @@ import 'package:get/get.dart';
 class ThemeController extends GetxController {
   var themeMode = ThemeMode.system.obs;
 
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    if(ThemeMode.system==ThemeMode.dark)
+      {
+        print("${themeMode}---- dark");
+      }else if(ThemeMode.system==ThemeMode.light){
+        print("${themeMode}---- light");
+
+    }else{
+      print('hello');
+    }
+
+  }
   void changeMode() {
     if (themeMode.value == ThemeMode.dark) {
       themeMode.value = ThemeMode.light;

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:chat_app/view/controller/sign_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -8,7 +9,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleFirebaseServices {
 
-
+  SignController sign = Get.find();
   static GoogleFirebaseServices googleFirebaseServices = GoogleFirebaseServices._();
   GoogleFirebaseServices._();
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -111,4 +112,36 @@ class GoogleFirebaseServices {
     }
     return user;
   }
+
+  Future<void> mobileUser(String number,String countryCode)
+  async {
+    await auth.verifyPhoneNumber(
+      phoneNumber: countryCode+number,
+      verificationCompleted: (PhoneAuthCredential credential) {
+
+      },
+      verificationFailed: (FirebaseAuthException e) {},
+      codeSent: (String verificationId, int? resendToken) {
+        sign.verificationId.value = verificationId;
+        Get.toNamed('/otpAdd');
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
+    );
+  }
+
+
+  Future<void> mobileVarifaction(String smsCode)
+  async {
+    try{
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: sign.verificationId.value, smsCode: smsCode);
+
+
+      await auth.signInWithCredential(credential);
+      Get.offAndToNamed('/home');
+    }catch(e){
+      log(e.toString());
+    }
+  }
+
+
 }
