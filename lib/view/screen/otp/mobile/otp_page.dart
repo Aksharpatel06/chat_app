@@ -57,10 +57,9 @@ class OtpPage extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 5),
                       decoration: BoxDecoration(
                           color:
-                          themeController.themeMode.value == ThemeMode.dark
+                              themeController.themeMode.value == ThemeMode.dark
                                   ? const Color(0xff1d1d1e)
-                                  :const Color(0xffF0F0F0),
-
+                                  : const Color(0xffF0F0F0),
                           borderRadius: BorderRadius.circular(50)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
