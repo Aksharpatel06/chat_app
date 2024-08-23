@@ -73,10 +73,8 @@ class ContinueWithOtherBrowser extends StatelessWidget {
                     .signInWithGoogle();
                 Fluttertoast.showToast(msg: status);
                 if (status == 'Suceess') {
-                  Get.toNamed('/home');
-                  // if (account == 'Already have an account') {
-                  //   controller.getUserDetails();
-                  // }
+                  Get.offAndToNamed('/home');
+
                 }
               },
               child: Container(

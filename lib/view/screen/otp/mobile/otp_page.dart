@@ -108,9 +108,13 @@ class OtpPage extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 35.0, vertical: 5),
                 child: Row(
                   children: [
-                    Checkbox(
-                      value: false,
-                      onChanged: (value) {},
+                    Obx(
+                      ()=> Checkbox(
+                        value: signController.remember.value,
+                        onChanged: (value) {
+                          signController.changeRemember(value!);
+                        },
+                      ),
                     ),
                     const Text('Remember me')
                   ],
@@ -148,6 +152,39 @@ class OtpPage extends StatelessWidget {
                     ),
                   ),
                 ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'login with',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Get.toNamed('/signin');
+                    },
+                    child: Text(
+                      'Email',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Color(0xff31C48D),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 30,
               ),
             ],
           ),

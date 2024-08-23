@@ -168,12 +168,18 @@ class SignController extends GetxController{
   TextEditingController(text: '+91');
   RxString phone = "".obs;
   RxString code = "".obs;
+  RxBool remember =false.obs;
 
   RxString verificationId =''.obs;
 
   void changeCode(String value)
   {
     code.value = value;
+  }
+
+  void changeRemember(bool value)
+  {
+    remember.value=value;
   }
 
 }

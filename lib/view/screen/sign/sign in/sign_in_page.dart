@@ -1,5 +1,7 @@
 import 'package:chat_app/view/controller/sign_controller.dart';
 import 'package:chat_app/view/helper/google_firebase_services.dart';
+import 'package:chat_app/view/helper/user_services.dart';
+import 'package:chat_app/view/modal/user_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -74,6 +76,13 @@ class SignInPage extends StatelessWidget {
                     GoogleFirebaseServices.googleFirebaseServices
                         .compareEmailAndPwd(signController.txtEmail.text,
                             signController.txtPwd.text);
+                    Map userModal={
+                      'username':signController.txtUser.text,
+                      'email':signController.txtCreateMail.text
+                    };
+
+                    UserModal user = UserModal(userModal);
+                    UserSarvice.userSarvice.addUser(user);
                   },
                   child: Container(
                     width: double.infinity,

@@ -27,25 +27,28 @@ class IntroPage extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                const Text.rich(
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16, wordSpacing: 2),
-                  TextSpan(
-                    children: [
-                      TextSpan(text: 'Read our '),
-                      TextSpan(
-                          text: 'Privacy Policy',
-                          style: TextStyle(color: Colors.blue)),
-                      TextSpan(
-                        text: '. Tap “Agree and Continue” to accept ',
-                      ),
-                      TextSpan(
-                        text: 'Terms of Services.',
-                        style: TextStyle(
-                          color: Colors.blue,
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text.rich(
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 16, wordSpacing: 2),
+                    TextSpan(
+                      children: [
+                        TextSpan(text: 'Read our '),
+                        TextSpan(
+                            text: 'Privacy Policy',
+                            style: TextStyle(color: Colors.blue)),
+                        TextSpan(
+                          text: '. Tap “Agree and Continue” to accept ',
                         ),
-                      ),
-                    ],
+                        TextSpan(
+                          text: 'Terms of Services.',
+                          style: TextStyle(
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(

@@ -4,6 +4,9 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../helper/user_services.dart';
+import '../../modal/user_modal.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -12,6 +15,7 @@ class HomePage extends StatelessWidget {
     ThemeController themeController = Get.find();
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           'Chatify',
           style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25),
@@ -54,20 +58,33 @@ class HomePage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: ListView.builder(
-          itemCount: 16,
-          itemBuilder: (context, index) => Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: ListTile(
-              onTap: () {
-                Get.to(() => const ChatPage());
-              },
-              leading: const CircleAvatar(
-                radius: 30,
-              ),
-              title: Text(index.toString()),
-            ),
-          ),
+        child: StreamBuilder(
+          stream: UserSarvice.userSarvice.getUser(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(snapshot.error.toString()),
+              );
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            var queryData = snapshot.data!.docs;
+            List users = queryData.map((e) => e.data()).toList();
+            List<UserModal> userList = users.map((e) => UserModal(e)).toList();
+            return ListView.builder(
+              itemCount: userList.length,
+              itemBuilder: (context, index) => ListTile(
+                  leading: Image.network(
+                    userList[index].photoUrl!,
+                    fit: BoxFit.cover,
+                  ),
+                  title: Text(userList[index].email!)),
+            );
+          },
         ),
       ),
       floatingActionButton: Padding(
