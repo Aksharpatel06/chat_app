@@ -1,8 +1,9 @@
+import 'package:chat_app/view/controller/chat_controller.dart';
 import 'package:chat_app/view/controller/theme_controller.dart';
-import 'package:chat_app/view/screen/chat/chat_page.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:chat_app/view/helper/google_firebase_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 import '../../helper/user_services.dart';
 import '../../modal/user_modal.dart';
@@ -13,6 +14,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeController themeController = Get.find();
+    ChatController chatController = Get.put(ChatController());
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -59,7 +61,7 @@ class HomePage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: StreamBuilder(
-          stream: UserSarvice.userSarvice.getUser(),
+          stream: UserService.userSarvice.getUser(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return Center(
@@ -77,12 +79,20 @@ class HomePage extends StatelessWidget {
             List<UserModal> userList = users.map((e) => UserModal(e)).toList();
             return ListView.builder(
               itemCount: userList.length,
-              itemBuilder: (context, index) => ListTile(
-                  leading: Image.network(
-                    userList[index].photoUrl!,
-                    fit: BoxFit.cover,
-                  ),
-                  title: Text(userList[index].email!)),
+              itemBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListTile(
+                  onTap: () {
+                    chatController.changeReceiverEmail(userList[index].email!,userList[index].photoUrl!);
+                    Get.toNamed('/chat');
+                  },
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        userList[index].photoUrl!,
+                      ),
+                    ),
+                    title: Text(userList[index].email!)),
+              ),
             );
           },
         ),
@@ -92,27 +102,69 @@ class HomePage extends StatelessWidget {
         child: FloatingActionButton(
           onPressed: () {
             themeController.changeMode();
+            GoogleFirebaseServices.googleFirebaseServices.emailLogout();
+
           },
           backgroundColor: Colors.green.shade500,
           child: const Icon(Icons.add_comment),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Obx(
-          () => CurvedNavigationBar(
-            backgroundColor: Colors.green.shade200,
-            buttonBackgroundColor: Colors.green,
-            color: themeController.themeMode.value == ThemeMode.dark
-                ? Colors.black
-                : Colors.white,
-            items: const [
-              Icon(Icons.chat_sharp),
-              Icon(Icons.update),
-              Icon(Icons.groups_2_outlined),
-              Icon(Icons.call),
-            ],
+      bottomNavigationBar: Obx(
+        () => StylishBottomBar(
+          option: DotBarOptions(
+            dotStyle: DotStyle.tile,
+            gradient: const LinearGradient(
+              colors: [
+                Colors.deepPurple,
+                Colors.pink,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
           ),
+          items: [
+            BottomBarItem(
+              icon: const Icon(
+                Icons.chat_sharp,
+              ),
+              selectedIcon: const Icon(Icons.chat_sharp),
+              selectedColor: Colors.teal,
+              unSelectedColor: Colors.grey,
+              title: const Text('Chats'),
+            ),
+            BottomBarItem(
+              icon: const Icon(Icons.update),
+              selectedIcon: const Icon(Icons.update),
+              selectedColor: Colors.red,
+              title: const Text('Updates'),
+            ),
+            BottomBarItem(
+                icon: const Icon(
+                  Icons.groups_2_outlined,
+                ),
+                selectedIcon: const Icon(
+                  Icons.groups_2_outlined,
+                ),
+                selectedColor: Colors.deepOrangeAccent,
+                title: const Text('Communities')),
+            BottomBarItem(
+              icon: const Icon(
+                Icons.call,
+              ),
+              selectedIcon: const Icon(
+                Icons.call,
+              ),
+              selectedColor: Colors.deepPurple,
+              title: const Text('Calls'),
+            ),
+          ],
+          hasNotch: true,
+          // backgroundColor: ,
+          currentIndex: chatController.bottomIndex.value,
+          notchStyle: NotchStyle.square,
+          onTap: (index) {
+            chatController.changeBottomIndex(index);
+          },
         ),
       ),
     );

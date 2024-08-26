@@ -22,6 +22,7 @@ class GoogleFirebaseServices {
 
   Future<void> createEmailAndPassword(String? email, String? pwd) async {
     try {
+      log("$email--------------------$pwd");
       await auth.createUserWithEmailAndPassword(email: email!, password: pwd!);
       Get.toNamed('/signin');
     } catch (e) {
@@ -31,8 +32,11 @@ class GoogleFirebaseServices {
 
   Future<void> compareEmailAndPwd(String? email, String? pwd) async {
     try {
+      log("$email--------------------$pwd");
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email!, password: pwd!);
+      log("$email--------------------$pwd");
+      currentUser();
       Get.toNamed('/home');
     } on FirebaseAuthException catch (e) {
       log(e.code);
@@ -71,6 +75,8 @@ class GoogleFirebaseServices {
     try {
       googleSignIn.signOut();
       auth.signOut();
+      currentUser();
+      Get.toNamed('/otp');
     } catch (e) {
       log(e.toString());
     }
@@ -78,7 +84,7 @@ class GoogleFirebaseServices {
 
   Future<String> signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleSignInAccount =
+      GoogleSignInAccount? googleSignInAccount =
           await googleSignIn.signIn();
       GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount!.authentication;
@@ -98,7 +104,7 @@ class GoogleFirebaseServices {
       };
 
       UserModal user = UserModal(userModal);
-      UserSarvice.userSarvice.addUser(user);
+      UserService.userSarvice.addUser(user);
 
       return "Suceess";
     } catch (e) {
@@ -139,7 +145,6 @@ class GoogleFirebaseServices {
     {
       log(e.toString());
     }
-    // mAuth.getFirebaseAuthSettings().setAppVerificationDisabledForTesting(true);
   }
 
   Future<void> mobileVarifaction(String smsCode) async {
@@ -147,13 +152,13 @@ class GoogleFirebaseServices {
       PhoneAuthCredential credential = PhoneAuthProvider.credential(
           verificationId: sign.verificationId.value, smsCode: smsCode);
       await auth.signInWithCredential(credential);
+      currentUser();
       Map userModal = {
         'username': auth.currentUser!.displayName,
         'email': sign.phone.value,
       };
-
       UserModal user = UserModal(userModal);
-      UserSarvice.userSarvice.addUser(user);
+      UserService.userSarvice.addUser(user);
       Get.offAndToNamed('/home');
     } catch (e) {
       log(e.toString());

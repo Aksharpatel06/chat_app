@@ -58,8 +58,6 @@ class SignController extends GetxController{
     if (error.isEmpty && pwd.isEmpty) {
       await GoogleFirebaseServices.googleFirebaseServices
           .createEmailAndPassword(txtEmail.text, txtPwd.text);
-
-      Get.toNamed('/signin');
     }
     update();
   }

@@ -9,4 +9,20 @@ class ChatController extends GetxController{
   {
     chatMessage.value = value;
   }
+
+  RxInt bottomIndex=0.obs;
+
+  void changeBottomIndex(int value)
+  {
+    bottomIndex.value=value;
+  }
+
+  RxString receiverEmail =''.obs;
+  RxString receiverImageUrl =''.obs;
+
+  void changeReceiverEmail(String email,String photoUrl)
+  {
+    receiverEmail.value=email;
+    receiverImageUrl.value =photoUrl;
+  }
 }

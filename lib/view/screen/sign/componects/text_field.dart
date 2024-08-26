@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../../controller/sign_controller.dart';
 
@@ -30,20 +29,22 @@ class SignTextField extends StatelessWidget {
             borderRadius: BorderRadius.circular(50)),
         child: TextField(
           controller: textEditingController,
-          obscureText: (!controller.isShowPwd.value) ? true : false,
+          obscureText: (hintText == 'Password')
+              ? (!controller.isShowPwd.value)
+                  ? true
+                  : false
+              : false,
           obscuringCharacter: '*',
           decoration: InputDecoration(
             prefixIcon: prefixIcon,
             suffixIcon: (hintText == 'Password')
-                ? Obx(
-                  ()=> InkWell(
-                  onTap: () {
-                    controller.showPassword();
-                  },
-                  child: (!controller.isShowPwd.value)
-                      ? const Icon(Icons.remove_red_eye_sharp)
-                      : const Icon(Icons.visibility_off)),
-                )
+                ? InkWell(
+                    onTap: () {
+                      controller.showPassword();
+                    },
+                    child: (!controller.isShowPwd.value)
+                        ? const Icon(Icons.remove_red_eye_sharp)
+                        : const Icon(Icons.visibility_off))
                 : null,
             hintText: hintText,
             hintStyle: TextStyle(color: Colors.grey.shade400),

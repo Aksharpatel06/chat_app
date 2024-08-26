@@ -82,7 +82,7 @@ class SignInPage extends StatelessWidget {
                     };
 
                     UserModal user = UserModal(userModal);
-                    UserSarvice.userSarvice.addUser(user);
+                    UserService.userSarvice.addUser(user);
                   },
                   child: Container(
                     width: double.infinity,

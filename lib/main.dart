@@ -28,49 +28,47 @@ class MyApp extends StatelessWidget {
     ThemeController themeController = Get.put(ThemeController());
 
     return Obx(
-          () =>
-          GetMaterialApp(
-            themeMode: themeController.themeMode.value,
-            theme: ThemeData.light(),
-            darkTheme: ThemeData.dark(),
-            debugShowCheckedModeBanner: false,
-            getPages: [
-              GetPage(
-                name: '/',
-                page: () => const SplashPage(),
-              ),
-              GetPage(
-                name: '/intro',
-                page: () => const IntroPage(),
-              ),
-              GetPage(
-                name: '/signin',
-                page: () => const SignInPage(),
-              ),
-              GetPage(
-                name: '/signup',
-                page: () => const SignUpPage(),
-              ),
-              GetPage(
-                name: '/otp',
-                page: () => const OtpPage(),
-              ),
-              GetPage(
-                name: '/otpAdd',
-                page: () => const OtpVerifyPage(),
-              ),
-              GetPage(
-                name: '/home',
-                page: () => const HomePage(),
-              ),
-              GetPage(
-                name: '/chat',
-                page: () => const ChatPage(),
-              ),
-            ],
+      () => GetMaterialApp(
+        themeMode: themeController.themeMode.value,
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
+        debugShowCheckedModeBanner: false,
+        getPages: [
+          GetPage(
+            name: '/',
+            page: () =>
+            const SplashPage(),
           ),
+          GetPage(
+            name: '/intro',
+            page: () => const IntroPage(),
+          ),
+          GetPage(
+            name: '/signin',
+            page: () => const SignInPage(),
+          ),
+          GetPage(
+            name: '/signup',
+            page: () => const SignUpPage(),
+          ),
+          GetPage(
+            name: '/otp',
+            page: () => const OtpPage(),
+          ),
+          GetPage(
+            name: '/otpAdd',
+            page: () => const OtpVerifyPage(),
+          ),
+          GetPage(
+            name: '/home',
+            page: () => const HomePage(),
+          ),
+          GetPage(
+            name: '/chat',
+            page: () => const ChatPage(),
+          ),
+        ],
+      ),
     );
   }
 }
-
-
