@@ -83,13 +83,7 @@ class ChatPage extends StatelessWidget {
                       child: CircularProgressIndicator(),
                     );
                   }
-
-
-
-
-
-
-
+                  
                   var queryData = snapshot.data!.docs;
                   List chats = queryData.map((e) => e.data()).toList();
                   List chatsId = queryData.map((e) => e.id).toList();
@@ -97,37 +91,37 @@ class ChatPage extends StatelessWidget {
                       chats.map((e) => ChatModal(e)).toList();
 
 
-                  if (queryData.isNotEmpty && queryData.last.id != lastMessageId) {
-                    lastMessageId = queryData.last.id;
-
-                    final Map<String, dynamic> data =
-                    queryData.last.data();
-                    final String message = data['message'];
-                    final String senderEmail = data['sender'];
-
-
-                    if (senderEmail !=
-                        GoogleFirebaseServices.googleFirebaseServices
-                            .currentUser()!
-                            .phoneNumber||
-                        senderEmail != GoogleFirebaseServices.googleFirebaseServices
-                            .currentUser()!
-                            .email) {
-                      NotificationServices.notificationServices
-                          .showNotification(
-                        queryData.last.hashCode,
-
-                        GoogleFirebaseServices.googleFirebaseServices
-                            .currentUser()!
-                            .phoneNumber ??
-                            GoogleFirebaseServices.googleFirebaseServices
-                                .currentUser()!
-                                .email!,
-
-                        message,
-                      );
-                    }
-                  }
+                  // if (queryData.isNotEmpty && queryData.last.id != lastMessageId) {
+                  //   lastMessageId = queryData.last.id;
+                  //
+                  //   final Map<String, dynamic> data =
+                  //   queryData.last.data();
+                  //   final String message = data['message'];
+                  //   final String senderEmail = data['sender'];
+                  //
+                  //
+                  //   if (senderEmail !=
+                  //       GoogleFirebaseServices.googleFirebaseServices
+                  //           .currentUser()!
+                  //           .phoneNumber||
+                  //       senderEmail != GoogleFirebaseServices.googleFirebaseServices
+                  //           .currentUser()!
+                  //           .email) {
+                  //     NotificationServices.notificationServices
+                  //         .showNotification(
+                  //       queryData.last.hashCode,
+                  //
+                  //       GoogleFirebaseServices.googleFirebaseServices
+                  //           .currentUser()!
+                  //           .phoneNumber ??
+                  //           GoogleFirebaseServices.googleFirebaseServices
+                  //               .currentUser()!
+                  //               .email!,
+                  //
+                  //       message,
+                  //     );
+                  //   }
+                  // }
 
                   return MessageList(
                       chatList: chatList,

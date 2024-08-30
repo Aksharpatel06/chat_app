@@ -35,7 +35,6 @@ class NotificationServices {
 
     NotificationDetails notificationDetails =
     NotificationDetails(android: androidNotificationDetails);
-
     await flutterLocalNotificationsPlugin.show(
         id,
         title,

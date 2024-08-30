@@ -69,28 +69,31 @@ class MessageTextFieldAndButton extends StatelessWidget {
                 () => FloatingActionButton(
                   shape: const CircleBorder(),
                   onPressed: () {
-                    Map<String, dynamic> chat = {
-                      'sender': GoogleFirebaseServices.googleFirebaseServices
+                    if(controller.txtChats.text.isNotEmpty)
+                      {
+                        Map<String, dynamic> chat = {
+                          'sender': GoogleFirebaseServices.googleFirebaseServices
                               .currentUser()!
                               .email ??
+                              GoogleFirebaseServices.googleFirebaseServices
+                                  .currentUser()!
+                                  .phoneNumber!,
+                          'receiver': controller.receiverEmail.value,
+                          'message': controller.txtChats.text,
+                          'timestamp': DateTime.now()
+                        };
+                        ChatServices.chatServices.insertData(
+                          chat,
                           GoogleFirebaseServices.googleFirebaseServices
-                              .currentUser()!
-                              .phoneNumber!,
-                      'receiver': controller.receiverEmail.value,
-                      'message': controller.txtChats.text,
-                      'timestamp': DateTime.now()
-                    };
-                    ChatServices.chatServices.insertData(
-                      chat,
-                      GoogleFirebaseServices.googleFirebaseServices
                               .currentUser()!
                               .email ??
-                          GoogleFirebaseServices.googleFirebaseServices
-                              .currentUser()!
-                              .phoneNumber!,
-                      controller.receiverEmail.value,
-                    );
-                    controller.txtChats.clear();
+                              GoogleFirebaseServices.googleFirebaseServices
+                                  .currentUser()!
+                                  .phoneNumber!,
+                          controller.receiverEmail.value,
+                        );
+                        controller.txtChats.clear();
+                      }
                   },
                   child: controller.chatMessage.value.isEmpty
                       ? const Icon(Icons.mic)

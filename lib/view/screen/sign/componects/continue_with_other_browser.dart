@@ -1,5 +1,6 @@
 import 'package:chat_app/view/helper/google_firebase_services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
@@ -15,17 +16,17 @@ class ContinueWithOtherBrowser extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(
-          height: 10,
+         SizedBox(
+          height: 10.h,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
+             Text(
               'Did You have an Account?',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 18.sp,
                 fontWeight: FontWeight.w400,
               ),
             ),
@@ -40,8 +41,8 @@ class ContinueWithOtherBrowser extends StatelessWidget {
               child: Text(
                 sign,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 18,
+                style:  TextStyle(
+                  fontSize: 18.sp,
                   color: Color(0xff31C48D),
                   fontWeight: FontWeight.w600,
                 ),
@@ -49,20 +50,20 @@ class ContinueWithOtherBrowser extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(
-          height: 30,
+         SizedBox(
+          height: 30.h,
         ),
-        const Text(
+         Text(
           'Or continue with',
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 16.sp,
             letterSpacing: 1.5,
             fontWeight: FontWeight.w600,
           ),
         ),
-        const SizedBox(
-          height: 20,
+         SizedBox(
+          height: 20.h,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -78,10 +79,10 @@ class ContinueWithOtherBrowser extends StatelessWidget {
                 }
               },
               child: Container(
-                height: 50,
-                width: 50,
+                height: 50.h,
+                width: 50.h,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(10.r),
                   color: const Color(0xffc5cdee).withOpacity(0.5),
                   image: const DecorationImage(
                     image: AssetImage('asset/sign in/google.png'),
@@ -89,16 +90,16 @@ class ContinueWithOtherBrowser extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              width: 20,
+             SizedBox(
+              width: 20.w,
             ),
             GestureDetector(
               onTap: () async {},
               child: Container(
-                height: 50,
-                width: 50,
+                height: 50.h,
+                width: 50.w,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(10.r),
                   color: const Color(0xffc5cdee).withOpacity(0.5),
                   image: const DecorationImage(
                     image: AssetImage('asset/sign in/facebook.png'),
@@ -106,14 +107,14 @@ class ContinueWithOtherBrowser extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              width: 20,
+             SizedBox(
+              width: 20.w,
             ),
             Container(
-              height: 50,
-              width: 50,
+              height: 50.h,
+              width: 50.w,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10.r),
                 color: const Color(0xffc5cdee).withOpacity(0.5),
                 image: const DecorationImage(
                   image: AssetImage('asset/sign in/apple.png'),
