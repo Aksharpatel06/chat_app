@@ -1,10 +1,14 @@
+import 'dart:developer';
+
+import 'package:chat_app/view/controller/sign_controller.dart';
 import 'package:chat_app/view/helper/google_firebase_services.dart';
 import 'package:chat_app/view/modal/user_modal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 
 class UserService {
   static UserService userSarvice = UserService._();
-
+  SignController controller = Get.find();
   UserService._();
 
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -15,12 +19,19 @@ class UserService {
   }
 
   Stream<QuerySnapshot<Object?>> getUser() {
+    log(GoogleFirebaseServices.googleFirebaseServices
+        .currentUser()!
+        .email??GoogleFirebaseServices.googleFirebaseServices
+        .currentUser()!
+        .phoneNumber!);
     Stream<QuerySnapshot> collectionStream = FirebaseFirestore.instance
         .collection('user')
         .where('email',
             isNotEqualTo: GoogleFirebaseServices.googleFirebaseServices
                 .currentUser()!
-                .email)
+                .email??GoogleFirebaseServices.googleFirebaseServices
+                .currentUser()!
+                .phoneNumber)
         .snapshots();
     return collectionStream;
   }

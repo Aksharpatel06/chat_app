@@ -10,13 +10,20 @@ plugins {
 
 android {
     namespace = "com.example.chat_app"
-    compileSdk = flutter.compileSdkVersion
+    compileSdkVersion 34
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
+//        coreLibraryDesugaringEnabled true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+//    dependencies {
+//
+//        // for flutter_local_notification
+//        coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.1'
+//    }
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
@@ -31,6 +38,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -38,6 +46,7 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.debug
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
@@ -50,9 +59,14 @@ dependencies {
     implementation 'androidx.browser:browser:1.8.0'
     implementation 'com.google.android.play:integrity:1.4.0'
 
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation 'com.google.firebase:firebase-messaging:24.0.1'
+
+
     // TODO: Add the dependencies for Firebase products you want to use
     // When using the BoM, don't specify versions in Firebase dependencies
     // https://firebase.google.com/docs/android/setup#available-libraries
+//    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
 }
 flutter {
     source = "../.."

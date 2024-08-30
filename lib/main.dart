@@ -1,4 +1,8 @@
+import 'package:chat_app/view/controller/chat_controller.dart';
+import 'package:chat_app/view/controller/sign_controller.dart';
 import 'package:chat_app/view/controller/theme_controller.dart';
+import 'package:chat_app/view/helper/google_firebase_services.dart';
+import 'package:chat_app/view/helper/notification_services.dart';
 import 'package:chat_app/view/screen/chat/chat_page.dart';
 import 'package:chat_app/view/screen/home/home_page.dart';
 import 'package:chat_app/view/screen/intro/intro_page.dart';
@@ -12,11 +16,16 @@ import 'package:get/get.dart';
 import 'firebase_options.dart';
 import 'view/screen/sign/sign in/sign_in_page.dart';
 
-void main() {
+
+void main()  {
   WidgetsFlutterBinding.ensureInitialized();
+
   Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  NotificationServices.notificationServices.initNotification();
+
   runApp(const MyApp());
 }
 
@@ -26,9 +35,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeController themeController = Get.put(ThemeController());
+    Get.put(SignController());
+    Get.put(ChatController());
 
     return Obx(
       () => GetMaterialApp(
+
         themeMode: themeController.themeMode.value,
         theme: ThemeData.light(),
         darkTheme: ThemeData.dark(),
@@ -36,12 +48,15 @@ class MyApp extends StatelessWidget {
         getPages: [
           GetPage(
             name: '/',
-            page: () =>
-            const SplashPage(),
+            page: () => const SplashPage(),
           ),
           GetPage(
             name: '/intro',
-            page: () => const IntroPage(),
+            page: () =>
+                GoogleFirebaseServices.googleFirebaseServices.currentUser() !=
+                        null
+                    ? const HomePage()
+                    : const IntroPage(),
           ),
           GetPage(
             name: '/signin',
@@ -67,8 +82,14 @@ class MyApp extends StatelessWidget {
             name: '/chat',
             page: () => const ChatPage(),
           ),
+          // GetPage(
+          //   name: '/call',
+          //   page: () => const CallPage(),
+          // ),
         ],
       ),
     );
   }
 }
+
+

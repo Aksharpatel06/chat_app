@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChatController extends GetxController{
   RxString chatMessage = ''.obs;
   TextEditingController txtChats = TextEditingController();
+  TextEditingController txtEditChats = TextEditingController();
 
   void changeMessage(String value)
   {
@@ -22,7 +25,11 @@ class ChatController extends GetxController{
 
   void changeReceiverEmail(String email,String photoUrl)
   {
+    log("$email and photo----------------------------------------------------");
     receiverEmail.value=email;
     receiverImageUrl.value =photoUrl;
+    update();
   }
+
+  RxString callId =''.obs;
 }
