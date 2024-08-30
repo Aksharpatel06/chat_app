@@ -13,8 +13,11 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
     ThemeController themeController = Get.find();
     ChatController chatController = Get.find();
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,

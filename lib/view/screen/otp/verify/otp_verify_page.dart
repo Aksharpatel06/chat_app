@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 
@@ -25,25 +26,25 @@ class OtpVerifyPage extends StatelessWidget {
                 width: 150,
                 height: 150,
               ),
-              const SizedBox(
+               SizedBox(
                 height: 25,
               ),
-              const Text(
+               Text(
                 "Phone Verification",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 22.sp, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(
-                height: 10,
+               SizedBox(
+                height: 10.h,
               ),
-              const Text(
+               Text(
                 "We need to register your phone without getting started!",
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 16.sp,
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(
-                height: 30,
+               SizedBox(
+                height: 30.h,
               ),
               Pinput(
                 length: 6,
@@ -53,17 +54,17 @@ class OtpVerifyPage extends StatelessWidget {
                 },
                 onCompleted: (pin) => print(pin),
               ),
-              const SizedBox(
-                height: 20,
+               SizedBox(
+                height: 20.h,
               ),
               SizedBox(
                 width: double.infinity,
-                height: 45,
+                height: 45.h,
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green.shade600,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10))),
+                            borderRadius: BorderRadius.circular(10.r))),
                     onPressed: () {
                       GoogleFirebaseServices.googleFirebaseServices
                           .mobileVarifaction(signController.code.value);

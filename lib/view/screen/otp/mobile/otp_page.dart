@@ -2,6 +2,7 @@ import 'package:chat_app/view/controller/sign_controller.dart';
 import 'package:chat_app/view/controller/theme_controller.dart';
 import 'package:chat_app/view/helper/google_firebase_services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class OtpPage extends StatelessWidget {
@@ -16,59 +17,59 @@ class OtpPage extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              const SizedBox(
-                height: 150,
+              SizedBox(
+                height: 150.h,
               ),
               Image.asset(
                 'asset/splash/Group 1.png',
                 fit: BoxFit.cover,
               ),
-              const SizedBox(
-                height: 100,
+              SizedBox(
+                height: 100.h,
               ),
-              const Text(
+              Text(
                 'Sign in to your Account',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 22,
+                  fontSize: 22.sp,
                 ),
               ),
-              const SizedBox(
-                height: 20,
+              SizedBox(
+                height: 20.h,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 35.0,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 35.h,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
+                    Padding(
+                      padding: EdgeInsets.all(8.h),
                       child: Text(
                         'Phone Number',
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      padding: EdgeInsets.symmetric(vertical: 5.h),
                       child: Container(
-                        height: 50,
+                        height: 50.h,
                         width: double.infinity,
-                        padding: const EdgeInsets.only(left: 5),
+                        padding: EdgeInsets.only(left: 5.h),
                         decoration: BoxDecoration(
                             color: themeController.themeMode.value ==
                                     ThemeMode.dark
                                 ? const Color(0xff1d1d1e)
                                 : const Color(0xffF0F0F0),
-                            borderRadius: BorderRadius.circular(50)),
+                            borderRadius: BorderRadius.circular(50.r)),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const SizedBox(
-                              width: 10,
+                            SizedBox(
+                              width: 10.h,
                             ),
                             SizedBox(
-                              width: 40,
+                              width: 40.h,
                               child: TextField(
                                 controller: signController.countryController,
                                 keyboardType: TextInputType.number,
@@ -77,13 +78,13 @@ class OtpPage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            const Text(
+                            Text(
                               "|",
-                              style:
-                                  TextStyle(fontSize: 33, color: Colors.grey),
+                              style: TextStyle(
+                                  fontSize: 33.sp, color: Colors.grey),
                             ),
-                            const SizedBox(
-                              width: 10,
+                            SizedBox(
+                              width: 10.h,
                             ),
                             Expanded(
                                 child: TextField(
@@ -104,12 +105,11 @@ class OtpPage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 35.0, vertical: 5),
+                padding: EdgeInsets.symmetric(horizontal: 35.h, vertical: 5.h),
                 child: Row(
                   children: [
                     Obx(
-                      ()=> Checkbox(
+                      () => Checkbox(
                         value: signController.remember.value,
                         onChanged: (value) {
                           signController.changeRemember(value!);
@@ -120,11 +120,11 @@ class OtpPage extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 30,
+              SizedBox(
+                height: 30.h,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                padding: EdgeInsets.symmetric(horizontal: 40.h),
                 child: GestureDetector(
                   onTap: () {
                     GoogleFirebaseServices.googleFirebaseServices.mobileUser(
@@ -133,7 +133,7 @@ class OtpPage extends StatelessWidget {
                   },
                   child: Container(
                     width: double.infinity,
-                    height: 50,
+                    height: 50.h,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         boxShadow: const [
@@ -145,25 +145,25 @@ class OtpPage extends StatelessWidget {
                           )
                         ],
                         color: const Color(0xff31C48D),
-                        borderRadius: BorderRadius.circular(25)),
-                    child: const Text(
+                        borderRadius: BorderRadius.circular(25.r)),
+                    child: Text(
                       'Send the otp',
-                      style: TextStyle(fontSize: 17, color: Colors.white),
+                      style: TextStyle(fontSize: 17.sp, color: Colors.white),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 10,
+              SizedBox(
+                height: 10.h,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
+                  Text(
                     'login with',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 18.sp,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -174,8 +174,8 @@ class OtpPage extends StatelessWidget {
                     child: Text(
                       'Email',
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 18,
+                      style: TextStyle(
+                        fontSize: 18.sp,
                         color: Color(0xff31C48D),
                         fontWeight: FontWeight.w600,
                       ),
@@ -183,8 +183,8 @@ class OtpPage extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 30,
+              SizedBox(
+                height: 30.h,
               ),
             ],
           ),
