@@ -13,7 +13,7 @@ class SignInPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SignController signController = Get.put(SignController());
+    SignController signController = Get.find();
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(

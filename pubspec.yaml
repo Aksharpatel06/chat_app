@@ -43,6 +43,9 @@ dependencies:
   google_sign_in: ^6.2.1
   pinput: ^5.0.0
   stylish_bottom_bar: ^1.1.0
+  flutter_local_notifications: ^17.2.2
+  timezone: ^0.9.4
+#  zego_uikit_signaling_plugin: ^2.8.2
 
 
 

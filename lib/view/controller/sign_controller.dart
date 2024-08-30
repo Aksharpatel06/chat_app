@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:chat_app/view/helper/google_firebase_services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,22 +23,6 @@ class SignController extends GetxController{
     isShowPwd.value = !isShowPwd.value;
     update();
   }
-
-  // google and firebase current User
-  RxString email = ''.obs;
-  RxString name = ''.obs;
-  RxString url = ''.obs;
-
-  Future<void> getUserDetails() async {
-    User? user = GoogleFirebaseServices.googleFirebaseServices.currentUser();
-    if (user != null) {
-      email.value = user.email!;
-      url.value = user.photoURL!;
-      name.value = user.displayName!;
-    }
-  }
-
-  // google and firebase email id logout
 
   void emailLayout() {
     GoogleFirebaseServices.googleFirebaseServices.emailLogout();

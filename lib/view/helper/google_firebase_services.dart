@@ -22,7 +22,7 @@ class GoogleFirebaseServices {
 
   Future<void> createEmailAndPassword(String? email, String? pwd) async {
     try {
-      log("$email--------------------$pwd");
+      // log("$email--------------------$pwd");
       await auth.createUserWithEmailAndPassword(email: email!, password: pwd!);
       Get.toNamed('/signin');
     } catch (e) {
@@ -32,10 +32,10 @@ class GoogleFirebaseServices {
 
   Future<void> compareEmailAndPwd(String? email, String? pwd) async {
     try {
-      log("$email--------------------$pwd");
+      // log("$email--------------------$pwd");
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email!, password: pwd!);
-      log("$email--------------------$pwd");
+      // log("$email--------------------$pwd");
       currentUser();
       Get.toNamed('/home');
     } on FirebaseAuthException catch (e) {
@@ -76,7 +76,8 @@ class GoogleFirebaseServices {
       googleSignIn.signOut();
       auth.signOut();
       currentUser();
-      Get.toNamed('/otp');
+      sign.phone.value='';
+      Get.offAndToNamed('/otp');
     } catch (e) {
       log(e.toString());
     }
@@ -116,9 +117,9 @@ class GoogleFirebaseServices {
   User? currentUser() {
     User? user = auth.currentUser;
     if (user != null) {
-      print(user.email);
+      print("email:${user.email}");
       print(user.displayName);
-      print(user.phoneNumber);
+      print("phone:${user.phoneNumber}");
       print(user.photoURL);
     }
     return user;
@@ -155,7 +156,7 @@ class GoogleFirebaseServices {
       currentUser();
       Map userModal = {
         'username': auth.currentUser!.displayName,
-        'email': sign.phone.value,
+        'email':auth.currentUser!.phoneNumber,
       };
       UserModal user = UserModal(userModal);
       UserService.userSarvice.addUser(user);

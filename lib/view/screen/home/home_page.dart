@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeController themeController = Get.find();
-    ChatController chatController = Get.put(ChatController());
+    ChatController chatController = Get.find();
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -103,7 +103,6 @@ class HomePage extends StatelessWidget {
           onPressed: () {
             themeController.changeMode();
             GoogleFirebaseServices.googleFirebaseServices.emailLogout();
-
           },
           backgroundColor: Colors.green.shade500,
           child: const Icon(Icons.add_comment),

@@ -10,7 +10,7 @@ class OtpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeController themeController = Get.find();
-    SignController signController = Get.put(SignController());
+    SignController signController = Get.find();
     return Scaffold(
       body: SingleChildScrollView(
         child: Center(
