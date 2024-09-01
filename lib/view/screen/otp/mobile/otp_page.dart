@@ -46,7 +46,7 @@ class OtpPage extends StatelessWidget {
                   children: [
                     Padding(
                       padding: EdgeInsets.all(8.h),
-                      child: Text(
+                      child: const Text(
                         'Phone Number',
                       ),
                     ),
@@ -57,10 +57,7 @@ class OtpPage extends StatelessWidget {
                         width: double.infinity,
                         padding: EdgeInsets.only(left: 5.h),
                         decoration: BoxDecoration(
-                            color: themeController.themeMode.value ==
-                                    ThemeMode.dark
-                                ? const Color(0xff1d1d1e)
-                                : const Color(0xffF0F0F0),
+                            color: themeController.isTextFiledColor.value,
                             borderRadius: BorderRadius.circular(50.r)),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -160,10 +157,10 @@ class OtpPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'login with',
+                    'do you login with',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 18.sp,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -175,8 +172,8 @@ class OtpPage extends StatelessWidget {
                       'Email',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 18.sp,
-                        color: Color(0xff31C48D),
+                        fontSize: 15.sp,
+                        color: const Color(0xff31C48D),
                         fontWeight: FontWeight.w600,
                       ),
                     ),

@@ -38,8 +38,10 @@ class MyApp extends StatelessWidget {
     Get.put(SignController());
     Get.put(ChatController());
 
+    final height = MediaQuery.sizeOf(context).height;
+    final width = MediaQuery.sizeOf(context).width;
     return ScreenUtilInit(
-      designSize: const Size(360, 690),
+      designSize:  Size(width, height),
       minTextAdapt: true,
       splitScreenMode: true,
       child: Obx(

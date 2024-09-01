@@ -10,20 +10,22 @@ class ChatServices {
   ChatServices._();
   ChatController controller = Get.find();
 
+
+
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Future<void> insertData(Map<String, dynamic> chat,String sender,String receiver) async {
-    log("$sender ------------------------------------- $receiver");
-    List doc=[sender,receiver];
+  Future<void> insertData(Map<String, dynamic> chat,String receiver) async {
+    log("${controller.currentLogin.value} ------------------------------------- $receiver");
+    List doc=[controller.currentLogin.value,receiver];
     doc.sort();
     String docId = doc.join('_');
     await firestore.collection('chatroom').doc(docId).collection('chat').add(chat);
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getChat(String sender,String receiver) {
-    log("$sender ------------------------------------- $receiver");
+  Stream<QuerySnapshot<Map<String, dynamic>>> getChat(String receiver) {
+    log("${controller.currentLogin.value} ------------------------------------- $receiver");
 
-    List doc=[sender,receiver];
+    List doc=[controller.currentLogin.value,receiver];
     doc.sort();
     String docId = doc.join('_');
     controller.callId.value =docId;
@@ -31,12 +33,12 @@ class ChatServices {
   }
 
 
-  void updateChat(String message, String chatId, String sender,
+  void updateChat(String message, String chatId,
       String receiver) {
     // 1. chat id field
     // 2. docId access
 
-    List doc = [sender, receiver];
+    List doc = [controller.currentLogin.value, receiver];
     doc.sort();
     String docId = doc.join('_');
     FirebaseFirestore.instance
@@ -49,12 +51,12 @@ class ChatServices {
     });
   }
 
-  void deleteChat(String chatId, String sender,
+  void deleteChat(String chatId,
       String receiver) {
     // 1. chat id field
     // 2. docId access
 
-    List doc = [sender, receiver];
+    List doc = [controller.currentLogin.value, receiver];
     doc.sort();
     String docId = doc.join('_');
     FirebaseFirestore.instance

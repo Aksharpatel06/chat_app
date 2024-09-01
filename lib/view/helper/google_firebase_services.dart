@@ -116,12 +116,13 @@ class GoogleFirebaseServices {
 
   User? currentUser() {
     User? user = auth.currentUser;
-    // if (user != null) {
-      print("email:${user!.email}");
+    if (user != null) {
+      print("email:${user.email}");
+      print(user.email);
       print(user.displayName);
       print("phone:${user.phoneNumber}");
       print(user.photoURL);
-    // }
+    }
     return user;
   }
 

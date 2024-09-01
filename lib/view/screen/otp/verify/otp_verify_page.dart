@@ -15,7 +15,7 @@ class OtpVerifyPage extends StatelessWidget {
 
     return Scaffold(
       body: Container(
-        margin: const EdgeInsets.only(left: 25, right: 25),
+        margin:  EdgeInsets.only(left: 25.h, right: 25.h),
         alignment: Alignment.center,
         child: SingleChildScrollView(
           child: Column(
@@ -23,11 +23,11 @@ class OtpVerifyPage extends StatelessWidget {
             children: [
               Image.asset(
                 'asset/otp/img1.png',
-                width: 150,
-                height: 150,
+                width: 150.w,
+                height: 150.h,
               ),
                SizedBox(
-                height: 25,
+                height: 25.h,
               ),
                Text(
                 "Phone Verification",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
@@ -17,28 +18,28 @@ class SignUpPage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(
-                height: 45,
+               SizedBox(
+                height: 45.h,
               ),
               SizedBox(
-                height: 200,
+                height: 175.h,
                 child: Image.asset(
                   'asset/splash/Group 1.png',
                   fit: BoxFit.cover,
                 ),
               ),
-              const SizedBox(
-                height: 30,
+               SizedBox(
+                height: 30.h,
               ),
-              const Text(
+               Text(
                 'Sign up for free',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 26,
+                  fontSize: 24.sp,
                 ),
               ),
-              const SizedBox(
-                height: 30,
+               SizedBox(
+                height: 20.h,
               ),
               SignTextField(
                 hintText: 'User name',
@@ -58,11 +59,11 @@ class SignUpPage extends StatelessWidget {
                 controller: signController,
                 textEditingController: signController.txtCreatePwd,
               ),
-              const SizedBox(
-                height: 30,
+               SizedBox(
+                height: 30.h,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                padding:  EdgeInsets.symmetric(horizontal: 40.h),
                 child: GestureDetector(
                   onTap: () async {
                     signController.validateInputs(signController.txtCreateMail,
@@ -87,7 +88,7 @@ class SignUpPage extends StatelessWidget {
                   },
                   child: Container(
                     width: double.infinity,
-                    height: 50,
+                    height: 50.h,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         boxShadow: const [
@@ -99,16 +100,16 @@ class SignUpPage extends StatelessWidget {
                           )
                         ],
                         color: const Color(0xff31C48D),
-                        borderRadius: BorderRadius.circular(25)),
-                    child: const Text(
+                        borderRadius: BorderRadius.circular(25.r)),
+                    child:  Text(
                       'Sign Up',
-                      style: TextStyle(fontSize: 17, color: Colors.white),
+                      style: TextStyle(fontSize: 17.sp, color: Colors.white),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 30,
+               SizedBox(
+                height: 30.h,
               ),
               const ContinueWithOtherBrowser(
                 sign: 'Sign In',

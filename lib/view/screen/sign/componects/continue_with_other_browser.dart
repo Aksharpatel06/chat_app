@@ -26,7 +26,7 @@ class ContinueWithOtherBrowser extends StatelessWidget {
               'Did You have an Account?',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 18.sp,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.w400,
               ),
             ),
@@ -42,7 +42,7 @@ class ContinueWithOtherBrowser extends StatelessWidget {
                 sign,
                 textAlign: TextAlign.center,
                 style:  TextStyle(
-                  fontSize: 18.sp,
+                  fontSize: 16.sp,
                   color: Color(0xff31C48D),
                   fontWeight: FontWeight.w600,
                 ),
