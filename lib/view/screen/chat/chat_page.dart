@@ -1,8 +1,5 @@
 import 'package:chat_app/view/controller/chat_controller.dart';
-import 'package:chat_app/view/helper/google_firebase_services.dart';
-import 'package:chat_app/view/helper/notification_services.dart';
 import 'package:chat_app/view/modal/chat_modal.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../helper/chat_services.dart';
@@ -15,7 +12,7 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ChatController controller = Get.find();
-    String lastMessageId = "";
+    // String lastMessageId = "";
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 100,
@@ -64,12 +61,7 @@ class ChatPage extends StatelessWidget {
             child: Obx(
               () => StreamBuilder(
                 stream: ChatServices.chatServices.getChat(
-                  GoogleFirebaseServices.googleFirebaseServices
-                          .currentUser()!
-                          .email ??
-                      GoogleFirebaseServices.googleFirebaseServices
-                          .currentUser()!
-                          .phoneNumber!,
+
                   controller.receiverEmail.value,
                 ),
                 builder: (context, snapshot) {

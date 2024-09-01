@@ -1,4 +1,4 @@
-
+import 'package:chat_app/view/controller/chat_controller.dart';
 import 'package:chat_app/view/controller/sign_controller.dart';
 import 'package:chat_app/view/helper/google_firebase_services.dart';
 import 'package:chat_app/view/modal/user_modal.dart';
@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 class UserService {
   static UserService userSarvice = UserService._();
   SignController controller = Get.find();
+  ChatController chat = Get.find();
+
   UserService._();
 
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -18,24 +20,28 @@ class UserService {
   }
 
   Stream<QuerySnapshot<Object?>> getUser() {
-    String name;
-if(GoogleFirebaseServices.googleFirebaseServices
-    .currentUser()!
-    .email!.isEmpty)
-  {
-    name = GoogleFirebaseServices.googleFirebaseServices
+
+    if( GoogleFirebaseServices.googleFirebaseServices
         .currentUser()!
-        .phoneNumber!;
-  }else{
-  name = GoogleFirebaseServices.googleFirebaseServices
-      .currentUser()!
-      .email!;
-  }
-print(name);
+        .email == null||GoogleFirebaseServices.googleFirebaseServices
+        .currentUser()!
+        .email=='')
+      {
+
+        chat.currentLogin.value = GoogleFirebaseServices.googleFirebaseServices
+            .currentUser()!
+            .phoneNumber!;
+      }
+    else {
+      chat.currentLogin.value = GoogleFirebaseServices.googleFirebaseServices
+          .currentUser()!
+          .email!;
+    }
+    print(chat.currentLogin.value);
     Stream<QuerySnapshot> collectionStream = FirebaseFirestore.instance
         .collection('user')
         .where('email',
-            isNotEqualTo: name)
+        isNotEqualTo: chat.currentLogin.value)
         .snapshots();
     return collectionStream;
   }

@@ -38,7 +38,46 @@ class MessageList extends StatelessWidget {
               : Alignment.centerLeft,
           child: GestureDetector(
             onLongPress: () {
-              changeThisMessage(controller, chatList[index], context, chatsId[index]);
+              controller.txtEditChats = TextEditingController(
+                  text: chatList[index].message);
+              if (chatList[index].sender ==
+                  GoogleFirebaseServices.googleFirebaseServices
+                      .currentUser()!
+                      .email||chatList[index].sender ==
+                  GoogleFirebaseServices.googleFirebaseServices
+                      .currentUser()!
+                      .phoneNumber) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      content: const Text(
+                          'what will you change this message ?'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            editMessage(context, controller,
+                                chatsId[index]);
+                          },
+                          child: const Text('Edit'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            deleteMessage(context,  chatsId[index],controller);
+                          },
+                          child: const Text('Delete'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('Close'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
             },
             child: Card(
               child: Padding(

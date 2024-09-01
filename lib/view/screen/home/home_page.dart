@@ -2,6 +2,7 @@ import 'package:chat_app/view/controller/chat_controller.dart';
 import 'package:chat_app/view/controller/theme_controller.dart';
 import 'package:chat_app/view/helper/google_firebase_services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
@@ -13,26 +14,24 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     ThemeController themeController = Get.find();
     ChatController chatController = Get.find();
 
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text(
+        title: Text(
           'Chatify',
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25),
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 25.sp,
+            color: const Color(0xff31C48D),
+          ),
         ),
         actions: const [
           Padding(
             padding: EdgeInsets.only(left: 16.0, right: 8),
             child: Icon(Icons.qr_code_scanner),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 16.0, right: 8),
-            child: Icon(Icons.camera_alt_outlined),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -85,10 +84,11 @@ class HomePage extends StatelessWidget {
               itemBuilder: (context, index) => Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ListTile(
-                  onTap: () {
-                    chatController.changeReceiverEmail(userList[index].email!,userList[index].photoUrl!);
-                    Get.toNamed('/chat');
-                  },
+                    onTap: () {
+                      chatController.changeReceiverEmail(
+                          userList[index].email!, userList[index].photoUrl!);
+                      Get.toNamed('/chat');
+                    },
                     leading: CircleAvatar(
                       backgroundImage: NetworkImage(
                         userList[index].photoUrl!,
@@ -113,6 +113,7 @@ class HomePage extends StatelessWidget {
       ),
       bottomNavigationBar: Obx(
         () => StylishBottomBar(
+          backgroundColor: themeController.isTextFiledColor.value,
           option: DotBarOptions(
             dotStyle: DotStyle.tile,
             gradient: const LinearGradient(

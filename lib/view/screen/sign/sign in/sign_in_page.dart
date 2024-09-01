@@ -3,6 +3,7 @@ import 'package:chat_app/view/helper/google_firebase_services.dart';
 import 'package:chat_app/view/helper/user_services.dart';
 import 'package:chat_app/view/modal/user_modal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../componects/continue_with_other_browser.dart';
@@ -19,28 +20,28 @@ class SignInPage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(
-                height: 35,
+               SizedBox(
+                height: 35.h,
               ),
               SizedBox(
-                height: 200,
+                height: 175.h,
                 child: Image.asset(
                   'asset/splash/Group 1.png',
                   fit: BoxFit.cover,
                 ),
               ),
-              const SizedBox(
-                height: 30,
+               SizedBox(
+                height: 30.h,
               ),
-              const Text(
+               Text(
                 'Sign in to your Account',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 26,
+                  fontSize: 24.sp,
                 ),
               ),
-              const SizedBox(
-                height: 30,
+               SizedBox(
+                height: 30.h,
               ),
               SignTextField(
                 hintText: 'Email id',
@@ -55,22 +56,22 @@ class SignInPage extends StatelessWidget {
                 textEditingController: signController.txtPwd,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                padding:  EdgeInsets.symmetric(horizontal: 50.h),
                 child: Align(
                     alignment: Alignment.centerRight,
                     child: Text(
                       'Forgot Password',
                       style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
                           color: Colors.grey.shade400),
                     )),
               ),
-              const SizedBox(
-                height: 30,
+               SizedBox(
+                height: 30.h,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                padding:  EdgeInsets.symmetric(horizontal: 40.h),
                 child: GestureDetector(
                   onTap: () {
                     GoogleFirebaseServices.googleFirebaseServices
@@ -86,7 +87,7 @@ class SignInPage extends StatelessWidget {
                   },
                   child: Container(
                     width: double.infinity,
-                    height: 50,
+                    height: 50.h,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         boxShadow: const [
@@ -98,16 +99,16 @@ class SignInPage extends StatelessWidget {
                           )
                         ],
                         color: const Color(0xff31C48D),
-                        borderRadius: BorderRadius.circular(25)),
-                    child: const Text(
+                        borderRadius: BorderRadius.circular(25.r)),
+                    child:  Text(
                       'Sign In',
-                      style: TextStyle(fontSize: 17, color: Colors.white),
+                      style: TextStyle(fontSize: 17.sp, color: Colors.white),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 35,
+               SizedBox(
+                height: 35.h,
               ),
               const ContinueWithOtherBrowser(
                 sign: 'Sign Up',

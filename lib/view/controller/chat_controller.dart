@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChatController extends GetxController{
+
+  RxString currentLogin=''.obs;
+
   RxString chatMessage = ''.obs;
   TextEditingController txtChats = TextEditingController();
   TextEditingController txtEditChats = TextEditingController();
@@ -46,9 +49,6 @@ class ChatController extends GetxController{
     print('------------------------------------------------\n');
    User? user= GoogleFirebaseServices.googleFirebaseServices.currentUser();
     print('------------------------------------------------\n');
-    print('------------------------------------------------\n');
-
-   // print(user)
   }
 
   RxString callId =''.obs;

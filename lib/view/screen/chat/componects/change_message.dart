@@ -12,7 +12,10 @@ void changeThisMessage(ChatController controller,ChatModal chat,BuildContext con
   if (chat.sender ==
       GoogleFirebaseServices.googleFirebaseServices
           .currentUser()!
-          .email) {
+          .email||chat.sender ==
+      GoogleFirebaseServices.googleFirebaseServices
+          .currentUser()!
+          .phoneNumber) {
     showDialog(
       context: context,
       builder: (context) {
@@ -64,12 +67,6 @@ void editMessage(BuildContext context, ChatController controller, String chatId)
               ChatServices.chatServices.updateChat(
                 controller.txtEditChats.text,
                 chatId,
-                GoogleFirebaseServices.googleFirebaseServices
-                    .currentUser()!
-                    .email ??
-                    GoogleFirebaseServices.googleFirebaseServices
-                        .currentUser()!
-                        .phoneNumber!,
                 controller.receiverEmail.value,
               );
               Navigator.pop(context);
@@ -105,14 +102,7 @@ void deleteMessage(BuildContext context,String chatId,ChatController controller)
               ChatServices.chatServices
                   .deleteChat(
                 chatId,
-                GoogleFirebaseServices
-                    .googleFirebaseServices
-                    .currentUser()!
-                    .email ??
-                    GoogleFirebaseServices
-                        .googleFirebaseServices
-                        .currentUser()!
-                        .phoneNumber!,
+
                 controller.receiverEmail
                     .value,
               );

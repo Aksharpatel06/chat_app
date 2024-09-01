@@ -84,12 +84,6 @@ class MessageTextFieldAndButton extends StatelessWidget {
                         };
                         ChatServices.chatServices.insertData(
                           chat,
-                          GoogleFirebaseServices.googleFirebaseServices
-                              .currentUser()!
-                              .email ??
-                              GoogleFirebaseServices.googleFirebaseServices
-                                  .currentUser()!
-                                  .phoneNumber!,
                           controller.receiverEmail.value,
                         );
                         controller.txtChats.clear();
