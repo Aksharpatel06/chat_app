@@ -22,7 +22,6 @@ class ChatController extends GetxController{
 
   void changeMessage(String value)
   {
-
     chatMessage.value = value;
   }
 
@@ -35,12 +34,14 @@ class ChatController extends GetxController{
 
   RxString receiverEmail =''.obs;
   RxString receiverImageUrl =''.obs;
+  RxString receiverUserNameUrl =''.obs;
 
-  void changeReceiverEmail(String email,String photoUrl)
+  void changeReceiverEmail(String email,String photoUrl,String user)
   {
     log("$email and photo----------------------------------------------------");
     receiverEmail.value=email;
     receiverImageUrl.value =photoUrl;
+    receiverUserNameUrl.value=user;
     update();
   }
 

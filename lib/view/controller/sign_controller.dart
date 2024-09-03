@@ -147,6 +147,7 @@ class SignController extends GetxController{
 
   TextEditingController countryController =
   TextEditingController(text: '+91');
+  TextEditingController txtUserName = TextEditingController();
   RxString phone = "".obs;
   RxString code = "".obs;
   RxBool remember =false.obs;
