@@ -85,8 +85,8 @@ class HomePage extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: ListTile(
                     onTap: () {
-                      chatController.changeReceiverEmail(
-                          userList[index].email!, userList[index].photoUrl!);
+                      chatController.changeReceiverEmail(userList[index].email!,
+                          userList[index].photoUrl!, userList[index].username!);
                       Get.toNamed('/chat');
                     },
                     leading: CircleAvatar(
@@ -94,7 +94,7 @@ class HomePage extends StatelessWidget {
                         userList[index].photoUrl!,
                       ),
                     ),
-                    title: Text(userList[index].email!)),
+                    title: Text(userList[index].username!)),
               ),
             );
           },

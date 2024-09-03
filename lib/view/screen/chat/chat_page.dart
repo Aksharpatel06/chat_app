@@ -1,4 +1,5 @@
 import 'package:chat_app/view/controller/chat_controller.dart';
+import 'package:chat_app/view/controller/theme_controller.dart';
 import 'package:chat_app/view/modal/chat_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeController themeController = Get.find();
     final ChatController controller = Get.find();
     // String lastMessageId = "";
     return Scaffold(
@@ -23,7 +25,7 @@ class ChatPage extends StatelessWidget {
             const BackButton(),
             Obx(
               () => CircleAvatar(
-                radius: 25,
+                radius: 21,
                 backgroundImage: NetworkImage(
                   controller.receiverImageUrl.value,
                 ),
@@ -33,23 +35,20 @@ class ChatPage extends StatelessWidget {
         ),
         title: Obx(
           () => Text(
-            controller.receiverEmail.value,
+            controller.receiverUserNameUrl.value,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
           ),
         ),
-        actions: const [
-          // GestureDetector(
-          //   onTap: () {
-          //     Get.toNamed('/call');
-          //   },
-          //   child: const Padding(
-          //     padding: EdgeInsets.only(left: 16.0, right: 8),
-          //     child: Icon(Icons.add_call),
-          //   ),
-          // ),
-
-          Padding(
+        actions: [
+          GestureDetector(
+            onTap: () {},
+            child: const Padding(
+              padding: EdgeInsets.only(left: 16.0, right: 8),
+              child: Icon(Icons.add_call),
+            ),
+          ),
+          const Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Icon(Icons.more_vert),
           ),
@@ -61,7 +60,6 @@ class ChatPage extends StatelessWidget {
             child: Obx(
               () => StreamBuilder(
                 stream: ChatServices.chatServices.getChat(
-
                   controller.receiverEmail.value,
                 ),
                 builder: (context, snapshot) {
@@ -75,50 +73,19 @@ class ChatPage extends StatelessWidget {
                       child: CircularProgressIndicator(),
                     );
                   }
-                  
+
                   var queryData = snapshot.data!.docs;
                   List chats = queryData.map((e) => e.data()).toList();
                   List chatsId = queryData.map((e) => e.id).toList();
                   List<ChatModal> chatList =
                       chats.map((e) => ChatModal(e)).toList();
 
-
-                  // if (queryData.isNotEmpty && queryData.last.id != lastMessageId) {
-                  //   lastMessageId = queryData.last.id;
-                  //
-                  //   final Map<String, dynamic> data =
-                  //   queryData.last.data();
-                  //   final String message = data['message'];
-                  //   final String senderEmail = data['sender'];
-                  //
-                  //
-                  //   if (senderEmail !=
-                  //       GoogleFirebaseServices.googleFirebaseServices
-                  //           .currentUser()!
-                  //           .phoneNumber||
-                  //       senderEmail != GoogleFirebaseServices.googleFirebaseServices
-                  //           .currentUser()!
-                  //           .email) {
-                  //     NotificationServices.notificationServices
-                  //         .showNotification(
-                  //       queryData.last.hashCode,
-                  //
-                  //       GoogleFirebaseServices.googleFirebaseServices
-                  //           .currentUser()!
-                  //           .phoneNumber ??
-                  //           GoogleFirebaseServices.googleFirebaseServices
-                  //               .currentUser()!
-                  //               .email!,
-                  //
-                  //       message,
-                  //     );
-                  //   }
-                  // }
-
                   return MessageList(
-                      chatList: chatList,
-                      controller: controller,
-                      chatsId: chatsId);
+                    chatList: chatList,
+                    controller: controller,
+                    chatsId: chatsId,
+                    theme: themeController,
+                  );
                 },
               ),
             ),

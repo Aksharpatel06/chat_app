@@ -156,7 +156,7 @@ class GoogleFirebaseServices {
       await auth.signInWithCredential(credential);
       currentUser();
       Map userModal = {
-        'username': auth.currentUser!.displayName,
+        'username': sign.txtUserName.text,
         'email':auth.currentUser!.phoneNumber,
       };
       UserModal user = UserModal(userModal);

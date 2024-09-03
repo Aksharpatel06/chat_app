@@ -8,33 +8,40 @@ class ChatServices {
   static ChatServices chatServices = ChatServices._();
 
   ChatServices._();
+
   ChatController controller = Get.find();
-
-
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Future<void> insertData(Map<String, dynamic> chat,String receiver) async {
+  Future<void> insertData(Map<String, dynamic> chat, String receiver) async {
     log("${controller.currentLogin.value} ------------------------------------- $receiver");
-    List doc=[controller.currentLogin.value,receiver];
+    List doc = [controller.currentLogin.value, receiver];
     doc.sort();
     String docId = doc.join('_');
-    await firestore.collection('chatroom').doc(docId).collection('chat').add(chat);
+    await firestore
+        .collection('chatroom')
+        .doc(docId)
+        .collection('chat')
+        .doc(chat['timestamp'])
+        .set(chat);
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getChat(String receiver) {
     log("${controller.currentLogin.value} ------------------------------------- $receiver");
 
-    List doc=[controller.currentLogin.value,receiver];
+    List doc = [controller.currentLogin.value, receiver];
     doc.sort();
     String docId = doc.join('_');
-    controller.callId.value =docId;
-    return firestore.collection('chatroom').doc(docId).collection('chat').orderBy('timestamp',descending: false).snapshots();
+    controller.callId.value = docId;
+    return firestore
+        .collection('chatroom')
+        .doc(docId)
+        .collection('chat')
+        .orderBy('timestamp', descending: false)
+        .snapshots();
   }
 
-
-  void updateChat(String message, String chatId,
-      String receiver) {
+  void updateChat(String message, String chatId, String receiver) {
     // 1. chat id field
     // 2. docId access
 
@@ -51,8 +58,7 @@ class ChatServices {
     });
   }
 
-  void deleteChat(String chatId,
-      String receiver) {
+  void deleteChat(String chatId, String receiver) {
     // 1. chat id field
     // 2. docId access
 
@@ -65,5 +71,20 @@ class ChatServices {
         .collection('chat')
         .doc(chatId)
         .delete();
+  }
+
+  void updateMessageReadStatus(String receiver) {
+    log("${controller.currentLogin.value} ------------------------------------- $receiver");
+
+    List doc = [controller.currentLogin.value, receiver];
+    doc.sort();
+    String docId = doc.join('_');
+    controller.callId.value = docId;
+    firestore
+        .collection('chatroom')
+        .doc(docId)
+        .collection('chat')
+        .doc(docId)
+        .update({'read': DateTime.now().millisecondsSinceEpoch.toString()});
   }
 }

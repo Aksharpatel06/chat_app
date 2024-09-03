@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../sign/componects/text_field.dart';
+
 class OtpPage extends StatelessWidget {
   const OtpPage({super.key});
 
@@ -18,14 +20,17 @@ class OtpPage extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                height: 150.h,
-              ),
-              Image.asset(
-                'asset/splash/Group 1.png',
-                fit: BoxFit.cover,
+                height: 100.h,
               ),
               SizedBox(
-                height: 100.h,
+                height: 175.h,
+                child: Image.asset(
+                  'asset/splash/Group 1.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+              SizedBox(
+                height: 70.h,
               ),
               Text(
                 'Sign in to your Account',
@@ -35,7 +40,24 @@ class OtpPage extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 20.h,
+                height: 30.h,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 40.h,),
+                    child: const Text(
+                      'User Name',
+                    ),
+                  ),
+                  SignTextField(
+                    hintText: 'User name',
+                    prefixIcon: const Icon(Icons.person_2_outlined),
+                    controller: signController,
+                    textEditingController: signController.txtUserName,
+                  ),
+                ],
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
@@ -101,6 +123,9 @@ class OtpPage extends StatelessWidget {
                   ],
                 ),
               ),
+              SizedBox(
+                height: 15.h,
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 35.h, vertical: 5.h),
                 child: Row(
@@ -118,7 +143,7 @@ class OtpPage extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 30.h,
+                height: 15.h,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40.h),
@@ -157,7 +182,7 @@ class OtpPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'do you login with',
+                    'Do you login with',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 15.sp,
