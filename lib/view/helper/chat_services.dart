@@ -73,7 +73,7 @@ class ChatServices {
   }
 
   void updateMessageReadStatus(
-      String receiver) {
+      String receiver,String chatId) {
     log("${controller.currentLogin.value} ------------------------------------- $receiver");
 
     List doc = [controller.currentLogin.value, receiver];
@@ -84,7 +84,7 @@ class ChatServices {
         .collection('chatroom')
         .doc(docId)
         .collection('chat')
-        .doc(docId)
+        .doc(chatId)
         .update({
       'read': DateTime.now().millisecondsSinceEpoch.toString()
     });
