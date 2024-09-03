@@ -22,8 +22,7 @@ class ChatServices {
         .collection('chatroom')
         .doc(docId)
         .collection('chat')
-        .doc(chat['timestamp'])
-        .set(chat);
+        .add(chat);
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getChat(String receiver) {
@@ -73,7 +72,8 @@ class ChatServices {
         .delete();
   }
 
-  void updateMessageReadStatus(String receiver) {
+  void updateMessageReadStatus(
+      String receiver) {
     log("${controller.currentLogin.value} ------------------------------------- $receiver");
 
     List doc = [controller.currentLogin.value, receiver];
@@ -85,6 +85,8 @@ class ChatServices {
         .doc(docId)
         .collection('chat')
         .doc(docId)
-        .update({'read': DateTime.now().millisecondsSinceEpoch.toString()});
+        .update({
+      'read': DateTime.now().millisecondsSinceEpoch.toString()
+    });
   }
 }
