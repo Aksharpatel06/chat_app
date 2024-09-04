@@ -25,7 +25,7 @@ class MessageList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(4.0),
+      padding: EdgeInsets.all(4.h),
       child: ListView.builder(
         itemCount: chatList.length,
         itemBuilder: (context, index) {
@@ -35,7 +35,7 @@ class MessageList extends StatelessWidget {
                 controller.receiverEmail.value, chatsId[index]);
           }
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.h),
             child: Align(
               alignment:
                   (controller.currentLogin.value == chatList[index].sender)
@@ -93,22 +93,25 @@ class MessageList extends StatelessWidget {
                             : theme.reciverMessageColor.value,
                         borderOnForeground: true,
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8.0, horizontal: 12),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 8.h, horizontal: 12.h),
                           child: Text(
                             chatList[index].message!,
-                            style: const TextStyle(fontSize: 15),
+                            style: TextStyle(fontSize: 15.sp),
                           ),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        padding: EdgeInsets.symmetric(horizontal: 8.h),
                         child: Text(
                           (chatList[index].read &&
                                   chatList[index].sender ==
                                       controller.currentLogin.value)
-                              ? '✔️✔️' "${TimeOfDay.fromDateTime(chatList[index].timestamp!.toDate()).format(context)}"
-                              : TimeOfDay.fromDateTime(chatList[index].timestamp!.toDate()).format(context),
+                              ? '✔️✔️'
+                                  "${TimeOfDay.fromDateTime(chatList[index].timestamp!.toDate()).format(context)}"
+                              : TimeOfDay.fromDateTime(
+                                      chatList[index].timestamp!.toDate())
+                                  .format(context),
                           style: TextStyle(
                               fontSize: 10.sp,
                               color: theme.timeColor.value,
