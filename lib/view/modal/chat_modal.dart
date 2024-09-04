@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatModal {
-  String? sender, receiver, message,read;
+  String? sender, receiver, message;
+  bool read;
   Timestamp? timestamp;
 
   ChatModal._(
@@ -15,7 +16,7 @@ class ChatModal {
     return ChatModal._(
         sender: json['sender'],
         receiver: json['receiver'],
-        read: json['read'],
+        read: json['read']??false,
         message: json['message'],
         timestamp: json['timestamp']);
   }

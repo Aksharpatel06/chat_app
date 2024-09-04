@@ -1,5 +1,7 @@
 import 'package:chat_app/view/controller/theme_controller.dart';
+import 'package:chat_app/view/helper/chat_services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/chat_controller.dart';
@@ -27,12 +29,18 @@ class MessageList extends StatelessWidget {
       child: ListView.builder(
         itemCount: chatList.length,
         itemBuilder: (context, index) {
+          if (chatList[index].read == false &&
+              chatList[index].receiver == controller.currentLogin.value) {
+            ChatServices.chatServices.updateMessageReadStatus(
+                controller.receiverEmail.value, chatsId[index]);
+          }
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Align(
-              alignment: (controller.currentLogin.value == chatList[index].sender)
-                  ? Alignment.centerRight
-                  : Alignment.centerLeft,
+              alignment:
+                  (controller.currentLogin.value == chatList[index].sender)
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft,
               child: GestureDetector(
                 onLongPress: () {
                   controller.txtEditChats =
@@ -43,11 +51,12 @@ class MessageList extends StatelessWidget {
                       builder: (context) {
                         return AlertDialog(
                           content:
-                          const Text('what will you change this message ?'),
+                              const Text('what will you change this message ?'),
                           actions: [
                             TextButton(
                               onPressed: () {
-                                editMessage(context, controller, chatsId[index]);
+                                editMessage(
+                                    context, controller, chatsId[index]);
                               },
                               child: const Text('Edit'),
                             ),
@@ -71,15 +80,15 @@ class MessageList extends StatelessWidget {
                   }
                 },
                 child: Obx(
-                      () => Column(
-                    crossAxisAlignment:
-                    (controller.currentLogin.value == chatList[index].sender)
+                  () => Column(
+                    crossAxisAlignment: (controller.currentLogin.value ==
+                            chatList[index].sender)
                         ? CrossAxisAlignment.end
                         : CrossAxisAlignment.start,
                     children: [
                       Card(
                         color: (controller.currentLogin.value ==
-                            chatList[index].sender)
+                                chatList[index].sender)
                             ? theme.senderMessageColor.value
                             : theme.reciverMessageColor.value,
                         borderOnForeground: true,
@@ -95,11 +104,13 @@ class MessageList extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: Text(
-                          TimeOfDay.fromDateTime(
-                              chatList[index].timestamp!.toDate())
-                              .format(context),
+                          (chatList[index].read &&
+                                  chatList[index].sender ==
+                                      controller.currentLogin.value)
+                              ? '✔️✔️' "${TimeOfDay.fromDateTime(chatList[index].timestamp!.toDate()).format(context)}"
+                              : TimeOfDay.fromDateTime(chatList[index].timestamp!.toDate()).format(context),
                           style: TextStyle(
-                              fontSize: 10,
+                              fontSize: 10.sp,
                               color: theme.timeColor.value,
                               fontWeight: FontWeight.w300),
                         ),
