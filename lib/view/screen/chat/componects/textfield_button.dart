@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/chat_controller.dart';
@@ -17,16 +18,16 @@ class MessageTextFieldAndButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
+      padding:  EdgeInsets.symmetric(horizontal: 8.h, vertical: 8.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Card(
             child: Container(
-              height: 50,
-              width: 292,
+              height: 50.h,
+              width: 292.w,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
+                borderRadius: BorderRadius.circular(50.r),
               ),
               child: Obx(
                 () => TextField(
@@ -34,26 +35,26 @@ class MessageTextFieldAndButton extends StatelessWidget {
                   onChanged: (value) => controller.changeMessage(value),
                   decoration: InputDecoration(
                     hintText: 'Message',
-                    hintStyle: const TextStyle(fontSize: 20),
+                    hintStyle:  TextStyle(fontSize: 20.sp),
                     border: InputBorder.none,
                     prefixIcon: const Icon(Icons.emoji_emotions_outlined),
                     suffixIcon: controller.chatMessage.value.isEmpty
-                        ? const Row(
+                        ?  Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(Icons.attach_file),
-                              SizedBox(width: 15),
-                              Icon(CupertinoIcons.money_dollar_circle_fill),
-                              SizedBox(width: 15),
-                              Icon(Icons.photo_camera),
-                              SizedBox(width: 15),
+                              const Icon(Icons.attach_file),
+                              SizedBox(width: 15.w),
+                              const Icon(CupertinoIcons.money_dollar_circle_fill),
+                              SizedBox(width: 15.w),
+                              const Icon(Icons.photo_camera),
+                              SizedBox(width: 15.w),
                             ],
                           )
-                        : const Row(
+                        :  Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(Icons.attach_file),
-                              SizedBox(width: 10),
+                              const Icon(Icons.attach_file),
+                              SizedBox(width: 10.w),
                             ],
                           ),
                   ),
@@ -62,7 +63,7 @@ class MessageTextFieldAndButton extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 60,
+            height: 60.h,
             child: Padding(
               padding: const EdgeInsets.only(bottom: 8.0, right: 4),
               child: Obx(
