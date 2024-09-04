@@ -40,6 +40,21 @@ class ChatServices {
         .snapshots();
   }
 
+  Stream<QuerySnapshot<Map<String, dynamic>>> getLastChat(String receiver) {
+    log("${controller.currentLogin.value} ------------------------------------- $receiver");
+
+    List doc = [controller.currentLogin.value, receiver];
+    doc.sort();
+    String docId = doc.join('_');
+    controller.callId.value = docId;
+    return firestore
+        .collection('chatroom')
+        .doc(docId)
+        .collection('chat')
+        .orderBy('timestamp', descending: false)
+        .snapshots();
+  }
+
   void updateChat(String message, String chatId, String receiver) {
     // 1. chat id field
     // 2. docId access
