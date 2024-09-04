@@ -81,6 +81,7 @@ class MessageTextFieldAndButton extends StatelessWidget {
                           'receiver': controller.receiverEmail.value,
                           'message': controller.txtChats.text,
                           'timestamp': DateTime.now(),
+                          'read':null,
                         };
                         ChatServices.chatServices.insertData(
                           chat,

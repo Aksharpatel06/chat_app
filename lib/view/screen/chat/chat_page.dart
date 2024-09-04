@@ -2,6 +2,7 @@ import 'package:chat_app/view/controller/chat_controller.dart';
 import 'package:chat_app/view/controller/theme_controller.dart';
 import 'package:chat_app/view/modal/chat_modal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../helper/chat_services.dart';
 import 'componects/message_list.dart';
@@ -17,15 +18,15 @@ class ChatPage extends StatelessWidget {
     // String lastMessageId = "";
     return Scaffold(
       appBar: AppBar(
-        leadingWidth: 100,
-        toolbarHeight: 60,
+        leadingWidth: 100.w,
+        toolbarHeight: 60.h,
         elevation: 1,
         leading: Row(
           children: [
             const BackButton(),
             Obx(
               () => CircleAvatar(
-                radius: 21,
+                radius: 21.r,
                 backgroundImage: NetworkImage(
                   controller.receiverImageUrl.value,
                 ),
@@ -37,7 +38,7 @@ class ChatPage extends StatelessWidget {
           () => Text(
             controller.receiverUserNameUrl.value,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+            style:  TextStyle(fontWeight: FontWeight.w600, fontSize: 18.sp),
           ),
         ),
         actions: [

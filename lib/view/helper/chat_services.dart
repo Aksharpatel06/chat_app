@@ -72,8 +72,7 @@ class ChatServices {
         .delete();
   }
 
-  void updateMessageReadStatus(
-      String receiver,String chatId) {
+  void updateMessageReadStatus(String receiver, String chatId) {
     log("${controller.currentLogin.value} ------------------------------------- $receiver");
 
     List doc = [controller.currentLogin.value, receiver];
@@ -85,8 +84,6 @@ class ChatServices {
         .doc(docId)
         .collection('chat')
         .doc(chatId)
-        .update({
-      'read': DateTime.now().millisecondsSinceEpoch.toString()
-    });
+        .update({'read': true});
   }
 }
