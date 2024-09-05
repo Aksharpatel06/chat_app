@@ -103,19 +103,26 @@ class MessageList extends StatelessWidget {
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 8.h),
-                        child: Text(
-                          (chatList[index].read &&
-                                  chatList[index].sender ==
-                                      controller.currentLogin.value)
-                              ? '✔️✔️'
-                                  "${TimeOfDay.fromDateTime(chatList[index].timestamp!.toDate()).format(context)}"
-                              : TimeOfDay.fromDateTime(
+                        child: Row(
+                          children: [
+                            (chatList[index].read &&
+                                    chatList[index].sender ==
+                                        controller.currentLogin.value)
+                                ? Image.asset(
+                                    'asset/chat/read.png',
+                                    fit: BoxFit.cover,
+                                  )
+                                : Container(),
+                            Text(
+                              TimeOfDay.fromDateTime(
                                       chatList[index].timestamp!.toDate())
                                   .format(context),
-                          style: TextStyle(
-                              fontSize: 10.sp,
-                              color: theme.timeColor.value,
-                              fontWeight: FontWeight.w300),
+                              style: TextStyle(
+                                  fontSize: 10.sp,
+                                  color: theme.timeColor.value,
+                                  fontWeight: FontWeight.w300),
+                            ),
+                          ],
                         ),
                       ),
                     ],

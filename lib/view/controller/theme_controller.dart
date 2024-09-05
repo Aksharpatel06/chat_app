@@ -18,7 +18,7 @@ class ThemeController extends GetxController {
 
   void changeMode() {
     if (themeMode.value == ThemeMode.dark) {
-      reciverMessageColor.value = Colors.transparent;
+      reciverMessageColor.value = Color(0xffc4bcbc);
       senderMessageColor.value =  const Color(0xd856d076);
       isTextFiledColor.value =  const Color(0xfff0f0f0);
       timeColor.value = Colors.black;
