@@ -47,6 +47,8 @@ dependencies:
   timezone: ^0.9.4
   flutter_screenutil: ^5.9.3
   firebase_messaging: ^15.1.0
+  googleapis_auth: ^1.6.0
+  http: ^1.2.2
 
 
 

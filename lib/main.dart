@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:chat_app/view/controller/chat_controller.dart';
 import 'package:chat_app/view/controller/sign_controller.dart';
 import 'package:chat_app/view/controller/theme_controller.dart';
@@ -13,7 +11,6 @@ import 'package:chat_app/view/screen/otp/verify/otp_verify_page.dart';
 import 'package:chat_app/view/screen/sign/sign%20up/sign_up_page.dart';
 import 'package:chat_app/view/screen/splash/splash_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
