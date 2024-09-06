@@ -1,9 +1,12 @@
 import 'package:chat_app/view/controller/chat_controller.dart';
 import 'package:chat_app/view/controller/sign_controller.dart';
-import 'package:chat_app/view/helper/google_firebase_services.dart';
+import 'package:chat_app/view/helper/firebase_auth/google_firebase_services.dart';
 import 'package:chat_app/view/modal/user_modal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+
+import '../notification/firebase_messaging_services.dart';
 
 class UserService {
   static UserService userSarvice = UserService._();
@@ -48,5 +51,12 @@ class UserService {
   DocumentReference<Object?> currentUser(UserModal userModal) {
     CollectionReference user = firebaseFirestore.collection('user');
     return user.doc(userModal.email);
+  }
+
+  Future<void> updateUserToken() async {
+    String? token = await FirebaseMessagingServices.firebaseMessagingServices
+        .generateDeviceToken();
+    User? user = GoogleFirebaseServices.googleFirebaseServices.currentUser();
+    firebaseFirestore.collection('users').doc(user!.email).update({'token': token});
   }
 }

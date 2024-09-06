@@ -1,11 +1,11 @@
 import 'package:chat_app/view/controller/chat_controller.dart';
 import 'package:chat_app/view/controller/theme_controller.dart';
-import 'package:chat_app/view/helper/google_firebase_services.dart';
+import 'package:chat_app/view/helper/firebase_auth/google_firebase_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../helper/user_services.dart';
+import '../../helper/firebase_database/user_services.dart';
 import '../../modal/user_modal.dart';
 import 'componects/bottom_navigation.dart';
 import 'componects/chat_user_card.dart';

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../controller/sign_controller.dart';
-import '../../../helper/google_firebase_services.dart';
+import '../../../helper/firebase_auth/google_firebase_services.dart';
 
 class OtpVerifyPage extends StatelessWidget {
   const OtpVerifyPage({super.key});

@@ -7,8 +7,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../modal/user_modal.dart';
-import 'user_services.dart';
+import '../../modal/user_modal.dart';
+import '../firebase_database/user_services.dart';
 
 class GoogleFirebaseServices {
   SignController sign = Get.find();
@@ -116,13 +116,6 @@ class GoogleFirebaseServices {
 
   User? currentUser() {
     User? user = auth.currentUser;
-    if (user != null) {
-      print("email:${user.email}");
-      print(user.email);
-      print(user.displayName);
-      print("phone:${user.phoneNumber}");
-      print(user.photoURL);
-    }
     return user;
   }
 

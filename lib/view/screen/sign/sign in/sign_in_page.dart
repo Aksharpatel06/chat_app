@@ -1,6 +1,6 @@
 import 'package:chat_app/view/controller/sign_controller.dart';
-import 'package:chat_app/view/helper/google_firebase_services.dart';
-import 'package:chat_app/view/helper/user_services.dart';
+import 'package:chat_app/view/helper/firebase_auth/google_firebase_services.dart';
+import 'package:chat_app/view/helper/firebase_database/user_services.dart';
 import 'package:chat_app/view/modal/user_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
