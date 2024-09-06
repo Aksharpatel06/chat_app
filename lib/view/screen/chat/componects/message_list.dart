@@ -118,7 +118,10 @@ class MessageList extends StatelessWidget {
                                   )
                                 : Container(),
                             SizedBox(
-                              width: 5.w,
+                              width:(chatList[index].read &&
+                                  chatList[index].sender ==
+                                      controller.currentLogin.value)
+                                  ? 5.w:0.w,
                             ),
                             Text(
                               TimeOfDay.fromDateTime(
