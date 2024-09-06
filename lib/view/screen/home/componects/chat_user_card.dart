@@ -62,31 +62,31 @@ class _ChatUserCardState extends State<ChatUserCard> {
               chat == null
                   ? ''
                   : chat!.message != null
-                  ? chat!.message!
-                  : 'bol',
+                      ? chat!.message!
+                      : 'hi',
               maxLines: 1,
               style: const TextStyle(fontWeight: FontWeight.w300),
             ),
             trailing: chat == null
                 ? null
                 : !chat!.read
-                ? const SizedBox(
-              width: 15,
-              height: 15,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 0, 230, 119),
-                    borderRadius:
-                    BorderRadius.all(Radius.circular(10))),
-              ),
-            )
-                :
-            //message sent time
-            Text(
-              TimeOfDay.fromDateTime(chat!.timestamp!.toDate())
-                  .format(context),
-              style: const TextStyle(color: Colors.black54),
-            ),
+                    ? const SizedBox(
+                        width: 15,
+                        height: 15,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 0, 230, 119),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                        ),
+                      )
+                    :
+                    //message sent time
+                    Text(
+                        TimeOfDay.fromDateTime(chat!.timestamp!.toDate())
+                            .format(context),
+                        style: const TextStyle(color: Colors.black54),
+                      ),
           ),
         );
       },
