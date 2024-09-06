@@ -2,6 +2,8 @@ import 'package:chat_app/routes.dart';
 import 'package:chat_app/view/controller/chat_controller.dart';
 import 'package:chat_app/view/controller/sign_controller.dart';
 import 'package:chat_app/view/controller/theme_controller.dart';
+import 'package:chat_app/view/helper/notification/api_services.dart';
+import 'package:chat_app/view/helper/notification/firebase_messaging_services.dart';
 import 'package:chat_app/view/helper/notification/notification_services.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -18,6 +20,10 @@ Future<void> main() async {
   );
 
   NotificationServices.notificationServices.initNotification();
+  await FirebaseMessagingServices.firebaseMessagingServices.requestPermission();
+  await FirebaseMessagingServices.firebaseMessagingServices.generateDeviceToken();
+  ApiService.apiService.getServerToken();
+  FirebaseMessagingServices.firebaseMessagingServices.onMessageListener();
 
   runApp(const MyApp());
 }
