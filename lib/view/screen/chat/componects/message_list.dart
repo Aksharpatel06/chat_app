@@ -104,6 +104,9 @@ class MessageList extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 8.h),
                         child: Row(
+                          mainAxisAlignment: (controller.currentLogin.value == chatList[index].sender)
+                              ? MainAxisAlignment.end
+                              : MainAxisAlignment.start,
                           children: [
                             (chatList[index].read &&
                                     chatList[index].sender ==
@@ -111,8 +114,12 @@ class MessageList extends StatelessWidget {
                                 ? Icon(
                                     Icons.done_all_rounded,
                                     color: Colors.blue.shade400,
+                              size: 18.sp,
                                   )
                                 : Container(),
+                            SizedBox(
+                              width: 5.w,
+                            ),
                             Text(
                               TimeOfDay.fromDateTime(
                                       chatList[index].timestamp!.toDate())
