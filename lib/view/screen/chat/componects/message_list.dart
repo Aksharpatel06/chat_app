@@ -108,9 +108,9 @@ class MessageList extends StatelessWidget {
                             (chatList[index].read &&
                                     chatList[index].sender ==
                                         controller.currentLogin.value)
-                                ? Image.asset(
-                                    'asset/chat/read.png',
-                                    fit: BoxFit.cover,
+                                ? Icon(
+                                    Icons.done_all_rounded,
+                                    color: Colors.blue.shade400,
                                   )
                                 : Container(),
                             Text(
