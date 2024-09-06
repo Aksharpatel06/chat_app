@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../controller/chat_controller.dart';
-import '../../../helper/chat_services.dart';
-import '../../../helper/google_firebase_services.dart';
+import '../../../helper/firebase_database/chat_services.dart';
+import '../../../helper/firebase_auth/google_firebase_services.dart';
 import '../../../modal/chat_modal.dart';
 
 void changeThisMessage(ChatController controller,ChatModal chat,BuildContext context,String chatId)

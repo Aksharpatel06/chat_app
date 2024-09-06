@@ -2,7 +2,7 @@ import 'package:chat_app/routes.dart';
 import 'package:chat_app/view/controller/chat_controller.dart';
 import 'package:chat_app/view/controller/sign_controller.dart';
 import 'package:chat_app/view/controller/theme_controller.dart';
-import 'package:chat_app/view/helper/notification_services.dart';
+import 'package:chat_app/view/helper/notification/notification_services.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

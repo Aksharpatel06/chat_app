@@ -1,5 +1,5 @@
 import 'package:chat_app/view/controller/theme_controller.dart';
-import 'package:chat_app/view/helper/chat_services.dart';
+import 'package:chat_app/view/helper/firebase_database/chat_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';

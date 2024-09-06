@@ -4,7 +4,7 @@ import 'package:chat_app/view/modal/chat_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../helper/chat_services.dart';
+import '../../helper/firebase_database/chat_services.dart';
 import 'componects/message_list.dart';
 import 'componects/textfield_button.dart';
 

@@ -1,4 +1,4 @@
-import 'package:chat_app/view/helper/google_firebase_services.dart';
+import 'package:chat_app/view/helper/firebase_auth/google_firebase_services.dart';
 import 'package:chat_app/view/screen/chat/chat_page.dart';
 import 'package:chat_app/view/screen/home/home_page.dart';
 import 'package:chat_app/view/screen/intro/intro_page.dart';

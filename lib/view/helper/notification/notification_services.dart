@@ -4,9 +4,6 @@ class NotificationServices {
   static NotificationServices notificationServices = NotificationServices._();
   NotificationServices._();
 
-
-
-
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
   FlutterLocalNotificationsPlugin();
 
@@ -24,7 +21,7 @@ class NotificationServices {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
-  Future<void> showNotification(int id, String title, String body) async {
+  Future<void> showNotification(String title, String body) async {
     AndroidNotificationDetails androidNotificationDetails =
     const AndroidNotificationDetails(
       'chat',
@@ -36,7 +33,7 @@ class NotificationServices {
     NotificationDetails notificationDetails =
     NotificationDetails(android: androidNotificationDetails);
     await flutterLocalNotificationsPlugin.show(
-        id,
+        0,
         title,
         body,
         notificationDetails);

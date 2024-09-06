@@ -1,7 +1,6 @@
 import 'dart:developer';
 
-import 'package:chat_app/view/helper/google_firebase_services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:chat_app/view/helper/firebase_auth/google_firebase_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -48,7 +47,7 @@ class ChatController extends GetxController{
   void checkCurrentUser()
   {
     print('------------------------------------------------\n');
-   User? user= GoogleFirebaseServices.googleFirebaseServices.currentUser();
+   GoogleFirebaseServices.googleFirebaseServices.currentUser();
     print('------------------------------------------------\n');
   }
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/chat_controller.dart';
-import '../../../helper/chat_services.dart';
+import '../../../helper/firebase_database/chat_services.dart';
 import '../../../modal/chat_modal.dart';
 import '../../../modal/user_modal.dart';
 
