@@ -9,6 +9,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../modal/user_modal.dart';
 import '../firebase_database/user_services.dart';
+import '../notification/firebase_messaging_services.dart';
 
 class GoogleFirebaseServices {
   SignController sign = Get.find();
@@ -35,8 +36,18 @@ class GoogleFirebaseServices {
       // log("$email--------------------$pwd");
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email!, password: pwd!);
-      // log("$email--------------------$pwd");
+      Map userModal = {
+        'username': sign.txtUser.text,
+        'email': sign.txtCreateMail.text,
+        'token':await FirebaseMessagingServices.firebaseMessagingServices
+            .generateDeviceToken()
+      };
+
+      UserModal user = UserModal(userModal);
+      UserService.userSarvice.addUser(user);
       currentUser();
+      // UserService.userSarvice.updateUserToken();
+
       Get.toNamed('/home');
     } on FirebaseAuthException catch (e) {
       log(e.code);
@@ -76,7 +87,7 @@ class GoogleFirebaseServices {
       googleSignIn.signOut();
       auth.signOut();
       currentUser();
-      sign.phone.value='';
+      sign.phone.value = '';
       Get.offAndToNamed('/otp');
     } catch (e) {
       log(e.toString());
@@ -85,8 +96,7 @@ class GoogleFirebaseServices {
 
   Future<String> signInWithGoogle() async {
     try {
-      GoogleSignInAccount? googleSignInAccount =
-          await googleSignIn.signIn();
+      GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
       GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount!.authentication;
 
@@ -101,11 +111,15 @@ class GoogleFirebaseServices {
       Map userModal = {
         'username': auth.currentUser!.displayName,
         'email': auth.currentUser!.email,
-        'photoUrl':auth.currentUser!.photoURL,
+        'photoUrl': auth.currentUser!.photoURL,
+        'token':await FirebaseMessagingServices.firebaseMessagingServices
+            .generateDeviceToken(),
       };
 
       UserModal user = UserModal(userModal);
       UserService.userSarvice.addUser(user);
+
+      // UserService.userSarvice.updateUserToken();
 
       return "Suceess";
     } catch (e) {
@@ -120,14 +134,14 @@ class GoogleFirebaseServices {
   }
 
   Future<void> mobileUser(String number, String countryCode) async {
-    try{
-      await auth.verifyPhoneNumber(
-        phoneNumber: countryCode + number,
-        verificationCompleted: (PhoneAuthCredential credential) {
-        },
+    try {
+      await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: countryCode+number,
+        verificationCompleted: (PhoneAuthCredential credential) {},
         verificationFailed: (FirebaseAuthException e) {
           if (e.code == 'invalid-phone-number') {
-            Fluttertoast.showToast(msg: 'The provided phone number is not valid.');
+            Fluttertoast.showToast(
+                msg: 'The provided phone number is not valid.');
           }
         },
         codeSent: (String verificationId, int? resendToken) {
@@ -136,8 +150,7 @@ class GoogleFirebaseServices {
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
       );
-    }catch(e)
-    {
+    } catch (e) {
       log(e.toString());
     }
   }
@@ -150,10 +163,15 @@ class GoogleFirebaseServices {
       currentUser();
       Map userModal = {
         'username': sign.txtUserName.text,
-        'email':auth.currentUser!.phoneNumber,
+        'email': auth.currentUser!.phoneNumber,
+        'token':await FirebaseMessagingServices.firebaseMessagingServices
+            .generateDeviceToken(),
       };
       UserModal user = UserModal(userModal);
       UserService.userSarvice.addUser(user);
+
+      // UserService.userSarvice.updateUserToken();
+
       Get.offAndToNamed('/home');
     } catch (e) {
       log(e.toString());

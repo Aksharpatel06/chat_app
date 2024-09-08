@@ -1,3 +1,4 @@
+import 'package:chat_app/view/helper/notification/api_services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,7 +19,7 @@ class MessageTextFieldAndButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:  EdgeInsets.symmetric(horizontal: 8.h, vertical: 8.h),
+      padding: EdgeInsets.symmetric(horizontal: 8.h, vertical: 8.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -35,22 +36,23 @@ class MessageTextFieldAndButton extends StatelessWidget {
                   onChanged: (value) => controller.changeMessage(value),
                   decoration: InputDecoration(
                     hintText: 'Message',
-                    hintStyle:  TextStyle(fontSize: 20.sp),
+                    hintStyle: TextStyle(fontSize: 20.sp),
                     border: InputBorder.none,
                     prefixIcon: const Icon(Icons.emoji_emotions_outlined),
                     suffixIcon: controller.chatMessage.value.isEmpty
-                        ?  Row(
+                        ? Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               const Icon(Icons.attach_file),
                               SizedBox(width: 15.w),
-                              const Icon(CupertinoIcons.money_dollar_circle_fill),
+                              const Icon(
+                                  CupertinoIcons.money_dollar_circle_fill),
                               SizedBox(width: 15.w),
                               const Icon(Icons.photo_camera),
                               SizedBox(width: 15.w),
                             ],
                           )
-                        :  Row(
+                        : Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               const Icon(Icons.attach_file),
@@ -70,26 +72,31 @@ class MessageTextFieldAndButton extends StatelessWidget {
                 () => FloatingActionButton(
                   shape: const CircleBorder(),
                   onPressed: () {
-                    if(controller.txtChats.text.isNotEmpty)
-                      {
-                        Map<String, dynamic> chat = {
-                          'sender': GoogleFirebaseServices.googleFirebaseServices
-                              .currentUser()!
-                              .email ??
-                              GoogleFirebaseServices.googleFirebaseServices
-                                  .currentUser()!
-                                  .phoneNumber!,
-                          'receiver': controller.receiverEmail.value,
-                          'message': controller.txtChats.text,
-                          'timestamp': DateTime.now(),
-                          'read':null,
-                        };
-                        ChatServices.chatServices.insertData(
-                          chat,
-                          controller.receiverEmail.value,
-                        );
-                        controller.txtChats.clear();
-                      }
+                    if (controller.txtChats.text.isNotEmpty) {
+                      Map<String, dynamic> chat = {
+                        'sender': GoogleFirebaseServices.googleFirebaseServices
+                                .currentUser()!
+                                .email ??
+                            GoogleFirebaseServices.googleFirebaseServices
+                                .currentUser()!
+                                .phoneNumber!,
+                        'receiver': controller.receiverEmail.value,
+                        'message': controller.txtChats.text,
+                        'timestamp': DateTime.now(),
+                        'read': null,
+                      };
+                      ChatServices.chatServices.insertData(
+                        chat,
+                        controller.receiverEmail.value,
+                      );
+
+                      ApiService.apiService.sendMessage(
+                          controller.currentLogin.value,
+                          controller.txtChats.text,
+                          controller.receiverToken.value);
+
+                      controller.txtChats.clear();
+                    }
                   },
                   child: controller.chatMessage.value.isEmpty
                       ? const Icon(Icons.mic)
