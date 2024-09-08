@@ -49,7 +49,7 @@ class _ChatUserCardState extends State<ChatUserCard> {
           child: ListTile(
             onTap: () {
               widget.chatController.changeReceiverEmail(widget.user.email!,
-                  widget.user.photoUrl!, widget.user.username!);
+                  widget.user.photoUrl!, widget.user.username!,widget.user.userToken!);
               Get.toNamed('/chat');
             },
             leading: CircleAvatar(

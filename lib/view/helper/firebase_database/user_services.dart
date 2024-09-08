@@ -57,6 +57,6 @@ class UserService {
     String? token = await FirebaseMessagingServices.firebaseMessagingServices
         .generateDeviceToken();
     User? user = GoogleFirebaseServices.googleFirebaseServices.currentUser();
-    firebaseFirestore.collection('users').doc(user!.email).update({'token': token});
+    firebaseFirestore.collection('user').doc(user!.email).update({'token': token});
   }
 }

@@ -77,13 +77,6 @@ class SignInPage extends StatelessWidget {
                     GoogleFirebaseServices.googleFirebaseServices
                         .compareEmailAndPwd(signController.txtEmail.text,
                             signController.txtPwd.text);
-                    Map userModal={
-                      'username':signController.txtUser.text,
-                      'email':signController.txtCreateMail.text
-                    };
-
-                    UserModal user = UserModal(userModal);
-                    UserService.userSarvice.addUser(user);
                   },
                   child: Container(
                     width: double.infinity,

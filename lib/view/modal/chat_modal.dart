@@ -2,13 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatModal {
   String? sender, receiver, message;
-  bool read;
+  bool read,isImage;
   Timestamp? timestamp;
 
   ChatModal._(
       {required this.sender,
         required this.receiver,
         required this.message,
+        required this.isImage,
         required this.read,
         required this.timestamp});
 
@@ -17,6 +18,7 @@ class ChatModal {
         sender: json['sender'],
         receiver: json['receiver'],
         read: json['read']??false,
+        isImage: json['isImage']??false,
         message: json['message'],
         timestamp: json['timestamp']);
   }
@@ -28,6 +30,7 @@ class ChatModal {
       'message': chat.message,
       'timestamp': chat.timestamp,
       'read':chat.read,
+      'isImage':chat.isImage,
     };
   }
 }
