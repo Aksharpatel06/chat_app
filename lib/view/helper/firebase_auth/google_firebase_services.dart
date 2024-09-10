@@ -9,7 +9,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../modal/user_modal.dart';
 import '../firebase_database/user_services.dart';
-import '../notification/firebase_messaging_services.dart';
 
 class GoogleFirebaseServices {
   SignController sign = Get.find();
@@ -39,14 +38,12 @@ class GoogleFirebaseServices {
       Map userModal = {
         'username': sign.txtUser.text,
         'email': sign.txtCreateMail.text,
-        'token':await FirebaseMessagingServices.firebaseMessagingServices
-            .generateDeviceToken()
       };
 
       UserModal user = UserModal(userModal);
       UserService.userSarvice.addUser(user);
       currentUser();
-      // UserService.userSarvice.updateUserToken();
+      UserService.userSarvice.updateUserToken();
 
       Get.toNamed('/home');
     } on FirebaseAuthException catch (e) {
@@ -112,14 +109,14 @@ class GoogleFirebaseServices {
         'username': auth.currentUser!.displayName,
         'email': auth.currentUser!.email,
         'photoUrl': auth.currentUser!.photoURL,
-        'token':await FirebaseMessagingServices.firebaseMessagingServices
-            .generateDeviceToken(),
+        // 'token':await FirebaseMessagingServices.firebaseMessagingServices
+        //     .generateDeviceToken(),
       };
 
       UserModal user = UserModal(userModal);
       UserService.userSarvice.addUser(user);
 
-      // UserService.userSarvice.updateUserToken();
+      UserService.userSarvice.updateUserToken();
 
       return "Suceess";
     } catch (e) {
@@ -164,13 +161,10 @@ class GoogleFirebaseServices {
       Map userModal = {
         'username': sign.txtUserName.text,
         'email': auth.currentUser!.phoneNumber,
-        'token':await FirebaseMessagingServices.firebaseMessagingServices
-            .generateDeviceToken(),
       };
       UserModal user = UserModal(userModal);
       UserService.userSarvice.addUser(user);
-
-      // UserService.userSarvice.updateUserToken();
+      UserService.userSarvice.updateUserToken();
 
       Get.offAndToNamed('/home');
     } catch (e) {
