@@ -33,8 +33,7 @@ class GoogleFirebaseServices {
   Future<void> compareEmailAndPwd(String? email, String? pwd) async {
     try {
       // log("$email--------------------$pwd");
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email!, password: pwd!);
+      await auth.signInWithEmailAndPassword(email: email!, password: pwd!);
       Map userModal = {
         'username': sign.txtUser.text,
         'email': sign.txtCreateMail.text,
@@ -93,7 +92,8 @@ class GoogleFirebaseServices {
 
   Future<String> signInWithGoogle() async {
     try {
-      GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+      final GoogleSignInAccount? googleSignInAccount =
+          await googleSignIn.signIn();
       GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount!.authentication;
 
@@ -109,8 +109,6 @@ class GoogleFirebaseServices {
         'username': auth.currentUser!.displayName,
         'email': auth.currentUser!.email,
         'photoUrl': auth.currentUser!.photoURL,
-        // 'token':await FirebaseMessagingServices.firebaseMessagingServices
-        //     .generateDeviceToken(),
       };
 
       UserModal user = UserModal(userModal);
@@ -132,8 +130,8 @@ class GoogleFirebaseServices {
 
   Future<void> mobileUser(String number, String countryCode) async {
     try {
-      await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: countryCode+number,
+      await auth.verifyPhoneNumber(
+        phoneNumber: countryCode + number,
         verificationCompleted: (PhoneAuthCredential credential) {},
         verificationFailed: (FirebaseAuthException e) {
           if (e.code == 'invalid-phone-number') {

@@ -71,8 +71,6 @@ class ChatController extends GetxController {
     if (image != null) {
       files = File(image.path);
     }
-    log('${files}-----------------------------------');
-    imgPath.value=files;
     update();
   }
 
