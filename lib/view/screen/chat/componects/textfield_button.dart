@@ -1,3 +1,5 @@
+
+
 import 'package:chat_app/view/helper/notification/api_services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +8,7 @@ import 'package:get/get.dart';
 
 import '../../../controller/chat_controller.dart';
 import '../../../helper/firebase_database/chat_services.dart';
-import '../../../helper/firebase_auth/google_firebase_services.dart';
+
 
 class MessageTextFieldAndButton extends StatelessWidget {
   const MessageTextFieldAndButton({
@@ -43,7 +45,12 @@ class MessageTextFieldAndButton extends StatelessWidget {
                         ? Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Icon(Icons.attach_file),
+                              IconButton(
+                                  padding: EdgeInsets.zero,
+                                  onPressed: () {
+                                    imagePickerDialog(context, controller);
+                                  },
+                                  icon: const Icon(Icons.attach_file)),
                               SizedBox(width: 15.w),
                               const Icon(
                                   CupertinoIcons.money_dollar_circle_fill),
@@ -55,7 +62,11 @@ class MessageTextFieldAndButton extends StatelessWidget {
                         : Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Icon(Icons.attach_file),
+                              IconButton(
+                                  onPressed: () {
+                                    imagePickerDialog(context, controller);
+                                  },
+                                  icon: const Icon(Icons.attach_file)),
                               SizedBox(width: 10.w),
                             ],
                           ),
@@ -71,36 +82,52 @@ class MessageTextFieldAndButton extends StatelessWidget {
               child: Obx(
                 () => FloatingActionButton(
                   shape: const CircleBorder(),
-                  onPressed: () {
+                  onPressed: () async {
                     if (controller.txtChats.text.isNotEmpty) {
+                      String messageContent;
+                      // log(controller.imgPath.value.path);
+                      // List<int> imageBytes = await controller.imgPath.value.readAsBytes();
+                      // image = base64Encode(imageBytes);
+
+                        messageContent = controller.txtChats.text;
+
+                      // Common chat data
                       Map<String, dynamic> chat = {
-                        'sender': GoogleFirebaseServices.googleFirebaseServices
-                                .currentUser()!
-                                .email ??
-                            GoogleFirebaseServices.googleFirebaseServices
-                                .currentUser()!
-                                .phoneNumber!,
+                        'sender': controller.currentLogin.value,
                         'receiver': controller.receiverEmail.value,
-                        'message': controller.txtChats.text,
+                        'message': messageContent,
                         'timestamp': DateTime.now(),
                         'read': null,
+                        'isImage': false,
+                        'image':'',
                       };
-                      ChatServices.chatServices.insertData(
-                        chat,
-                        controller.receiverEmail.value,
-                      );
+
+                      // Insert chat into the database
+                      ChatServices.chatServices
+                          .insertData(chat, controller.receiverEmail.value);
 
                       ApiService.apiService.sendMessage(
-                          controller.currentLogin.value,
-                          controller.txtChats.text,
-                          controller.receiverToken.value);
+                        controller.currentLogin.value,
+                        controller.txtChats.text,
+                        controller.receiverToken.value,
+                      );
 
+                      // Clear the input and reset image flag
                       controller.txtChats.clear();
+                      // controller.isImage.value = false;
+
+
+                      // Delete the selected image if one was picked
+                      // if (controller.imgPath.value != null) {
+                      //   await controller.imgPath.value!.delete();
+                      //   controller.imgPath.value =
+                      //       null; // Reset the image path after deletion
+                      // }
                     }
                   },
-                  child: controller.chatMessage.value.isEmpty
-                      ? const Icon(Icons.mic)
-                      : const Icon(Icons.send),
+                  child: controller.chatMessage.value.isNotEmpty
+                      ? const Icon(Icons.send)
+                      : const Icon(Icons.mic),
                 ),
               ),
             ),
@@ -109,4 +136,27 @@ class MessageTextFieldAndButton extends StatelessWidget {
       ),
     );
   }
+}
+
+void imagePickerDialog(BuildContext context, ChatController controller) {
+  showAdaptiveDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      actions: [
+        TextButton(
+            onPressed: () {
+              // controller.selectedImage(ImageSource.camera);
+              Navigator.pop(context);
+            },
+            child: const Text('Take Photo')),
+        TextButton(
+            onPressed: () {
+              // controller.selectedImage(ImageSource.gallery);
+              Navigator.pop(context);
+            },
+            child: const Text('Choose Photo')),
+      ],
+      content: const Text('Choose you option from below'),
+    ),
+  );
 }

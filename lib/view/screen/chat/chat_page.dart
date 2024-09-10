@@ -23,7 +23,12 @@ class ChatPage extends StatelessWidget {
         elevation: 1,
         leading: Row(
           children: [
-            const BackButton(),
+             BackButton(
+              onPressed: () {
+                // controller.isImage.value = false;
+                // controller.imgPath!.value.delete();
+              },
+            ),
             Obx(
               () => CircleAvatar(
                 radius: 21.r,
