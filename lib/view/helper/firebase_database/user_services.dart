@@ -62,4 +62,13 @@ class UserService {
     User? user = GoogleFirebaseServices.googleFirebaseServices.currentUser();
     firebaseFirestore.collection('user').doc(user!.email).update({'token': token});
   }
+
+  Future<void> updateIsOnline(bool isOnline) async {
+    final userEmail = FirebaseAuth.instance.currentUser?.email;
+    if (userEmail == null) return;
+
+    await firebaseFirestore.collection('user').doc(userEmail).update({
+      'isOnline': isOnline
+    });
+  }
 }
