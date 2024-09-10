@@ -22,13 +22,14 @@ class ApiService {
 
     final servicesClient = await clientViaServiceAccount(client, scopes);
 
-    final serverToken = servicesClient.credentials.accessToken.data;
+    String serverToken = servicesClient.credentials.accessToken.data;
+    log("Server Token: \n $serverToken \n \n");
     return serverToken;
   }
 
   // onclick method call
   Future<void> sendMessage(String title, String body, String token) async {
-    // Replace 'token' with a valid FCM token
+
     Map notification = {
       "message": {
         "token": token, // Use a valid FCM token here
@@ -45,8 +46,8 @@ class ApiService {
     try {
       // String serverToken = getServerToken().toString();
       String serverToken =
-          'ya29.a0AcM612zxzUJjOmpZFKh-EOVGj5sYJh5sJjGuJUqkxQ6OG0ZcsX2c8_fm8es8P78i-N32qh3lh1_uRtsTXNfiUtUXQMxiUSQ5J1qJg_xu9lzLMeiJIkD-NgsJ0T7YFqkTVqQUeGj9a6agnuyDO9nA4553u1bvFPKl-HuaBvjOaCgYKAbkSARESFQHGX2MiR2yCd3zKjc8-CSaYzLJWlg0175';
-
+          // 'ya29.a0AcM612zxzUJjOmpZFKh-EOVGj5sYJh5sJjGuJUqkxQ6OG0ZcsX2c8_fm8es8P78i-N32qh3lh1_uRtsTXNfiUtUXQMxiUSQ5J1qJg_xu9lzLMeiJIkD-NgsJ0T7YFqkTVqQUeGj9a6agnuyDO9nA4553u1bvFPKl-HuaBvjOaCgYKAbkSARESFQHGX2MiR2yCd3zKjc8-CSaYzLJWlg0175';
+          'ya29.a0AcM612yOYUmywhry3Pjn0DqpEu1zss-eVTTmjLOB6nc5ehU6-8naGs6H_LiVeNEADyqxHC2ViFhZjm5PbScqs4ID7fdIWWDQFqlntdIG0Qa7oLT3jrV_9bHU92TvO5XwNOc_BOy7GUNppDsG8vdM5W23kZsG5RIGWU11gxl9aCgYKAaUSARESFQHGX2Mi-1zMt9gM9Lc6uQOSjPSpyg0175';
       log('$title----------------------------$body-------------$token');
       var response = await http.post(Uri.parse(baseUrl),
           body: jsonNotification,

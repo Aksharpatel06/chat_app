@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:chat_app/view/controller/chat_controller.dart';
 import 'package:chat_app/view/controller/sign_controller.dart';
 import 'package:chat_app/view/helper/firebase_auth/google_firebase_services.dart';
@@ -56,6 +58,7 @@ class UserService {
   Future<void> updateUserToken() async {
     String? token = await FirebaseMessagingServices.firebaseMessagingServices
         .generateDeviceToken();
+    log('----------------------token-----------------');
     User? user = GoogleFirebaseServices.googleFirebaseServices.currentUser();
     firebaseFirestore.collection('user').doc(user!.email).update({'token': token});
   }

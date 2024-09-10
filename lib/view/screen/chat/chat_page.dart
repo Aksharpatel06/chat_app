@@ -24,10 +24,10 @@ class ChatPage extends StatelessWidget {
         leading: Row(
           children: [
              BackButton(
-              onPressed: () {
-                // controller.isImage.value = false;
-                // controller.imgPath!.value.delete();
-              },
+              // onPressed: () {
+              //   // controller.isImage.value = false;
+              //   // controller.imgPath!.value.delete();
+              // },
             ),
             Obx(
               () => CircleAvatar(
