@@ -50,6 +50,7 @@ dependencies:
   googleapis_auth: ^1.6.0
   http: ^1.2.2
   image_picker: ^1.1.2
+  path_provider: ^2.1.4
 
 dev_dependencies:
   flutter_test:
