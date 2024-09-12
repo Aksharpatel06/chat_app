@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ThemeController extends GetxController {
-  var themeMode=ThemeMode.dark.obs;
+  var themeMode=ThemeMode.light.obs;
   Rx<Color> isTextFiledColor = const Color(0xffF0F0F0).obs;
   Rx<Color> senderMessageColor = const Color(0xfff6f6f6).withOpacity(0.5).obs;
   Rx<Color> reciverMessageColor = Colors.grey.shade400.obs;
