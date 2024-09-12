@@ -72,7 +72,7 @@ class ContinueWithOtherBrowser extends StatelessWidget {
               onTap: () async {
                 String status = await GoogleFirebaseServices.googleFirebaseServices
                     .signInWithGoogle();
-                Fluttertoast.showToast(msg: status);
+                // Fluttertoast.showToast(msg: status);
                 if (status == 'Suceess') {
                   Get.offAndToNamed('/home');
 

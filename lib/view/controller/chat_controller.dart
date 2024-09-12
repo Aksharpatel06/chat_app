@@ -12,6 +12,7 @@ import 'package:path_provider/path_provider.dart';
 
 class ChatController extends GetxController {
   RxString currentLogin = ''.obs;
+  RxString currentUserLogin = ''.obs;
 
   RxString chatMessage = ''.obs;
   TextEditingController txtChats = TextEditingController();
