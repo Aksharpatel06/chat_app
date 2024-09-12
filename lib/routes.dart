@@ -10,12 +10,12 @@ import 'package:chat_app/view/screen/splash/splash_page.dart';
 import 'package:get/get.dart';
 
 List<GetPage> getPages =[
+  // GetPage(
+  //   name: '/',
+  //   page: () => const SplashPage(),
+  // ),
   GetPage(
     name: '/',
-    page: () => const SplashPage(),
-  ),
-  GetPage(
-    name: '/intro',
     page: () =>
     GoogleFirebaseServices.googleFirebaseServices.currentUser() !=
         null

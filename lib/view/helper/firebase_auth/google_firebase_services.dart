@@ -119,7 +119,7 @@ class GoogleFirebaseServices {
       return "Suceess";
     } catch (e) {
       log(e.toString());
-      return "Failed";
+      return "";
     }
   }
 

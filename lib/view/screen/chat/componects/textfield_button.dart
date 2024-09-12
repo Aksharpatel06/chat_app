@@ -28,7 +28,7 @@ class MessageTextFieldAndButton extends StatelessWidget {
           Card(
             child: Container(
               height: 50.h,
-              width: 292.w,
+              width: 270.w,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50.r),
               ),
@@ -85,13 +85,11 @@ class MessageTextFieldAndButton extends StatelessWidget {
                   onPressed: () async {
                     if (controller.txtChats.text.isNotEmpty) {
                       String messageContent;
-                      // log(controller.imgPath.value.path);
-                      // List<int> imageBytes = await controller.imgPath.value.readAsBytes();
-                      // image = base64Encode(imageBytes);
+
 
                         messageContent = controller.txtChats.text;
 
-                      // Common chat data
+
                       Map<String, dynamic> chat = {
                         'sender': controller.currentLogin.value,
                         'receiver': controller.receiverEmail.value,
@@ -99,7 +97,6 @@ class MessageTextFieldAndButton extends StatelessWidget {
                         'timestamp': DateTime.now(),
                         'read': null,
                         'isImage': false,
-                        'image':'',
                       };
 
                       // Insert chat into the database
@@ -107,22 +104,12 @@ class MessageTextFieldAndButton extends StatelessWidget {
                           .insertData(chat, controller.receiverEmail.value);
 
                       ApiService.apiService.sendMessage(
-                        controller.currentLogin.value,
+                        controller.currentUserLogin.value,
                         controller.txtChats.text,
                         controller.receiverToken.value,
                       );
 
-                      // Clear the input and reset image flag
                       controller.txtChats.clear();
-                      // controller.isImage.value = false;
-
-
-                      // Delete the selected image if one was picked
-                      // if (controller.imgPath.value != null) {
-                      //   await controller.imgPath.value!.delete();
-                      //   controller.imgPath.value =
-                      //       null; // Reset the image path after deletion
-                      // }
                     }
                   },
                   child: controller.chatMessage.value.isNotEmpty

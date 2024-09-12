@@ -32,7 +32,6 @@ class UserService {
         .currentUser()!
         .email=='')
       {
-
         chat.currentLogin.value = GoogleFirebaseServices.googleFirebaseServices
             .currentUser()!
             .phoneNumber!;
@@ -42,6 +41,9 @@ class UserService {
           .currentUser()!
           .email!;
     }
+
+    chat.currentUserLogin.value = GoogleFirebaseServices.googleFirebaseServices
+        .currentUser()!.displayName!;
     Stream<QuerySnapshot> collectionStream = FirebaseFirestore.instance
         .collection('user')
         .where('email',
