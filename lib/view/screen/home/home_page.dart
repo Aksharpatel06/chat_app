@@ -1,4 +1,3 @@
-
 import 'package:chat_app/view/controller/chat_controller.dart';
 import 'package:chat_app/view/controller/theme_controller.dart';
 import 'package:chat_app/view/helper/firebase_auth/google_firebase_services.dart';
@@ -21,7 +20,10 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       drawer: Drawer(
-        backgroundColor: Theme.of(context).colorScheme.surface,
+        backgroundColor: Theme
+            .of(context)
+            .colorScheme
+            .surface,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -47,10 +49,13 @@ class HomePage extends StatelessWidget {
 
                     // Extract user data
                     final userData = snapshot.data!;
-                    final userName = userData['username'] ?? 'User name';
-                    final userEmail = userData['email'] ?? 'No email';
+                    final userName = userData['username'] ??
+                        GoogleFirebaseServices.googleFirebaseServices
+                            .currentUser()!.displayName ?? 'User name';
+                    final userEmail = userData['email'] ?? chatController.currentLogin.value??'No email';
                     final userPhoto = userData['photoUrl'] ??
-                        'https://via.placeholder.com/150';
+                        GoogleFirebaseServices.googleFirebaseServices
+                            .currentUser()!.displayName ??'https://via.placeholder.com/150';
 
                     return DrawerHeader(
                       child: Column(
@@ -89,7 +94,10 @@ class HomePage extends StatelessWidget {
                     leading: Icon(
                       Icons.home,
                       size: 24.r,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme
+                          .of(context)
+                          .colorScheme
+                          .primary,
                     ), // Responsive icon size
                     title: const Text('Home'), // Responsive font size
                     onTap: () {
@@ -129,9 +137,12 @@ class HomePage extends StatelessWidget {
                     leading: Icon(
                       Icons.mode,
                       size: 24.r,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme
+                          .of(context)
+                          .colorScheme
+                          .primary,
                     ), // Responsive icon size
-                    title:Text('Theme'), // Responsive font size
+                    title: Text('Theme'), // Responsive font size
                   ),
                 ),
 
@@ -141,7 +152,10 @@ class HomePage extends StatelessWidget {
                     leading: Icon(
                       Icons.settings,
                       size: 24.r,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme
+                          .of(context)
+                          .colorScheme
+                          .primary,
                     ),
                     // Responsive icon size
                     title: const Text('Setting'),
@@ -155,7 +169,10 @@ class HomePage extends StatelessWidget {
                 title: const Text('Logout'),
                 leading: Icon(
                   Icons.logout,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme
+                      .of(context)
+                      .colorScheme
+                      .primary,
                 ),
                 onTap: () {
                   GoogleFirebaseServices.googleFirebaseServices.emailLogout();
@@ -203,7 +220,8 @@ class HomePage extends StatelessWidget {
                 hintText: 'search',
                 trailing: Iterable.generate(
                   1,
-                  (index) => const Padding(
+                      (index) =>
+                  const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: Icon(Icons.search),
                   ),
@@ -236,10 +254,11 @@ class HomePage extends StatelessWidget {
             List<UserModal> userList = users.map((e) => UserModal(e)).toList();
             return ListView.builder(
               itemCount: userList.length,
-              itemBuilder: (context, index) => ChatUserCard(
-                chatController: chatController,
-                user: userList[index],
-              ),
+              itemBuilder: (context, index) =>
+                  ChatUserCard(
+                    chatController: chatController,
+                    user: userList[index],
+                  ),
             );
           },
         ),
@@ -247,8 +266,7 @@ class HomePage extends StatelessWidget {
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 12.0, right: 14),
         child: FloatingActionButton(
-          onPressed: () {
-          },
+          onPressed: () {},
           backgroundColor: Colors.green.shade500,
           child: const Icon(Icons.add_comment),
         ),
