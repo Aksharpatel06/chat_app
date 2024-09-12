@@ -98,3 +98,9 @@ Include some screenshots or a demo GIF here to showcase the app.
 ## Video
 
 https://github.com/user-attachments/assets/7b99b5ab-0fe2-4dd9-8afb-0c1dfae2ccd2
+
+
+https://github.com/user-attachments/assets/df4a8bd8-7936-4512-8712-f2da96baaa86
+
+
+
