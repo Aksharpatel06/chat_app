@@ -16,20 +16,21 @@ class ApiService {
       'https://fcm.googleapis.com/v1/projects/chat-app-5384f/messages:send';
 
   Future<String> getServerToken() async {
-    final scopes = ['https://www.googleapis.com/auth/firebase.messaging'];
-    final privateKey = jsonEncode(appJson);
-    final client = ServiceAccountCredentials.fromJson(privateKey);
+    var accountCredentials = ServiceAccountCredentials.fromJson(appJson);
 
-    final servicesClient = await clientViaServiceAccount(client, scopes);
+    // Define the scopes required for FCM (Cloud Platform scope)
+    var scopes = ['https://www.googleapis.com/auth/firebase.messaging'];
 
-    String serverToken = servicesClient.credentials.accessToken.data;
-    log("Server Token: \n $serverToken \n \n");
-    return serverToken;
+    // Use the credentials to get an authenticated client
+    var authClient = await clientViaServiceAccount(accountCredentials, scopes);
+
+    // Return the OAuth 2.0 access token
+    return authClient.credentials.accessToken.data;
   }
 
   // onclick method call
   Future<void> sendMessage(String title, String body, String token) async {
-
+    String accessToken = await getServerToken();
     Map notification = {
       "message": {
         "token": token, // Use a valid FCM token here
@@ -45,14 +46,14 @@ class ApiService {
 
     try {
       // String serverToken = getServerToken().toString();
-      String serverToken =
-          // 'ya29.a0AcM612zxzUJjOmpZFKh-EOVGj5sYJh5sJjGuJUqkxQ6OG0ZcsX2c8_fm8es8P78i-N32qh3lh1_uRtsTXNfiUtUXQMxiUSQ5J1qJg_xu9lzLMeiJIkD-NgsJ0T7YFqkTVqQUeGj9a6agnuyDO9nA4553u1bvFPKl-HuaBvjOaCgYKAbkSARESFQHGX2MiR2yCd3zKjc8-CSaYzLJWlg0175';
-          'ya29.a0AcM612yOYUmywhry3Pjn0DqpEu1zss-eVTTmjLOB6nc5ehU6-8naGs6H_LiVeNEADyqxHC2ViFhZjm5PbScqs4ID7fdIWWDQFqlntdIG0Qa7oLT3jrV_9bHU92TvO5XwNOc_BOy7GUNppDsG8vdM5W23kZsG5RIGWU11gxl9aCgYKAaUSARESFQHGX2Mi-1zMt9gM9Lc6uQOSjPSpyg0175';
+      // String serverToken =
+      //     // 'ya29.a0AcM612zxzUJjOmpZFKh-EOVGj5sYJh5sJjGuJUqkxQ6OG0ZcsX2c8_fm8es8P78i-N32qh3lh1_uRtsTXNfiUtUXQMxiUSQ5J1qJg_xu9lzLMeiJIkD-NgsJ0T7YFqkTVqQUeGj9a6agnuyDO9nA4553u1bvFPKl-HuaBvjOaCgYKAbkSARESFQHGX2MiR2yCd3zKjc8-CSaYzLJWlg0175';
+      //     'ya29.a0AcM612yOYUmywhry3Pjn0DqpEu1zss-eVTTmjLOB6nc5ehU6-8naGs6H_LiVeNEADyqxHC2ViFhZjm5PbScqs4ID7fdIWWDQFqlntdIG0Qa7oLT3jrV_9bHU92TvO5XwNOc_BOy7GUNppDsG8vdM5W23kZsG5RIGWU11gxl9aCgYKAaUSARESFQHGX2Mi-1zMt9gM9Lc6uQOSjPSpyg0175';
       log('$title----------------------------$body-------------$token');
       var response = await http.post(Uri.parse(baseUrl),
           body: jsonNotification,
           headers: <String, String>{
-            'Authorization': 'Bearer $serverToken',
+            'Authorization': 'Bearer $accessToken',
             'Content-Type': 'application/json',
           });
 
@@ -67,8 +68,7 @@ class ApiService {
   }
 }
 
-String serverKey =
-    'ya29.c.c0ASRK0GbvFwvcMJ_ixdsSKLEZO0KY9DfaO7RUjIIQJLAfkrUERpMxlW4RRb7Fpk2HFVZxv5uLqLmfWTO5oEJNLQgH3VRHC68aazRF2JDKhE74eBArlXXRPtyfxu7dlhf1sWxmp1pbo6EKXfnDL-EFON1V5kA56MlZ5XQHN94DrEvKBXLl90RPIOzHgUua1PYQkOCmNnVi9xgdf3CucPyOHaBhBObIp4X25AIWuBGSZIIi3xtuoF-zlbkmI_OGuA8tloexzxPfIuc5yDIWhOcjBCjtNWnMlW0CKFZLr_GSMpSzxL6DqAkWo8izvDQN0J7dmV6Q4kHTrEyiYwgnDCd729W078CBk4z316qfDQI6Ag2x4PsX_0JyALAG384AgwXf0V5ksI7Wgzwhk-hob9YoiBWzZnyfWeYMz6U21cb5OIROBVYWvdWj75rflwxBisQ645a-kSnIqmawIBOxyeYvY25iXn5_1R-6qufxOUm6eIcsSaw813BJr1I95i-oVlzSmB-lxvlo-I2IRy7YdOYBwnfi_eYlnlQVXxbR_577WkRu4oqr25Ic0QVxUtMOr_12dBm_eWwbZskxYwIe1altwhgxZbYtxdd83VUZm2uzsMq_vmRwB3IVhWbY3h9b_wrY-n521MamOtuXRw8Rp7wXmlScVlbFW2FupmR0t8kFr7lRk14o4gcbmI6enmxW2Z8xYIi3ysp3bapy_qmp0d2weecBq_icJWS_OF7but0401Q7eyQXl9Rkm3pQkRsc6Z3Junf3hwX8gR43FzwRWv3c5rdpIU1oWV7lfvt-sI-rj3Ixj3OnOXqsb4azXXhOYXazxbBd0Ux5uMd92epktS6jjfJaqBUJlo_6-x4Ww0QXBM4_FsizfYQ-5hv6Io8qwrVVyZxrqknhn2k3oigV-WcxzpOX7uy380VOn_grsQ88nswfOi3Mk-OOYVU5bdajog75BcbvB3-iO-04rywFZWVzav5sfoxSdSpcOt5Ql4oyfVQwjri3Q35hjMx';
+
 final appJson = {
   "type": "service_account",
   "project_id": "chat-app-5384f",

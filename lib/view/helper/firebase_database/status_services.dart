@@ -14,7 +14,8 @@ class AppLifecycleObserver extends WidgetsBindingObserver {
   AppLifecycleObserver._internal();
 
   // Start listening to app lifecycle changes
-  void startListening() {
+  void
+  startListening() {
     WidgetsBinding.instance.addObserver(this);
   }
 
