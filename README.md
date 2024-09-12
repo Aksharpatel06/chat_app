@@ -1,31 +1,69 @@
 # Chatify [(Source Code)](https://github.com/Aksharpatel06/chat_app/tree/master/lib)
 
-You're building a **Flutter chat app** using **GetX** state management and **Firebase** services for authentication and real-time data handling. Here's a breakdown of the app's features and how they interact:
+A feature-rich chat application built using **Flutter** and **Firebase**. This app supports real-time messaging, Google authentication, mobile number login, and email login. Users can send messages to others within the app, edit and delete their messages, and see message read statuses with blue ticks. It also includes customizable themes, and the ability to view user details in the app's drawer.
 
-### 1. **User Authentication**
-   - **Google Sign-In & Mobile Authentication**: The app allows users to sign in with their Google account or via mobile phone number (OTP-based verification). This ensures a secure and easy login process, managed through Firebase Authentication.
+## Features
 
-### 2. **Real-Time Messaging**
-   - **Send and Receive Messages**: Users can send and receive text-based messages in real time. The messages are stored and retrieved from **Firebase Firestore**.
-   - **Message Status (Double Tick)**: When a message is sent, a single tick appears. When the recipient receives the message, a double tick is shown, giving users feedback on message delivery.
-   - **Date and Time**: Each message is timestamped, allowing users to see when a message was sent or received.
+- **Authentication**:
+  - Google login
+  - Mobile number login
+  - Email ID login
+- **Real-time Messaging**:
+  - Send and receive messages with Firebase Firestore
+  - Message status indicators:
+    - Single tick: Message sent
+    - Double tick: Message received
+    - Blue tick: Message read
+  - Edit and delete messages
+- **UI/UX**:
+  - Dark and light themes
+  - User can switch between themes easily
+  - Last message preview on the home screen
+  - Last message timestamp saved and displayed
+  - User's profile and personal details viewable in the navigation drawer
+- **Additional Functionalities**:
+  - Notification support (for new messages)
+  - Smooth user experience with GetX for state management
+  - Firebase Firestore for real-time database management
 
-### 3. **Theme Support**
-   - **Dark and Light Theme**: The app offers both dark and light themes, enabling users to switch between modes based on their preference. GetX makes it easy to handle state changes for theming.
+## Screenshots
+Include some screenshots or a demo GIF here to showcase the app.
 
-### 4. **Firebase Cloud Database (Firestore)**
-   - **Firestore Integration**: Messages and user data are stored in Firebase Firestore, providing real-time updates and scalable data storage.
-   - **Real-Time Sync**: As soon as a message is sent, it’s instantly synced across all devices of the involved users, ensuring a seamless chat experience.
+## Installation
 
-### 5. **Date and Time Display**
-   - The app displays **date and time** next to each message, so users can easily track the context of conversations. The format is adjustable according to user preferences or locale settings.
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/yourusername/flutter-chat-app.git
+    ```
+2. Navigate to the project directory:
+    ```bash
+    cd flutter-chat-app
+    ```
+3. Install dependencies:
+    ```bash
+    flutter pub get
+    ```
+4. Run the app:
+    ```bash
+    flutter run
+    ```
 
-### 6. **GetX State Management**
-   - **Reactive UI Updates**: The app utilizes **GetX** for efficient state management. This ensures instant UI updates whenever a message is sent or received, or when other states (like theme change or authentication) need to be reflected.
-   - **Efficient Navigation**: With GetX’s route management, transitions between screens (such as login, chat screens, and profile screens) are smooth and fast.
+## Configuration
 
-### Overall User Experience
-   - The app focuses on **speed** and **simplicity**, with **smooth animations** and **real-time messaging**. GetX helps maintain a **lightweight** and **performant** architecture, ensuring the app runs efficiently even with complex features like real-time message updates, multiple authentication methods, and dynamic theme switching.
+1. Set up **Firebase**:
+   - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/).
+   - Enable **Firebase Authentication** for Google, mobile, and email sign-in.
+   - Set up **Firebase Firestore** for real-time messaging.
+   - Download and include the `google-services.json` file in the `android/app` directory.
+
+2. Enable cloud messaging for notifications (optional).
+
+## Dependencies
+
+- **Flutter**: Latest stable version
+- **Firebase Authentication**
+- **Firebase Firestore**
+- **GetX**: For state management and dependency injection
 
 ## ScreenShorts
 
@@ -55,3 +93,8 @@ You're building a **Flutter chat app** using **GetX** state management and **Fir
   <img src='https://github.com/user-attachments/assets/79752bf4-b837-41c8-bc0c-2e73a7952aba' width=240> &nbsp;&nbsp;&nbsp;&nbsp;
   <img src='https://github.com/user-attachments/assets/59672e18-1475-4478-9823-a0a25d199cf1' width=240> &nbsp;&nbsp;&nbsp;&nbsp;
 </p>
+
+
+## Video
+
+https://github.com/user-attachments/assets/7b99b5ab-0fe2-4dd9-8afb-0c1dfae2ccd2
