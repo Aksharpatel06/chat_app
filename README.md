@@ -1,24 +1,35 @@
-# chat_app
+# Chatify [(Source Code)](https://github.com/Aksharpatel06/chat_app/tree/master/lib)
 
-A new Flutter project.
+You're building a **Flutter chat app** using **GetX** state management and **Firebase** services for authentication and real-time data handling. Here's a breakdown of the app's features and how they interact:
 
-## Getting Started
+### 1. **User Authentication**
+   - **Google Sign-In & Mobile Authentication**: The app allows users to sign in with their Google account or via mobile phone number (OTP-based verification). This ensures a secure and easy login process, managed through Firebase Authentication.
 
-This project is a starting point for a Flutter application.
+### 2. **Real-Time Messaging**
+   - **Send and Receive Messages**: Users can send and receive text-based messages in real time. The messages are stored and retrieved from **Firebase Firestore**.
+   - **Message Status (Double Tick)**: When a message is sent, a single tick appears. When the recipient receives the message, a double tick is shown, giving users feedback on message delivery.
+   - **Date and Time**: Each message is timestamped, allowing users to see when a message was sent or received.
 
-A few resources to get you started if this is your first Flutter project:
+### 3. **Theme Support**
+   - **Dark and Light Theme**: The app offers both dark and light themes, enabling users to switch between modes based on their preference. GetX makes it easy to handle state changes for theming.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### 4. **Firebase Cloud Database (Firestore)**
+   - **Firestore Integration**: Messages and user data are stored in Firebase Firestore, providing real-time updates and scalable data storage.
+   - **Real-Time Sync**: As soon as a message is sent, it’s instantly synced across all devices of the involved users, ensuring a seamless chat experience.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 5. **Date and Time Display**
+   - The app displays **date and time** next to each message, so users can easily track the context of conversations. The format is adjustable according to user preferences or locale settings.
 
+### 6. **GetX State Management**
+   - **Reactive UI Updates**: The app utilizes **GetX** for efficient state management. This ensures instant UI updates whenever a message is sent or received, or when other states (like theme change or authentication) need to be reflected.
+   - **Efficient Navigation**: With GetX’s route management, transitions between screens (such as login, chat screens, and profile screens) are smooth and fast.
+
+### Overall User Experience
+   - The app focuses on **speed** and **simplicity**, with **smooth animations** and **real-time messaging**. GetX helps maintain a **lightweight** and **performant** architecture, ensuring the app runs efficiently even with complex features like real-time message updates, multiple authentication methods, and dynamic theme switching.
 
 ## ScreenShorts
 
-### Light Mode : - 
+### **Light Mode : -** 
 <p align='center'>
   <img src='https://github.com/user-attachments/assets/64f31000-b67b-4e4f-b910-010a061e3531' width=240> &nbsp;&nbsp;&nbsp;&nbsp;
   <img src='https://github.com/user-attachments/assets/2c364089-7d71-463d-bad4-efc6b1a654af' width=240> &nbsp;&nbsp;&nbsp;&nbsp;
@@ -33,7 +44,7 @@ samples, guidance on mobile development, and a full API reference.
   
 </p>
 
-### Dark Mode : -
+### **Dark Mode : -**
 <p align ='center'>
   <img src='https://github.com/user-attachments/assets/5c475c70-28e4-43f8-9b24-56ebad3ad63c' width=240> &nbsp;&nbsp;&nbsp;&nbsp;
   <img src='https://github.com/user-attachments/assets/a683eddf-ed84-45af-8e4e-8a5fc07e3fa9' width=240> &nbsp;&nbsp;&nbsp;&nbsp;
