@@ -1,16 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModal {
-  String? username, email, photoUrl, userToken, lastMessage;
-  Timestamp? timestamp;
+  String? username, email, photoUrl, userToken;
   bool? isOnline;
 
   UserModal._(
       {required this.username,
       required this.email,
       required this.isOnline,
-      this.timestamp,
-      this.lastMessage,
       required this.photoUrl,
       required this.userToken});
 
@@ -19,8 +15,6 @@ class UserModal {
         username: m1['username'],
         email: m1['email'],
         isOnline: m1['isOnline'],
-        timestamp: m1['lastTimeStamp'],
-        lastMessage: m1['lastMessage'],
         userToken: m1['token'] ?? '--',
         photoUrl: m1['photoUrl'] ??
             'https://t3.ftcdn.net/jpg/01/65/63/94/360_F_165639425_kRh61s497pV7IOPAjwjme1btB8ICkV0L.jpg');
@@ -32,8 +26,6 @@ class UserModal {
       'email': userModal.email!,
       'photoUrl': userModal.photoUrl!,
       'token': userModal.userToken!,
-      'lastTimeStamp':userModal.timestamp!,
-      'lastMessage': userModal.lastMessage!,
       'isOnline': userModal.isOnline ?? true,
     };
   }

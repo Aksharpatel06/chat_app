@@ -1,12 +1,10 @@
-import 'dart:developer';
-import 'dart:io';
+
 
 import 'package:chat_app/view/controller/chat_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../modal/chat_modal.dart';
 
 class ChatServices {
   static ChatServices chatServices = ChatServices._();
@@ -26,22 +24,6 @@ class ChatServices {
         .doc(docId)
         .collection('chat')
         .add(chat);
-    firestore
-        .collection('user')
-        .doc(controller.currentLogin.value)
-        .update({'lastMessage': chat['message']});
-    firestore
-        .collection('user')
-        .doc(controller.currentLogin.value)
-        .update({'lastTimeStamp': chat['timestamp']});
-    firestore
-        .collection('user')
-        .doc(receiver)
-        .update({'lastMessage': chat['message']});
-    firestore
-        .collection('user')
-        .doc(receiver)
-        .update({'lastTimeStamp': chat['timestamp']});
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getChat(String receiver) {
