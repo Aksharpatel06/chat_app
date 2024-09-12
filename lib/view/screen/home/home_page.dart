@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:chat_app/view/controller/chat_controller.dart';
 import 'package:chat_app/view/controller/theme_controller.dart';
