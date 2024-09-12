@@ -132,23 +132,50 @@ class GoogleFirebaseServices {
     try {
       await auth.verifyPhoneNumber(
         phoneNumber: countryCode + number,
-        verificationCompleted: (PhoneAuthCredential credential) {},
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          // Automatically sign in the user when the phone number is verified
+          try {
+            await auth.signInWithCredential(credential);
+            Fluttertoast.showToast(msg: 'Phone number automatically verified and user signed in.');
+            // Navigate to home or dashboard screen
+            Get.offAllNamed('/home');
+          } catch (e) {
+            Fluttertoast.showToast(msg: 'Automatic verification failed.');
+            log(e.toString());
+          }
+        },
         verificationFailed: (FirebaseAuthException e) {
+          // Handle errors such as invalid phone number or billing issues
           if (e.code == 'invalid-phone-number') {
             Fluttertoast.showToast(
                 msg: 'The provided phone number is not valid.');
+          } else if (e.code == 'too-many-requests') {
+            Fluttertoast.showToast(
+                msg: 'Too many requests. Please try again later.');
+          } else if (e.code == 'quota-exceeded') {
+            Fluttertoast.showToast(
+                msg: 'SMS quota exceeded. Enable billing in Firebase.');
+          } else {
+            Fluttertoast.showToast(
+                msg: 'Phone verification failed. Try again later.');
           }
+          log('Verification failed with error: ${e.code} - ${e.message}');
         },
         codeSent: (String verificationId, int? resendToken) {
           sign.verificationId.value = verificationId;
+          Fluttertoast.showToast(msg: 'OTP sent successfully.');
           Get.toNamed('/otpAdd');
         },
-        codeAutoRetrievalTimeout: (String verificationId) {},
+        codeAutoRetrievalTimeout: (String verificationId) {
+          Fluttertoast.showToast(msg: 'Code retrieval timeout. Please try again.');
+        },
       );
     } catch (e) {
-      log(e.toString());
+      // Log any unexpected errors
+      log('Error in phone number verification: $e');
     }
   }
+
 
   Future<void> mobileVarifaction(String smsCode) async {
     try {

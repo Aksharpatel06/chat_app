@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:chat_app/view/controller/chat_controller.dart';
 import 'package:chat_app/view/controller/theme_controller.dart';
 import 'package:chat_app/view/helper/firebase_auth/google_firebase_services.dart';
@@ -19,6 +21,151 @@ class HomePage extends StatelessWidget {
     ChatController chatController = Get.find();
 
     return Scaffold(
+      drawer: Drawer(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                FutureBuilder(
+                  future: UserService.userSarvice
+                      .currentUser(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const DrawerHeader(
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    } else if (snapshot.hasError) {
+                      return const DrawerHeader(
+                        child: Center(child: Text('Error loading user data')),
+                      );
+                    } else if (!snapshot.hasData || snapshot.data == null) {
+                      return const DrawerHeader(
+                        child: Center(child: Text('No user data found')),
+                      );
+                    }
+
+                    // Extract user data
+                    final userData = snapshot.data!;
+                    final userName = userData['username'] ?? 'User name';
+                    final userEmail = userData['email'] ?? 'No email';
+                    final userPhoto = userData['photoUrl'] ??
+                        'https://via.placeholder.com/150';
+
+                    return DrawerHeader(
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 28.r, // Responsive radius
+                            backgroundImage: NetworkImage(userPhoto),
+                          ),
+                          SizedBox(height: 16.h), // Responsive height
+                          Text(
+                            userName,
+                            // authController.userDetail['name'].toString(),
+                            style: TextStyle(
+                              fontSize: 20.sp, // Responsive font size
+                              fontWeight: FontWeight.bold,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            userEmail,
+                            // authController.email.value,
+                            style: TextStyle(
+                              fontSize: 15.sp, // Responsive font size
+                              color: Colors.grey,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 25),
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.home,
+                      size: 24.r,
+                      color: Theme.of(context).colorScheme.primary,
+                    ), // Responsive icon size
+                    title: const Text('Home'), // Responsive font size
+                    onTap: () {
+                      Get.offNamed('/home');
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 25),
+                  child: ListTile(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            content: const Text(
+                                'Do you change mode in app ?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('No'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  themeController.changeMode();
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('Yes'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    leading: Icon(
+                      Icons.mode,
+                      size: 24.r,
+                      color: Theme.of(context).colorScheme.primary,
+                    ), // Responsive icon size
+                    title:Text('Theme'), // Responsive font size
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 25),
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.settings,
+                      size: 24.r,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    // Responsive icon size
+                    title: const Text('Setting'),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 25, bottom: 25),
+              child: ListTile(
+                title: const Text('Logout'),
+                leading: Icon(
+                  Icons.logout,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                onTap: () {
+                  GoogleFirebaseServices.googleFirebaseServices.emailLogout();
+                },
+              ),
+            )
+          ],
+        ),
+      ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(
@@ -29,15 +176,23 @@ class HomePage extends StatelessWidget {
             color: const Color(0xff31C48D),
           ),
         ),
-        actions: const [
+        actions: [
           Padding(
             padding: EdgeInsets.only(left: 16.0, right: 8),
             child: Icon(Icons.qr_code_scanner),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: Icon(Icons.more_vert),
-          ),
+          PopupMenuButton(
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem(
+                  child: Text('Profile'),
+                  onTap: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                ),
+              ];
+            },
+          )
         ],
         bottom: PreferredSize(
           preferredSize: const Size(double.infinity, 50),
@@ -94,8 +249,6 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 12.0, right: 14),
         child: FloatingActionButton(
           onPressed: () {
-            themeController.changeMode();
-            GoogleFirebaseServices.googleFirebaseServices.emailLogout();
           },
           backgroundColor: Colors.green.shade500,
           child: const Icon(Icons.add_comment),

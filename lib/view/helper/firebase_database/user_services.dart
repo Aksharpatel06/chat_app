@@ -50,9 +50,22 @@ class UserService {
     return collectionStream;
   }
 
-  DocumentReference<Object?> currentUser(UserModal userModal) {
-    CollectionReference user = firebaseFirestore.collection('user');
-    return user.doc(userModal.email);
+  Future<Map<String, dynamic>> currentUser() async {
+
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    try {
+      DocumentSnapshot data = await firestore.collection('user').doc(chat.currentLogin.value).get();
+
+      if (data.exists) {
+        return data.data() as Map<String, dynamic>;
+      } else {
+        log('Document does not exist');
+        return {};
+      }
+    } catch (e) {
+      log('Error fetching user data: $e');
+      return {};
+    }
   }
 
   Future<void> updateUserToken() async {

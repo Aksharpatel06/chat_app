@@ -1,10 +1,9 @@
-
 import 'dart:developer';
 import 'dart:io';
 
 import 'package:chat_app/view/controller/chat_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../modal/chat_modal.dart';
@@ -18,8 +17,6 @@ class ChatServices {
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  FirebaseStorage storage = FirebaseStorage.instance;
-
   Future<void> insertData(Map<String, dynamic> chat, String receiver) async {
     List doc = [controller.currentLogin.value, receiver];
     doc.sort();
@@ -29,6 +26,22 @@ class ChatServices {
         .doc(docId)
         .collection('chat')
         .add(chat);
+    firestore
+        .collection('user')
+        .doc(controller.currentLogin.value)
+        .update({'lastMessage': chat['message']});
+    firestore
+        .collection('user')
+        .doc(controller.currentLogin.value)
+        .update({'lastTimeStamp': chat['timestamp']});
+    firestore
+        .collection('user')
+        .doc(receiver)
+        .update({'lastMessage': chat['message']});
+    firestore
+        .collection('user')
+        .doc(receiver)
+        .update({'lastTimeStamp': chat['timestamp']});
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getChat(String receiver) {
@@ -97,71 +110,68 @@ class ChatServices {
         .snapshots();
   }
 
-   Future<void> sendChatImage(ChatModal chatModal, File file) async {
-    //getting image file extension
-    final ext = file.path.split('.').last;
+  // Future<void> sendChatImage(ChatModal chatModal, File file) async {
+  //   //getting image file extension
+  //   final ext = file.path.split('.').last;
+  //
+  //   //storage file ref with path
+  //   final ref = storage.ref().child(
+  //       'images/${chatModal.timestamp}/${DateTime.now().millisecondsSinceEpoch}.$ext');
+  //
+  //   //uploading image
+  //   await ref
+  //       .putFile(file, SettableMetadata(contentType: 'image/$ext'))
+  //       .then((p0) {
+  //     log('Data Transferred: ${p0.bytesTransferred / 1000} kb');
+  //   });
+  //
+  //   //updating image in firestore database
+  //   final imageUrl = await ref.getDownloadURL();
+  // }
 
-    //storage file ref with path
-    final ref = storage.ref().child(
-        'images/${chatModal.timestamp}/${DateTime.now().millisecondsSinceEpoch}.$ext');
+  String getLastMessageTime({
+    required BuildContext context,
+    required String time,
+  }) {
+    final DateTime sent = DateTime.fromMillisecondsSinceEpoch(int.parse(time));
+    final DateTime now = DateTime.now();
 
-    //uploading image
-    await ref
-        .putFile(file, SettableMetadata(contentType: 'image/$ext'))
-        .then((p0) {
-      log('Data Transferred: ${p0.bytesTransferred / 1000} kb');
-    });
+    if (now.day == sent.day &&
+        now.month == sent.month &&
+        now.year == sent.year) {
+      return TimeOfDay.fromDateTime(sent).format(context);
+    }
 
-    //updating image in firestore database
-    final imageUrl = await ref.getDownloadURL();
+    return '${sent.day} ${_getMonth(sent)}';
   }
 
-
-
+  String _getMonth(DateTime date) {
+    switch (date.month) {
+      case 1:
+        return 'Jan';
+      case 2:
+        return 'Feb';
+      case 3:
+        return 'Mar';
+      case 4:
+        return 'Apr';
+      case 5:
+        return 'May';
+      case 6:
+        return 'Jun';
+      case 7:
+        return 'Jul';
+      case 8:
+        return 'Aug';
+      case 9:
+        return 'Sept';
+      case 10:
+        return 'Oct';
+      case 11:
+        return 'Nov';
+      case 12:
+        return 'Dec';
+    }
+    return 'NA';
+  }
 }
-
-
-// String getLastMessageTime(
-//     {required BuildContext context,
-//       required String time,}) {
-//   final DateTime sent = DateTime.fromMillisecondsSinceEpoch(int.parse(time));
-//   final DateTime now = DateTime.now();
-//
-//   if (now.day == sent.day &&
-//       now.month == sent.month &&
-//       now.year == sent.year) {
-//     return TimeOfDay.fromDateTime(sent).format(context);
-//   }
-//
-//   return '${sent.day} ${_getMonth(sent)}';
-// }
-//
-// String _getMonth(DateTime date) {
-//   switch (date.month) {
-//     case 1:
-//       return 'Jan';
-//     case 2:
-//       return 'Feb';
-//     case 3:
-//       return 'Mar';
-//     case 4:
-//       return 'Apr';
-//     case 5:
-//       return 'May';
-//     case 6:
-//       return 'Jun';
-//     case 7:
-//       return 'Jul';
-//     case 8:
-//       return 'Aug';
-//     case 9:
-//       return 'Sept';
-//     case 10:
-//       return 'Oct';
-//     case 11:
-//       return 'Nov';
-//     case 12:
-//       return 'Dec';
-//   }
-//   return 'NA';
-// }
