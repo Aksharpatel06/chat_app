@@ -2,6 +2,7 @@ import 'package:chat_app/routes.dart';
 import 'package:chat_app/view/controller/chat_controller.dart';
 import 'package:chat_app/view/controller/sign_controller.dart';
 import 'package:chat_app/view/controller/theme_controller.dart';
+
 // import 'package:chat_app/view/helper/firebase_database/status_services.dart';
 import 'package:chat_app/view/helper/notification/api_services.dart';
 import 'package:chat_app/view/helper/notification/firebase_messaging_services.dart';
@@ -22,17 +23,15 @@ Future<void> main() async {
   // final appLifecycleObserver = AppLifecycleObserver();
   // appLifecycleObserver.startListening();
 
-
   NotificationServices.notificationServices.initNotification();
   await FirebaseMessagingServices.firebaseMessagingServices.requestPermission();
-  await FirebaseMessagingServices.firebaseMessagingServices.generateDeviceToken();
+  await FirebaseMessagingServices.firebaseMessagingServices
+      .generateDeviceToken();
   ApiService.apiService.getServerToken();
   FirebaseMessagingServices.firebaseMessagingServices.onMessageListener();
 
   runApp(const MyApp());
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -61,5 +60,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
