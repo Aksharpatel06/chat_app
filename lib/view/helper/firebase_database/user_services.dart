@@ -43,7 +43,7 @@ class UserService {
     }
 
     chat.currentUserLogin.value = GoogleFirebaseServices.googleFirebaseServices
-        .currentUser()!.displayName!;
+        .currentUser()!.displayName??'Akshar';
     Stream<QuerySnapshot> collectionStream = FirebaseFirestore.instance
         .collection('user')
         .where('email',

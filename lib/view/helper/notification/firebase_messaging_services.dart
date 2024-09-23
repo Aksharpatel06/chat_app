@@ -46,7 +46,7 @@ class FirebaseMessagingServices {
     FirebaseMessaging.onMessage.listen(
       (event) {
         NotificationServices.notificationServices.showNotification(
-            event.notification!.title!, event.notification!.body!);
+            event.notification!.title??'Akshar Hiren', event.notification!.body!);
       },
     );
   }
