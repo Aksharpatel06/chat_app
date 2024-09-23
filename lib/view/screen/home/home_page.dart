@@ -10,9 +10,21 @@ import '../../modal/user_modal.dart';
 import 'componects/bottom_navigation.dart';
 import 'componects/chat_user_card.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    UserService.userSarvice.updateUserToken();
+  }
   @override
   Widget build(BuildContext context) {
     ThemeController themeController = Get.find();
