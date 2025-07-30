@@ -1,5 +1,6 @@
 # Chatify [(Source Code)](https://github.com/Aksharpatel06/chat_app/tree/master/lib)
 
+
 A feature-rich chat application built using **Flutter** and **Firebase**. This app supports real-time messaging, Google authentication, mobile number login, and email login. Users can send messages to others within the app, edit and delete their messages, and see message read statuses with blue ticks. It also includes customizable themes, and the ability to view user details in the app's drawer.
 
 ## Features
