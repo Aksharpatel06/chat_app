@@ -1,10 +1,11 @@
-
+import 'dart:io';
+import 'dart:math';
 
 import 'package:chat_app/view/controller/chat_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 
 class ChatServices {
   static ChatServices chatServices = ChatServices._();
@@ -14,6 +15,8 @@ class ChatServices {
   ChatController controller = Get.find();
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  FirebaseStorage storage = FirebaseStorage.instance;
 
   Future<void> insertData(Map<String, dynamic> chat, String receiver) async {
     List doc = [controller.currentLogin.value, receiver];
@@ -53,16 +56,36 @@ class ChatServices {
     });
   }
 
-  void deleteChat(String chatId, String receiver) {
-    List doc = [controller.currentLogin.value, receiver];
-    doc.sort();
-    String docId = doc.join('_');
-    FirebaseFirestore.instance
-        .collection('chatroom')
-        .doc(docId)
-        .collection('chat')
-        .doc(chatId)
-        .delete();
+  String extractPathFromUrl(String imageUrl) {
+    final uri = Uri.parse(imageUrl);
+    final path = uri.pathSegments
+        .skipWhile((segment) => segment != 'o')
+        .skip(1)
+        .join('/');
+    return Uri.decodeFull(path);
+  }
+
+  Future<void> deleteChat(String chatId, String receiver, bool isImage,
+      {String imagePath = ''}) async {
+    try {
+      List doc = [controller.currentLogin.value, receiver];
+      doc.sort();
+      String docId = doc.join('_');
+      await FirebaseFirestore.instance
+          .collection('chatroom')
+          .doc(docId)
+          .collection('chat')
+          .doc(chatId)
+          .delete();
+
+      debugPrint('Chat deleted: $imagePath');
+
+      if (isImage == true) {
+        await storage.ref().child(extractPathFromUrl(imagePath)).delete();
+      }
+    } catch (e) {
+      debugPrint('Error deleting chat: $e');
+    }
   }
 
   void updateMessageReadStatus(String receiver, String chatId) {
@@ -91,25 +114,6 @@ class ChatServices {
         .limit(1)
         .snapshots();
   }
-
-  // Future<void> sendChatImage(ChatModal chatModal, File file) async {
-  //   //getting image file extension
-  //   final ext = file.path.split('.').last;
-  //
-  //   //storage file ref with path
-  //   final ref = storage.ref().child(
-  //       'images/${chatModal.timestamp}/${DateTime.now().millisecondsSinceEpoch}.$ext');
-  //
-  //   //uploading image
-  //   await ref
-  //       .putFile(file, SettableMetadata(contentType: 'image/$ext'))
-  //       .then((p0) {
-  //     log('Data Transferred: ${p0.bytesTransferred / 1000} kb');
-  //   });
-  //
-  //   //updating image in firestore database
-  //   final imageUrl = await ref.getDownloadURL();
-  // }
 
   String getLastMessageTime({
     required BuildContext context,
@@ -155,5 +159,41 @@ class ChatServices {
         return 'Dec';
     }
     return 'NA';
+  }
+
+  String generateUniqueSixDigitCode() {
+    final random = Random();
+    List<int> digits = List.generate(10, (index) => index); // 0–9
+
+    digits.shuffle(random); // Shuffle to randomize
+
+    // Take the first 6 digits
+    List<int> selectedDigits = digits.take(6).toList();
+
+    if (selectedDigits[0] == 0) {
+      for (int i = 1; i < 6; i++) {
+        if (selectedDigits[i] != 0) {
+          int temp = selectedDigits[0];
+          selectedDigits[0] = selectedDigits[i];
+          selectedDigits[i] = temp;
+          break;
+        }
+      }
+    }
+
+    return selectedDigits.join();
+  }
+
+  Future<String> uploadImageToFirebase(
+      String receiver, String imagePath) async {
+    List doc = [controller.currentLogin.value, receiver];
+    String chatId = generateUniqueSixDigitCode();
+    doc.sort();
+    String docId = doc.join('_');
+    final ref = storage.ref().child('chat_images/$docId/$chatId.jpg');
+    await ref.putFile(File(imagePath));
+    final imageUrl = await ref.getDownloadURL();
+
+    return imageUrl;
   }
 }

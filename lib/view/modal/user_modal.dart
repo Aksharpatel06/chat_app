@@ -1,4 +1,3 @@
-
 class UserModal {
   String? username, email, photoUrl, userToken;
   bool? isOnline;

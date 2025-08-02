@@ -25,38 +25,34 @@ class UserService {
   }
 
   Stream<QuerySnapshot<Object?>> getUser() {
-
-    if( GoogleFirebaseServices.googleFirebaseServices
-        .currentUser()!
-        .email == null||GoogleFirebaseServices.googleFirebaseServices
-        .currentUser()!
-        .email=='')
-      {
-        chat.currentLogin.value = GoogleFirebaseServices.googleFirebaseServices
-            .currentUser()!
-            .phoneNumber!;
-      }
-    else {
+    if (GoogleFirebaseServices.googleFirebaseServices.currentUser()!.email ==
+            null ||
+        GoogleFirebaseServices.googleFirebaseServices.currentUser()!.email ==
+            '') {
       chat.currentLogin.value = GoogleFirebaseServices.googleFirebaseServices
           .currentUser()!
-          .email!;
+          .phoneNumber!;
+    } else {
+      chat.currentLogin.value =
+          GoogleFirebaseServices.googleFirebaseServices.currentUser()!.email!;
     }
 
     chat.currentUserLogin.value = GoogleFirebaseServices.googleFirebaseServices
-        .currentUser()!.displayName??'Akshar';
+            .currentUser()!
+            .displayName ??
+        'Akshar';
     Stream<QuerySnapshot> collectionStream = FirebaseFirestore.instance
         .collection('user')
-        .where('email',
-        isNotEqualTo: chat.currentLogin.value)
+        .where('email', isNotEqualTo: chat.currentLogin.value)
         .snapshots();
     return collectionStream;
   }
 
   Future<Map<String, dynamic>> currentUser() async {
-
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     try {
-      DocumentSnapshot data = await firestore.collection('user').doc(chat.currentLogin.value).get();
+      DocumentSnapshot data =
+          await firestore.collection('user').doc(chat.currentLogin.value).get();
 
       if (data.exists) {
         return data.data() as Map<String, dynamic>;
@@ -73,17 +69,10 @@ class UserService {
   Future<void> updateUserToken() async {
     String? token = await FirebaseMessagingServices.firebaseMessagingServices
         .generateDeviceToken();
-    log('----------------------token-----------------');
     User? user = GoogleFirebaseServices.googleFirebaseServices.currentUser();
-    firebaseFirestore.collection('user').doc(user!.email).update({'token': token});
-  }
-
-  Future<void> updateIsOnline(bool isOnline) async {
-    final userEmail = FirebaseAuth.instance.currentUser?.email;
-    if (userEmail == null) return;
-
-    await firebaseFirestore.collection('user').doc(userEmail).update({
-      'isOnline': isOnline
-    });
+    firebaseFirestore
+        .collection('user')
+        .doc(user!.email)
+        .update({'token': token});
   }
 }

@@ -2,8 +2,9 @@ import 'package:chat_app/view/controller/theme_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 import '../../../controller/sign_controller.dart';
+
+import '../../../../utils/colors.dart';
 
 class SignTextField extends StatelessWidget {
   final String hintText;
@@ -21,42 +22,88 @@ class SignTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeController themeController = Get.find();
-    return Padding(
-      padding:  EdgeInsets.symmetric(horizontal: 35.h, vertical: 10.h),
-      child: Obx(
-        ()=> Container(
-          height: 50.h,
-          width: double.infinity,
-          padding:  EdgeInsets.only(left: 5.h),
-          child: TextField(
-            controller: textEditingController,
-            obscureText: (hintText == 'Password')
-                ? (!controller.isShowPwd.value)
-                    ? true
-                    : false
-                : false,
-            obscuringCharacter: '*',
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(50)
-              ),
-              filled: true,
-              fillColor: themeController.isTextFiledColor.value,
-              prefixIcon: prefixIcon,
-              suffixIcon: (hintText == 'Password')
-                  ? InkWell(
-                      onTap: () {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16.r),
+        boxShadow: [
+          BoxShadow(
+            color: CustomColors.primaryColor.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: TextField(
+        controller: textEditingController,
+        obscureText: (hintText.toLowerCase().contains('password'))
+            ? !controller.isShowPwd.value
+            : false,
+        obscuringCharacter: '●',
+        style: TextStyle(
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w500,
+          color: CustomColors.primaryColor,
+        ),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(16.r),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: CustomColors.backgroundColor.withOpacity(0.5),
+              width: 1.5,
+            ),
+            borderRadius: BorderRadius.circular(16.r),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: CustomColors.secondaryColor,
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(16.r),
+          ),
+          filled: true,
+          fillColor: CustomColors.textColor.withOpacity(0.3),
+          prefixIcon: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Icon(
+              prefixIcon.icon,
+              color: CustomColors.secondaryColor,
+              size: 22.sp,
+            ),
+          ),
+          prefixIconConstraints: BoxConstraints(
+            minWidth: 50.w,
+          ),
+          suffixIcon: (hintText.toLowerCase().contains('password'))
+              ? Padding(
+                  padding: EdgeInsets.only(right: 12.w),
+                  child: Obx(
+                    () => IconButton(
+                      onPressed: () {
                         controller.showPassword();
                       },
-                      child: (!controller.isShowPwd.value)
-                          ? const Icon(Icons.remove_red_eye_sharp)
-                          : const Icon(Icons.visibility_off))
-                  : null,
-              hintText: hintText,
-              contentPadding:  EdgeInsets.only(top: 12.h),
-            ),
+                      icon: Icon(
+                        !controller.isShowPwd.value
+                            ? Icons.visibility_outlined
+                            : Icons.visibility_off_outlined,
+                        color: CustomColors.secondaryColor,
+                        size: 22.sp,
+                      ),
+                    ),
+                  ),
+                )
+              : null,
+          hintText: hintText,
+          hintStyle: TextStyle(
+            fontSize: 15.sp,
+            fontWeight: FontWeight.w400,
+            // color: CustomColors.primaryColor.withOpacity(0.5),
+          ),
+          contentPadding: EdgeInsets.symmetric(
+            vertical: 18.h,
+            horizontal: 20.w,
           ),
         ),
       ),

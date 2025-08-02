@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import '../../../../utils/colors.dart';
 
 class ContinueWithOtherBrowser extends StatelessWidget {
   final String sign;
-
   const ContinueWithOtherBrowser({
     super.key,
     required this.sign,
@@ -16,18 +16,19 @@ class ContinueWithOtherBrowser extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-         SizedBox(
-          height: 10.h,
-        ),
+        // Account Question and Sign Up/In Link
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-             Text(
-              'Did You have an Account?',
+            Text(
+              sign == 'Sign Up'
+                  ? "Don't have an account? "
+                  : "Already have an account? ",
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 16.sp,
+                fontSize: 15.sp,
                 fontWeight: FontWeight.w400,
+                color: CustomColors.primaryColor.withOpacity(0.7),
               ),
             ),
             TextButton(
@@ -38,92 +39,142 @@ class ContinueWithOtherBrowser extends StatelessWidget {
                   Get.back();
                 }
               },
+              style: TextButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 8.w),
+                minimumSize: Size.zero,
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
               child: Text(
                 sign,
                 textAlign: TextAlign.center,
-                style:  TextStyle(
-                  fontSize: 16.sp,
-                  color: Color(0xff31C48D),
-                  fontWeight: FontWeight.w600,
+                style: TextStyle(
+                  fontSize: 15.sp,
+                  color: CustomColors.secondaryColor,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ),
           ],
         ),
-         SizedBox(
-          height: 30.h,
+
+        SizedBox(height: 35.h),
+
+        // Divider with "Or continue with" text
+        Row(
+          children: [
+            Expanded(
+              child: Divider(
+                color: CustomColors.primaryColor.withOpacity(0.3),
+                thickness: 1,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: Text(
+                'Or continue with',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w500,
+                  color: CustomColors.primaryColor.withOpacity(0.6),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Divider(
+                color: CustomColors.primaryColor.withOpacity(0.3),
+                thickness: 1,
+              ),
+            ),
+          ],
         ),
-         Text(
-          'Or continue with',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 16.sp,
-            letterSpacing: 1.5,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-         SizedBox(
-          height: 20.h,
-        ),
+
+        SizedBox(height: 25.h),
+
+        // Social Login Buttons
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            GestureDetector(
+            // Google Sign In
+            _buildSocialButton(
               onTap: () async {
-                String status = await GoogleFirebaseServices.googleFirebaseServices
+                String status = await GoogleFirebaseServices
+                    .googleFirebaseServices
                     .signInWithGoogle();
-                // Fluttertoast.showToast(msg: status);
-                if (status == 'Suceess') {
+                if (status == 'Success') {
                   Get.offAndToNamed('/home');
-
                 }
               },
-              child: Container(
-                height: 50.h,
-                width: 50.h,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.r),
-                  color: const Color(0xffc5cdee).withOpacity(0.5),
-                  image: const DecorationImage(
-                    image: AssetImage('asset/sign in/google.png'),
-                  ),
-                ),
-              ),
+              assetPath: 'asset/sign in/google.png',
+              isActive: true,
             ),
-             SizedBox(
-              width: 20.w,
+
+            SizedBox(width: 20.w),
+
+            // Facebook Sign In (Inactive)
+            _buildSocialButton(
+              onTap: () async {
+                // Facebook login implementation
+              },
+              assetPath: 'asset/sign in/facebook.png',
+              isActive: false,
             ),
-            GestureDetector(
-              onTap: () async {},
-              child: Container(
-                height: 50.h,
-                width: 50.w,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.r),
-                  color: const Color(0xffc5cdee).withOpacity(0.5),
-                  image: const DecorationImage(
-                    image: AssetImage('asset/sign in/facebook.png'),
-                  ),
-                ),
-              ),
-            ),
-             SizedBox(
-              width: 20.w,
-            ),
-            Container(
-              height: 50.h,
-              width: 50.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.r),
-                color: const Color(0xffc5cdee).withOpacity(0.5),
-                image: const DecorationImage(
-                  image: AssetImage('asset/sign in/apple.png'),
-                ),
-              ),
+
+            SizedBox(width: 20.w),
+
+            // Apple Sign In (Inactive)
+            _buildSocialButton(
+              onTap: () async {
+                // Apple login implementation
+              },
+              assetPath: 'asset/sign in/apple.png',
+              isActive: false,
             ),
           ],
         ),
       ],
+    );
+  }
+
+  Widget _buildSocialButton({
+    required VoidCallback onTap,
+    required String assetPath,
+    required bool isActive,
+  }) {
+    return GestureDetector(
+      onTap: isActive ? onTap : null,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        height: 55.h,
+        width: 55.w,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.r),
+          color: isActive
+              ? CustomColors.cardBackground
+              : CustomColors.cardBackground.withOpacity(0.5),
+          border: Border.all(
+            color: isActive
+                ? CustomColors.secondaryColor.withOpacity(0.3)
+                : CustomColors.primaryColor.withOpacity(0.1),
+            width: 1.5,
+          ),
+          boxShadow: isActive
+              ? [
+                  BoxShadow(
+                    color: CustomColors.primaryColor.withOpacity(0.1),
+                    blurRadius: 10,
+                    offset: const Offset(0, 5),
+                  ),
+                ]
+              : null,
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(12.w),
+          child: Image.asset(
+            assetPath,
+            color: isActive ? null : Colors.grey.withOpacity(0.5),
+          ),
+        ),
+      ),
     );
   }
 }

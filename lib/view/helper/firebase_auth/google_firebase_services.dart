@@ -18,11 +18,10 @@ class GoogleFirebaseServices {
   GoogleFirebaseServices._();
 
   FirebaseAuth auth = FirebaseAuth.instance;
-  GoogleSignIn googleSignIn = GoogleSignIn();
+  GoogleSignIn googleSignIn = GoogleSignIn.instance;
 
   Future<void> createEmailAndPassword(String? email, String? pwd) async {
     try {
-      // log("$email--------------------$pwd");
       await auth.createUserWithEmailAndPassword(email: email!, password: pwd!);
       Get.toNamed('/signin');
     } catch (e) {
@@ -32,7 +31,6 @@ class GoogleFirebaseServices {
 
   Future<void> compareEmailAndPwd(String? email, String? pwd) async {
     try {
-      // log("$email--------------------$pwd");
       await auth.signInWithEmailAndPassword(email: email!, password: pwd!);
       Map userModal = {
         'username': sign.txtUser.text,
@@ -92,17 +90,27 @@ class GoogleFirebaseServices {
 
   Future<String> signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleSignInAccount =
-          await googleSignIn.signIn();
-      GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount!.authentication;
-
-      AuthCredential authCredential = GoogleAuthProvider.credential(
-        idToken: googleSignInAuthentication.idToken,
-        accessToken: googleSignInAuthentication.accessToken,
+      await googleSignIn.initialize(
+        serverClientId:
+            '338011390486-69feosg3l2ie2l83doekjse1b46oh095.apps.googleusercontent.com',
       );
 
-      auth.signInWithCredential(authCredential);
+      final GoogleSignInAccount? googleSignInAccount =
+          await googleSignIn.authenticate();
+
+      if (googleSignInAccount == null) {
+        return ""; // User cancelled
+      }
+
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+
+      final AuthCredential authCredential = GoogleAuthProvider.credential(
+        idToken: googleSignInAuthentication.idToken,
+        // Also include this
+      );
+
+      await auth.signInWithCredential(authCredential);
       currentUser();
 
       Map userModal = {
@@ -113,12 +121,11 @@ class GoogleFirebaseServices {
 
       UserModal user = UserModal(userModal);
       UserService.userSarvice.addUser(user);
-
       UserService.userSarvice.updateUserToken();
 
-      return "Suceess";
-    } catch (e) {
-      log(e.toString());
+      return "Success";
+    } catch (e, stackTrace) {
+      debugPrint("error ::${e.toString()} \n stackTrace :: $stackTrace");
       return "";
     }
   }
@@ -133,11 +140,10 @@ class GoogleFirebaseServices {
       await auth.verifyPhoneNumber(
         phoneNumber: countryCode + number,
         verificationCompleted: (PhoneAuthCredential credential) async {
-          // Automatically sign in the user when the phone number is verified
           try {
             await auth.signInWithCredential(credential);
-            Fluttertoast.showToast(msg: 'Phone number automatically verified and user signed in.');
-            // Navigate to home or dashboard screen
+            Fluttertoast.showToast(
+                msg: 'Phone number automatically verified and user signed in.');
             Get.offAllNamed('/home');
           } catch (e) {
             Fluttertoast.showToast(msg: 'Automatic verification failed.');
@@ -145,7 +151,6 @@ class GoogleFirebaseServices {
           }
         },
         verificationFailed: (FirebaseAuthException e) {
-          // Handle errors such as invalid phone number or billing issues
           if (e.code == 'invalid-phone-number') {
             Fluttertoast.showToast(
                 msg: 'The provided phone number is not valid.');
@@ -159,7 +164,6 @@ class GoogleFirebaseServices {
             Fluttertoast.showToast(
                 msg: 'Phone verification failed. Try again later.');
           }
-          log('Verification failed with error: ${e.code} - ${e.message}');
         },
         codeSent: (String verificationId, int? resendToken) {
           sign.verificationId.value = verificationId;
@@ -167,15 +171,12 @@ class GoogleFirebaseServices {
           Get.toNamed('/otpAdd');
         },
         codeAutoRetrievalTimeout: (String verificationId) {
-          Fluttertoast.showToast(msg: 'Code retrieval timeout. Please try again.');
+          Fluttertoast.showToast(
+              msg: 'Code retrieval timeout. Please try again.');
         },
       );
-    } catch (e) {
-      // Log any unexpected errors
-      log('Error in phone number verification: $e');
-    }
+    } catch (e) {}
   }
-
 
   Future<void> mobileVarifaction(String smsCode) async {
     try {
@@ -197,3 +198,214 @@ class GoogleFirebaseServices {
     }
   }
 }
+
+// class GoogleFirebaseServices {
+//   final FirebaseAuth auth = FirebaseAuth.instance;
+//   late GoogleSignIn googleSignIn;
+
+//   // Initialize Google Sign-In
+//   Future<void> initializeGoogleSignIn() async {
+//     googleSignIn = GoogleSignIn.instance;
+
+//     await googleSignIn.initialize(
+//       serverClientId:
+//           '338011390486-69feosg3l2ie2l83doekjse1b46oh095.apps.googleusercontent.com',
+//     );
+
+//     // Listen to authentication events
+//     googleSignIn.authenticationEvents
+//         .listen(_handleAuthenticationEvent)
+//         .onError(_handleAuthenticationError);
+
+//     // Attempt lightweight authentication (silent sign-in)
+//     googleSignIn.attemptLightweightAuthentication();
+//   }
+
+//   // Handle authentication events
+//   void _handleAuthenticationEvent(GoogleSignInAuthenticationEvent event) {
+//     debugPrint('Google Sign-In Event: ${event.type}');
+
+//     switch (event.type) {
+//       case GoogleSignInAuthenticationEventType.signedIn:
+//         _handleSignedIn(event.account);
+//         break;
+//       case GoogleSignInAuthenticationEventType.signedOut:
+//         _handleSignedOut();
+//         break;
+//       case GoogleSignInAuthenticationEventType.failed:
+//         _handleAuthenticationFailed(event.exception);
+//         break;
+//     }
+//   }
+
+//   // Handle authentication errors
+//   void _handleAuthenticationError(Object error, StackTrace stackTrace) {
+//     debugPrint('Google Sign-In Error: $error');
+//     debugPrint('Stack Trace: $stackTrace');
+
+//     // You can show user-friendly error messages here
+//     if (error is GoogleSignInException) {
+//       switch (error.code) {
+//         case GoogleSignInExceptionCode.networkError:
+//           _showError('Network error. Please check your internet connection.');
+//           break;
+//         case GoogleSignInExceptionCode.canceled:
+//           _showError('Sign in was cancelled.');
+//           break;
+//         case GoogleSignInExceptionCode.signInFailed:
+//           _showError('Sign in failed. Please try again.');
+//           break;
+//         case GoogleSignInExceptionCode.clientConfigurationError:
+//           _showError('Configuration error. Please contact support.');
+//           break;
+//         default:
+//           _showError('An unexpected error occurred during sign in.');
+//       }
+//     } else {
+//       _showError('An unexpected error occurred during sign in.');
+//     }
+//   }
+
+//   // Handle successful sign-in
+//   void _handleSignedIn(GoogleSignInAccount? account) async {
+//     if (account == null) {
+//       debugPrint('Sign-in account is null');
+//       return;
+//     }
+
+//     try {
+//       debugPrint('User signed in: ${account.email}');
+
+//       // Get authentication details
+//       final GoogleSignInAuthentication googleAuth =
+//           await account.authentication;
+
+//       // Create Firebase credential
+//       final AuthCredential credential = GoogleAuthProvider.credential(
+//         idToken: googleAuth.idToken,
+//       );
+
+//       // Sign in to Firebase
+//       final UserCredential userCredential =
+//           await auth.signInWithCredential(credential);
+
+//       if (userCredential.user != null) {
+//         debugPrint(
+//             'Firebase sign-in successful: ${userCredential.user!.email}');
+
+//         // Create user model and save to your service
+//         Map userModal = {
+//           'username': userCredential.user!.displayName ?? account.displayName,
+//           'email': userCredential.user!.email ?? account.email,
+//           'photoUrl': userCredential.user!.photoURL ?? account.photoUrl,
+//         };
+
+//         UserModal user = UserModal(userModal);
+//         UserService.userSarvice.addUser(user);
+//         UserService.userSarvice.updateUserToken();
+
+//         // Navigate to main app or update UI state
+//         _onSignInSuccess();
+//       }
+//     } catch (e, stackTrace) {
+//       debugPrint('Error during Firebase sign-in: $e');
+//       debugPrint('Stack trace: $stackTrace');
+//       _handleAuthenticationError(e, stackTrace);
+//     }
+//   }
+
+//   // Handle sign-out
+//   void _handleSignedOut() {
+//     debugPrint('User signed out');
+
+//     // Sign out from Firebase as well
+//     auth.signOut();
+
+//     // Clear user data or navigate to login screen
+//     _onSignOutSuccess();
+//   }
+
+//   // Handle authentication failure
+//   void _handleAuthenticationFailed(GoogleSignInException? exception) {
+//     debugPrint('Authentication failed: ${exception?.toString()}');
+
+//     if (exception != null) {
+//       _handleAuthenticationError(exception, StackTrace.current);
+//     }
+//   }
+
+//   // Show error message to user (implement based on your UI framework)
+//   void _showError(String message) {
+//     debugPrint('Error Message: $message');
+
+//     // Example implementations:
+//     // For Flutter with ScaffoldMessenger:
+//     // ScaffoldMessenger.of(context).showSnackBar(
+//     //   SnackBar(content: Text(message)),
+//     // );
+
+//     // For custom error handling:
+//     // ErrorService.showError(message);
+
+//     // For state management (Bloc, Provider, etc.):
+//     // authBloc.add(AuthError(message));
+//   }
+
+//   // Called when sign-in is successful
+//   void _onSignInSuccess() {
+//     debugPrint('Sign-in completed successfully');
+
+//     // Navigate to home screen or update app state
+//     // Example:
+//     // Navigator.of(context).pushReplacementNamed('/home');
+//     // or update your state management
+//   }
+
+//   // Called when sign-out is successful
+//   void _onSignOutSuccess() {
+//     debugPrint('Sign-out completed successfully');
+
+//     // Navigate to login screen or update app state
+//     // Example:
+//     // Navigator.of(context).pushReplacementNamed('/login');
+//   }
+
+//   // Manual sign-in method (for button press)
+//   Future<String> signInWithGoogle() async {
+//     try {
+//       if (googleSignIn.supportsAuthenticate()) {
+//         await googleSignIn.authenticate();
+//         // The _handleAuthenticationEvent will handle the rest
+//         return "Authentication initiated";
+//       } else {
+//         // Fallback for platforms that don't support authenticate()
+//         final GoogleSignInAccount? account = await googleSignIn.authenticate();
+//         if (account != null) {
+//           _handleSignedIn(account);
+//           return "Success";
+//         }
+//         return "Sign-in cancelled";
+//       }
+//     } catch (e, stackTrace) {
+//       debugPrint("Manual sign-in error: $e");
+//       _handleAuthenticationError(e, stackTrace);
+//       return "Error occurred";
+//     }
+//   }
+
+//   // Manual sign-out method
+//   Future<void> signOut() async {
+//     try {
+//       await googleSignIn.signOut();
+//       // The _handleAuthenticationEvent will handle the rest
+//     } catch (e, stackTrace) {
+//       debugPrint("Sign-out error: $e");
+//       _handleAuthenticationError(e, stackTrace);
+//     }
+//   }
+
+//   // Check current authentication state
+//   bool get isSignedIn => googleSignIn.currentUser != null;
+
+//   GoogleSignInAccount? get currentUser => googleSignIn.currentUser;
+// }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../../utils/colors.dart';
 import '../../sign/componects/text_field.dart';
 
 class OtpPage extends StatelessWidget {
@@ -12,203 +13,293 @@ class OtpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeController themeController = Get.find();
     SignController signController = Get.find();
+
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 100.h,
-              ),
-              SizedBox(
-                height: 175.h,
-                child: Image.asset(
-                  'asset/splash/Group 1.png',
-                  fit: BoxFit.cover,
-                ),
-              ),
-              SizedBox(
-                height: 70.h,
-              ),
-              Text(
-                'Sign in to your Account',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22.sp,
-                ),
-              ),
-              SizedBox(
-                height: 30.h,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 40.h,),
-                    child: const Text(
-                      'User Name',
-                    ),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Title
+                Text(
+                  'Phone Verification',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 28.sp,
+                    color: CustomColors.primaryColor,
                   ),
-                  SignTextField(
-                    hintText: 'User name',
-                    prefixIcon: const Icon(Icons.person_2_outlined),
-                    controller: signController,
-                    textEditingController: signController.txtUserName,
-                  ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 35.h,
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(8.h),
-                      child: const Text(
-                        'Phone Number',
+
+                SizedBox(height: 8.h),
+
+                Text(
+                  'Enter your details to continue',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    color: CustomColors.secondaryColor,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+
+                SizedBox(height: 35.h),
+
+                // Input Fields Container
+                Padding(
+                  padding: EdgeInsets.all(12.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Username Field
+                      Text(
+                        'Username',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                          color: CustomColors.primaryColor,
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5.h),
-                      child: Container(
-                        height: 50.h,
-                        width: double.infinity,
-                        padding: EdgeInsets.only(left: 5.h),
+
+                      SizedBox(height: 10.h),
+
+                      SignTextField(
+                        hintText: 'Enter your username',
+                        prefixIcon: Icon(
+                          Icons.person_outline,
+                          color: CustomColors.secondaryColor,
+                        ),
+                        controller: signController,
+                        textEditingController: signController.txtUserName,
+                      ),
+
+                      SizedBox(height: 20.h),
+
+                      // Phone Number Field
+                      Text(
+                        'Phone Number',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                          color: CustomColors.primaryColor,
+                        ),
+                      ),
+
+                      SizedBox(height: 10.h),
+
+                      Container(
                         decoration: BoxDecoration(
-                            color: themeController.isTextFiledColor.value,
-                            borderRadius: BorderRadius.circular(50.r)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 10.h,
+                          borderRadius: BorderRadius.circular(16.r),
+                          boxShadow: [
+                            BoxShadow(
+                              color:
+                                  CustomColors.primaryColor.withOpacity(0.05),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
                             ),
-                            SizedBox(
-                              width: 40.h,
-                              child: TextField(
-                                controller: signController.countryController,
-                                keyboardType: TextInputType.number,
-                                decoration: const InputDecoration(
-                                  border: InputBorder.none,
+                          ],
+                        ),
+                        child: Container(
+                          height: 55.h,
+                          decoration: BoxDecoration(
+                            color: CustomColors.textColor.withOpacity(0.3),
+                            borderRadius: BorderRadius.circular(16.r),
+                            border: Border.all(
+                              color:
+                                  CustomColors.backgroundColor.withOpacity(0.5),
+                              width: 1.5,
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              // Country Code
+                              Container(
+                                width: 80.w,
+                                padding: EdgeInsets.symmetric(horizontal: 15.w),
+                                child: TextField(
+                                  controller: signController.countryController,
+                                  keyboardType: TextInputType.number,
+                                  textAlign: TextAlign.center,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: '+91',
+                                  ),
+                                ),
+                              ),
+
+                              // Divider
+                              Container(
+                                height: 30.h,
+                                width: 1.5,
+                                color:
+                                    CustomColors.primaryColor.withOpacity(0.8),
+                              ),
+
+                              // Phone Number
+                              Expanded(
+                                child: Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 15.w),
+                                  child: TextField(
+                                    onChanged: (value) {
+                                      signController.phone.value = value;
+                                    },
+                                    keyboardType: TextInputType.phone,
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: CustomColors.primaryColor,
+                                    ),
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: "Enter phone number",
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(height: 20.h),
+
+                      // Remember Me Checkbox
+                      Row(
+                        children: [
+                          Obx(
+                            () => Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6.r),
+                              ),
+                              child: Theme(
+                                data: Theme.of(context).copyWith(
+                                  checkboxTheme: CheckboxThemeData(
+                                    fillColor:
+                                        MaterialStateProperty.resolveWith(
+                                      (states) {
+                                        if (states
+                                            .contains(MaterialState.selected)) {
+                                          return CustomColors.secondaryColor;
+                                        }
+                                        return Colors.transparent;
+                                      },
+                                    ),
+                                    checkColor: MaterialStateProperty.all(
+                                        CustomColors.textColor),
+                                    side: BorderSide(
+                                      color: CustomColors.secondaryColor,
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
+                                child: Checkbox(
+                                  value: signController.remember.value,
+                                  onChanged: (value) {
+                                    signController.changeRemember(value!);
+                                  },
                                 ),
                               ),
                             ),
-                            Text(
-                              "|",
-                              style: TextStyle(
-                                  fontSize: 33.sp, color: Colors.grey),
+                          ),
+                          SizedBox(width: 8.w),
+                          Text(
+                            'Remember me',
+                            style: TextStyle(
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.w500,
+                              color: CustomColors.primaryColor,
                             ),
-                            SizedBox(
-                              width: 10.h,
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(height: 30.h),
+
+                      // Send OTP Button
+                      GestureDetector(
+                        onTap: () {
+                          GoogleFirebaseServices.googleFirebaseServices
+                              .mobileUser(
+                            signController.phone.value,
+                            signController.countryController.text,
+                          );
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          height: 55.h,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                CustomColors.primaryColor,
+                                CustomColors.secondaryColor,
+                              ],
                             ),
-                            Expanded(
-                                child: TextField(
-                              onChanged: (value) {
-                                signController.phone.value = value;
-                              },
-                              keyboardType: TextInputType.phone,
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "Phone",
+                            borderRadius: BorderRadius.circular(27.r),
+                            boxShadow: [
+                              BoxShadow(
+                                color:
+                                    CustomColors.primaryColor.withOpacity(0.3),
+                                blurRadius: 15,
+                                offset: const Offset(0, 8),
                               ),
-                            ))
-                          ],
+                            ],
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Send OTP',
+                              style: TextStyle(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w600,
+                                color: CustomColors.textColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: 30.h),
+
+                // Login with Email Option
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Want to login with ',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.w400,
+                        color: CustomColors.primaryColor.withOpacity(0.7),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Get.toNamed('/signin');
+                      },
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.symmetric(horizontal: 8.w),
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      child: Text(
+                        'Email?',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                          color: CustomColors.secondaryColor,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ),
                   ],
                 ),
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 35.h, vertical: 5.h),
-                child: Row(
-                  children: [
-                    Obx(
-                      () => Checkbox(
-                        value: signController.remember.value,
-                        onChanged: (value) {
-                          signController.changeRemember(value!);
-                        },
-                      ),
-                    ),
-                    const Text('Remember me')
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40.h),
-                child: GestureDetector(
-                  onTap: () {
-                    GoogleFirebaseServices.googleFirebaseServices.mobileUser(
-                        signController.phone.value,
-                        signController.countryController.text);
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    height: 50.h,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0x3F000000),
-                            blurRadius: 4,
-                            offset: Offset(0, 4),
-                            spreadRadius: 0,
-                          )
-                        ],
-                        color: const Color(0xff31C48D),
-                        borderRadius: BorderRadius.circular(25.r)),
-                    child: Text(
-                      'Send the otp',
-                      style: TextStyle(fontSize: 17.sp, color: Colors.white),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Do you login with',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Get.toNamed('/signin');
-                    },
-                    child: Text(
-                      'Email',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 15.sp,
-                        color: const Color(0xff31C48D),
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 30.h,
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

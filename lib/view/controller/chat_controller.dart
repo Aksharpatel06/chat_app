@@ -61,7 +61,9 @@ class ChatController extends GetxController {
   RxBool isImage = false.obs;
 
   ImagePicker imagePicker = ImagePicker();
-  Rx<File> imgPath= File('/data/user/0/com.example.chat_app/cache/6a997e24-2fdb-4d42-8d32-d96a866ea5ea/IMG-20240906-WA0069.jpg').obs;
+  Rx<File> imgPath = File(
+          '/data/user/0/com.example.chat_app/cache/6a997e24-2fdb-4d42-8d32-d96a866ea5ea/IMG-20240906-WA0069.jpg')
+      .obs;
 
   Future<void> selectedImage(ImageSource imageSource) async {
     final directory = await getApplicationDocumentsDirectory();
@@ -76,10 +78,16 @@ class ChatController extends GetxController {
   }
 
   Future<File?> stringToFile(ChatModal chat) async {
-      Uint8List bytes = base64Decode(chat.image!);
-      final directory = await getApplicationDocumentsDirectory();
-      File file = File('${directory.path}/${chat.timestamp}.png');
-      return file.writeAsBytes(bytes);
+    Uint8List bytes = base64Decode(chat.image!);
+    final directory = await getApplicationDocumentsDirectory();
+    File file = File('${directory.path}/${chat.timestamp}.png');
+    return file.writeAsBytes(bytes);
+  }
 
+  Rx<File> imagePath = File('').obs;
+
+  void changeImagePath(File path) {
+    imagePath.value = path;
+    update();
   }
 }
