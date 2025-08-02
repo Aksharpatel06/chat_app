@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:chat_app/view/helper/notification/notification_services.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 
 class FirebaseMessagingServices {
   FirebaseMessagingServices._();

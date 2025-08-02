@@ -65,17 +65,7 @@ class ChatController extends GetxController {
           '/data/user/0/com.example.chat_app/cache/6a997e24-2fdb-4d42-8d32-d96a866ea5ea/IMG-20240906-WA0069.jpg')
       .obs;
 
-  Future<void> selectedImage(ImageSource imageSource) async {
-    final directory = await getApplicationDocumentsDirectory();
-    File files = File('${directory.path}/${DateTime.now()}.png');
-    isImage.value = true;
-    log('${isImage.value}-----------------------------------');
-    final XFile? image = await imagePicker.pickImage(source: imageSource);
-    if (image != null) {
-      files = File(image.path);
-    }
-    update();
-  }
+  
 
   Future<File?> stringToFile(ChatModal chat) async {
     Uint8List bytes = base64Decode(chat.image!);

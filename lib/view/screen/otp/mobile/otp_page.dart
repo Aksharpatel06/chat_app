@@ -1,5 +1,4 @@
 import 'package:chat_app/view/controller/sign_controller.dart';
-import 'package:chat_app/view/controller/theme_controller.dart';
 import 'package:chat_app/view/helper/firebase_auth/google_firebase_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

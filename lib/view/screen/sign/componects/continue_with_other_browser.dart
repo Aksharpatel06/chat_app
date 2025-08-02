@@ -1,7 +1,6 @@
 import 'package:chat_app/view/helper/firebase_auth/google_firebase_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import '../../../../utils/colors.dart';
 
