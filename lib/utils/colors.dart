@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class CustomColors {
   // Primary Colors
-  static const Color primaryColor = Color(0xFF537D5D);
-  static const Color secondaryColor = Color(0xFF73946B);
-  static const Color backgroundColor = Color(0xFF9EBC8A);
-  static const Color textColor = Color(0xFFD2D0A0);
+  static const Color primaryColor = Color(0xFFF1F0E4);
+  static const Color secondaryColor = Color(0xFFBCA88D);
+  static const Color backgroundColor = Color(0xFF7D8D86);
+  static const Color textColor = Color(0xFF3E3F29);
   static const Color cardBackground = Color(0xFFFFFFFF);
 
   // Status Colors

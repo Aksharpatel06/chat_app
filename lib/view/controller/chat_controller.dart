@@ -51,9 +51,7 @@ class ChatController extends GetxController {
   }
 
   void checkCurrentUser() {
-    log('------------------------------------------------\n');
     GoogleFirebaseServices.googleFirebaseServices.currentUser();
-    log('------------------------------------------------\n');
   }
 
   RxString callId = ''.obs;

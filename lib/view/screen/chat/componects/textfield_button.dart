@@ -5,7 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../controller/chat_controller.dart';
+import '../../../helper/firebase_auth/google_firebase_services.dart';
 import '../../../helper/firebase_database/chat_services.dart';
+import '../../../helper/notification/api_services.dart';
+import '../../../helper/notification/notification_services.dart';
 
 class ModernMessageInputField extends StatefulWidget {
   const ModernMessageInputField({
@@ -268,6 +271,12 @@ class _ModernMessageInputFieldState extends State<ModernMessageInputField> {
           widget.controller.receiverEmail.value,
         );
 
+        ApiService.apiService.sendMessage(
+            widget.controller.currentUserLogin.value,
+            '',
+            widget.controller.receiverToken.value,
+            messageContent);
+
         widget.controller.changeImagePath(File(''));
       } else if (widget.controller.txtChats.text.isNotEmpty) {
         // Send text message
@@ -285,6 +294,11 @@ class _ModernMessageInputFieldState extends State<ModernMessageInputField> {
           chat,
           widget.controller.receiverEmail.value,
         );
+        ApiService.apiService.sendMessage(
+            widget.controller.currentUserLogin.value,
+            messageContent,
+            widget.controller.receiverToken.value,
+            '');
 
         widget.controller.txtChats.clear();
       }

@@ -8,23 +8,26 @@ class LoginOptionsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(25.w),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _buildHeader(),
-                  SizedBox(height: 40.h),
-                  _buildLoginButtons(),
-                  SizedBox(height: 30.h),
-                  _buildDivider(),
-                  SizedBox(height: 30.h),
-                  _buildFooter(),
-                ],
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        body: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(25.w),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _buildHeader(),
+                    SizedBox(height: 40.h),
+                    _buildLoginButtons(),
+                    SizedBox(height: 30.h),
+                    _buildDivider(),
+                    SizedBox(height: 30.h),
+                    _buildFooter(),
+                  ],
+                ),
               ),
             ),
           ),

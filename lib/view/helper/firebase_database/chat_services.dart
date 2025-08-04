@@ -19,6 +19,11 @@ class ChatServices {
   FirebaseStorage storage = FirebaseStorage.instance;
 
   Future<void> insertData(Map<String, dynamic> chat, String receiver) async {
+    final String currentUser = controller.currentLogin.value;
+    await firestore.collection('user').doc(currentUser).set({
+      'userFriends': FieldValue.arrayUnion([receiver]),
+    }, SetOptions(merge: true));
+
     List doc = [controller.currentLogin.value, receiver];
     doc.sort();
     String docId = doc.join('_');

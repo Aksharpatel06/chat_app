@@ -24,6 +24,11 @@ List<GetPage> getPages = [
             : const LoginOptionsPage(),
   ),
 
+  GetPage(
+    name: '/intro',
+    page: () => const LoginOptionsPage(),
+  ),
+
   GetPage(name: '/terms', page: () => const TermsOfServicePage()),
   GetPage(name: '/privacy', page: () => const PrivacyPolicyPage()),
 

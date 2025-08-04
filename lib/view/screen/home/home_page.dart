@@ -24,7 +24,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    UserService.userSarvice.updateUserToken();
+    UserService.userSarvice..updateUserToken();
+
     _scrollController.addListener(_scrollListener);
   }
 
@@ -42,16 +43,19 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     ThemeController themeController = Get.find();
-    return Scaffold(
-      drawer: _buildModernDrawer(context, themeController),
-      body: NestedScrollView(
-        controller: _scrollController,
-        headerSliverBuilder: (context, innerBoxIsScrolled) {
-          return [
-            _buildModernAppBar(context),
-          ];
-        },
-        body: _buildUserList(),
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        drawer: _buildModernDrawer(context, themeController),
+        body: NestedScrollView(
+          controller: _scrollController,
+          headerSliverBuilder: (context, innerBoxIsScrolled) {
+            return [
+              _buildModernAppBar(context),
+            ];
+          },
+          body: _buildUserList(),
+        ),
       ),
     );
   }
@@ -174,48 +178,67 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildUserList() {
     ChatController chatController = Get.find();
-    return StreamBuilder(
-      stream: UserService.userSarvice.getUser(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return _buildErrorState(snapshot.error.toString());
-        }
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return _buildLoadingState();
-        }
-        var queryData = snapshot.data!.docs;
-        List users = queryData.map((e) => e.data()).toList();
-        List<UserModal> userList = users.map((e) => UserModal(e)).toList();
-        // Filter users based on search query
-        if (_searchQuery.isNotEmpty) {
-          userList = userList.where((user) {
-            final username = user.username?.toLowerCase() ?? '';
-            final email = user.email?.toLowerCase() ?? '';
-            return username.contains(_searchQuery) ||
-                email.contains(_searchQuery);
-          }).toList();
-        }
-        // Sort users - online first
-        userList.sort((a, b) {
-          if (a.isOnline == b.isOnline) {
-            return (a.username ?? '').compareTo(b.username ?? '');
+    return FutureBuilder(
+        future: UserService.userSarvice.currentUser(),
+        builder: (context, asyncSnapshot) {
+          if (asyncSnapshot.connectionState == ConnectionState.waiting) {
+            return _buildLoadingState();
           }
-          return a.isOnline! ? -1 : 1;
+          return StreamBuilder(
+            stream: UserService.userSarvice.getUser(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return _buildErrorState(snapshot.error.toString());
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return _buildLoadingState();
+              }
+              var queryData = snapshot.data!.docs;
+              List users = queryData.map((e) => e.data()).toList();
+              List<UserModal> userList =
+                  users.map((e) => UserModal(e)).toList();
+
+              // Filter users based on search query
+              if (_searchQuery.isNotEmpty) {
+                userList = userList.where((user) {
+                  final username = user.username?.toLowerCase() ?? '';
+                  final email = user.email?.toLowerCase() ?? '';
+                  return username.contains(_searchQuery) ||
+                      email.contains(_searchQuery);
+                }).toList();
+              } else {
+                userList = userList.where((user) {
+                  // Exclude the current user from the list
+                  return asyncSnapshot.data!['userFriends']
+                          .toString()
+                          .contains(user.email ?? '') ||
+                      asyncSnapshot.data!['userFriends']
+                          .toString()
+                          .contains(user.username ?? '');
+                }).toList();
+              }
+              // Sort users - online first
+              userList.sort((a, b) {
+                if (a.isOnline == b.isOnline) {
+                  return (a.username ?? '').compareTo(b.username ?? '');
+                }
+                return a.isOnline! ? -1 : 1;
+              });
+              if (userList.isEmpty) {
+                return _buildEmptyState();
+              }
+              return ListView.separated(
+                padding: EdgeInsets.all(12.w),
+                itemCount: userList.length,
+                separatorBuilder: (context, index) => SizedBox(height: 5.h),
+                itemBuilder: (context, index) => ChatUserCard(
+                  chatController: chatController,
+                  user: userList[index],
+                ),
+              );
+            },
+          );
         });
-        if (userList.isEmpty) {
-          return _buildEmptyState();
-        }
-        return ListView.separated(
-          padding: EdgeInsets.all(12.w),
-          itemCount: userList.length,
-          separatorBuilder: (context, index) => SizedBox(height: 5.h),
-          itemBuilder: (context, index) => ChatUserCard(
-            chatController: chatController,
-            user: userList[index],
-          ),
-        );
-      },
-    );
   }
 
   Widget _buildModernDrawer(
